@@ -1,0 +1,67 @@
+{
+  "project": "anthropic-adaptyv-2026-pmhc",
+  "challenge": "Anthropic x Adaptyv 2026 Challenge 5 / Track 3 (pMHC): de-novo zero-shot binder selective for KRAS G12D VVVGADGVGK on HLA-A*11:01 + b2m",
+  "deadline": "2026-11-08T23:59 AoE",
+  "upload_gate": "USER-GATED (Proteinbase portal); never auto-upload",
+  "active_feature": "swap-decision",
+  "features": [
+    {
+      "id": "generate",
+      "desc": "Generate de-novo candidates (BoltzGen protein/nanobody/antibody + RFdiffusion1 + SolubleMPNN)",
+      "status": "done",
+      "evidence": "runs/campaign/pool_*.csv; gen_campaign.sh. Triage pool 3293 foldable.",
+      "done_criteria": "diverse de-novo pools across lineages, ESMFold pLDDT screened"
+    },
+    {
+      "id": "triage",
+      "desc": "Sharded ESMFold pLDDT + g12d-only 2-sample triage co-fold; per-lineage cut",
+      "status": "done",
+      "evidence": "funnel_prep.sh/funnel_triage.sh; runs/campaign/triage_g12d.tsv, pool_plddt.csv, survivors via funnel_select_panel.py",
+      "done_criteria": "top candidates selected per lineage for the full panel"
+    },
+    {
+      "id": "panel-cofold",
+      "desc": "TRUSTED 5-sample, 6-state pocket-restrained Boltz-2 co-fold (g12d/wt/scram/ebna4/atic/empty)",
+      "status": "done",
+      "evidence": "btp02w4u5 rc=0: 1888 designs x 6 states x 5 samples = 11328 folds; funnel_panel.sh",
+      "done_criteria": "all states folded, 5 samples each, confidence jsons present"
+    },
+    {
+      "id": "score-axes",
+      "desc": "Score all selectivity axes (ipSAE: spec_scram, promisc_margin, bh_e, grip)",
+      "status": "done",
+      "evidence": "bgcy33x8r: score_rfd_val_fast.py -> runs/campaign/panel_reval.tsv (max spec_scram 0.627); grip -> panel_grip.tsv",
+      "done_criteria": "panel_reval.tsv complete, same schema as locked-20 ruler"
+    },
+    {
+      "id": "survivors-orthogonal",
+      "desc": "Survivor gate + orthogonal signals: grip, MPNN differential delta, foldseek novelty",
+      "status": "done",
+      "evidence": "594 survivors (211 protein + 383 nb). MPNN delta bw4m63i5u rc=0 (594+2 controls) -> mpnn_diff.tsv; novelty runs/campaign/novelty/b3_struct.csv",
+      "done_criteria": "survivors scored on grip + mpnnD + novelty; controls calibrated",
+      "notes": "MPNN delta is NEVER a gate; verified a wash vs incumbents (does not rank G12D-vs-WT)."
+    },
+    {
+      "id": "assemble-select",
+      "desc": "Assemble union top-20 and propose same-ruler swaps vs the locked 20",
+      "status": "done",
+      "evidence": "assemble_final20.py --with-campaign -> combined_*; campaign_select.py -> 12 dominant swaps, 0 churn; SWAP_PROPOSAL*.txt",
+      "done_criteria": "swaps verified same-ruler (schema + byte spot-checks); Ig-folds caught"
+    },
+    {
+      "id": "swap-quality-verify",
+      "desc": "Verify the proposed swap on novelty / developability / concentration + same-ruler MPNN delta on incumbents",
+      "status": "done",
+      "evidence": "incumbent g12d fold bgp0pstvv rc=0 (100/100 pdb) + incumbent MPNN delta btbuwfalk rc=0 -> mpnn_diff_all.tsv. Novelty: swap removes 7 of 8 novelty_risk designs (8->1). Developability parity. ADD proteins max pairwise id 0.40; 2 nanobody near-cousins (0.88).",
+      "done_criteria": "swap evaluated on every measurable axis both-sides same-ruler"
+    },
+    {
+      "id": "swap-decision",
+      "desc": "User decides: full 12-swap / partial (diversity+novelty refinements) / keep locked 20; then gated upload",
+      "status": "in_progress",
+      "evidence": "combined_submission.csv portal-format-validated (20/20 passed). Recommendation: full swap is stronger on all measurable axes; 2 optional refinements offered.",
+      "done_criteria": "user chooses portfolio; upload remains user-gated",
+      "blocked_on": "USER decision + USER upload (gated)"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+name,singleseq_maxTM_pdb,top_hit,verdict
+protein_0369,0.723,6bx4-assembly2_B,novel
+protein_0212,0.876,8rmq-assembly1_B,borderline
+protein_0155,0.892,2kub-assembly1_A,borderline
+protein_0092,0.902,4uij-assembly4_D,risk
+protein_0103,0.912,6odd-assembly1_B,risk
+protein_0025,0.935,5ow5-assembly2_D,risk
+protein_0073,0.955,5j0k-assembly1_A,risk
+nanobody_0081,0.985,7lka-assembly3_C,risk
+nanobody_0202,0.996,6ghg-assembly2_H,risk

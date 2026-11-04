@@ -1,0 +1,113 @@
+{
+  "provenance": "7OW6 (G12D ordered) + 7OW5 (WT crystal); TCR/waters/ions/altloc-B+ dropped",
+  "wt_crystal_chains": {
+    "hla": "A",
+    "b2m": "B",
+    "pep": "C",
+    "pep_seq": "VVVGAGGVGK"
+  },
+  "states": {
+    "g12d": {
+      "file": "g12d.pdb",
+      "chains": {
+        "hla": "A",
+        "b2m": "B",
+        "pep": "C"
+      },
+      "pep_seq": "VVVGADGVGK"
+    },
+    "wt_insilico": {
+      "file": "wt_insilico.pdb",
+      "pep_seq": "VVVGAGGVGK",
+      "note": "WT seq in the mutant's ORDERED backbone (C/6 ASP->GLY). HARD negative for ELECTROSTATIC/direct designs only; BIASED (false-non-selective) for CONFORMATIONAL designs -> use the floppy WT ensemble for those. See wt_negative_policy."
+    },
+    "empty": {
+      "file": "empty.pdb",
+      "chains": {
+        "hla": "A",
+        "b2m": "B"
+      },
+      "pep_seq": null
+    },
+    "wt_crystal": {
+      "file": "wt_crystal.pdb",
+      "note": "independent WT crystal 7OW5"
+    }
+  },
+  "peptide_register": {
+    "chain": "C",
+    "resseqs": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "discriminating": {
+      "pos": 6,
+      "resseq": 6,
+      "g12d": "ASP",
+      "wt": "GLY"
+    }
+  },
+  "binder_hotspots": [
+    {
+      "pos": 7,
+      "resseq": 7,
+      "res": "GLY",
+      "feature": "backbone apex of up-bulge",
+      "sc_sasa": 0.0,
+      "total_sasa": 74.1,
+      "note": "MOST exposed; read main-chain"
+    },
+    {
+      "pos": 8,
+      "resseq": 8,
+      "res": "VAL",
+      "feature": "most exposed side chain",
+      "sc_sasa": 37.2,
+      "total_sasa": 45.1,
+      "note": "hydrophobic anchor"
+    },
+    {
+      "pos": 4,
+      "resseq": 4,
+      "res": "GLY",
+      "feature": "backbone bulge",
+      "sc_sasa": 0.0,
+      "total_sasa": 35.3
+    },
+    {
+      "pos": 5,
+      "resseq": 5,
+      "res": "ALA",
+      "feature": "partial; native TCR reads it",
+      "sc_sasa": 8.9,
+      "total_sasa": 29.3
+    },
+    {
+      "pos": 6,
+      "resseq": 6,
+      "res": "ASP",
+      "feature": "DISCRIMINATOR but semi-buried/inward",
+      "sc_sasa": 8.3,
+      "total_sasa": 20.0,
+      "note": "do NOT target directly; read via bulge geometry + electrostatics"
+    }
+  ],
+  "resolved_seqs": {
+    "hla_A": "GSHSMRYFYTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDQETRNVKAQSQTDRVDLGTLRGYYNQSEDGSHTIQIMYGCDVGPDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITKRKWEAAHAAEQQRAYLEGRCVEWLRRYLENGKETLQRTDPPKTHMTHHPISDHEATLRCWALGFYPAEITLTWQRDGEDQTQDTELVETRPAGDGTFQKWAAVVVPSGEEQRYTCHVQHEGLPKPLTLRWEP",
+    "b2m_B": "IQRTPKIQVYSRHPAENGKSNFLNCYVSGFHPSDIEVDLLKNGERIEKVEHSDLSFSKDWSFYLLYYTEFTPTEKDEYACRVNHVTLSQPKIVKWDRDM"
+  },
+  "wt_negative_policy": {
+    "ordered_chemistry_negative": "wt_insilico.pdb -- WT seq in the mutant ORDERED backbone; the HARD negative for ELECTROSTATIC/direct-readout designs (shape identical, only P6 chemistry differs). NEVER the negative for CONFORMATIONAL designs: they SHOULD grip the ordered shape, so frozen-ordered WT reads as false-non-selective -> false reject.",
+    "conformational_negative": "WT free-peptide-MHC MD ENSEMBLE (TO BUILD) = the floppy states, plus an unbound ordering-penalty term ddG_order(WT vs G12D). The correct negative for CONFORMATIONAL/gated designs.",
+    "cofold_from_seq": "Boltz/Chai fold WT from SEQUENCE (not from wt_insilico.pdb) -> one pose, likely ordered-bulge-like -> UNDER-captures WT floppiness; treat as complementarity-only.",
+    "rule": "Score each design's g12d-wt gap against the HARDEST WT negative applicable to its mechanism; a maximally-robust design clears ALL (ordered-chemistry AND floppy-ensemble)."
+  }
+}

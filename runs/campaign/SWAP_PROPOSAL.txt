@@ -1,0 +1,103 @@
+
+==============================================================================
+UNION TOP-20 (proposed), same sel ruler  [* = NEW b3 design]
+==============================================================================
+ # name             lineage                sel  spcS  bh_e  grip   pmrg  mpnnD
+ 1 nb3_gpu6_132     boltzgen-vhh-b3       1.86  0.58  0.03  0.53   0.62      - *
+ 2 nb3_gpu3_307     boltzgen-vhh-b3       1.71  0.52  0.08  0.56   0.51      - *
+ 3 b3_gpu7_181      boltzgen-protein-b3   1.68  0.53  0.01  0.28   0.56      - *
+ 4 b3_gpu5_072      boltzgen-protein-b3   1.66  0.62  0.07  0.15   0.45      - *
+ 5 b3_gpu7_113      boltzgen-protein-b3   1.63  0.47  0.01  0.26   0.52      - *
+ 6 b3_gpu7_136      boltzgen-protein-b3   1.58  0.56  0.20  0.25   0.51      - *
+ 7 b3_gpu4_211      boltzgen-protein-b3   1.58  0.48  0.04  0.20   0.50      - *
+ 8 b3_gpu5_174      boltzgen-protein-b3   1.54  0.55  0.23  0.29   0.49      - *
+ 9 nb3_gpu6_432     boltzgen-vhh-b3       1.50  0.58  0.24  0.38   0.29      - *
+10 nanobody_0202    boltzgen-vhh          1.49  0.49  0.20  0.33   0.44      -
+11 nb3_gpu4_132     boltzgen-vhh-b3       1.48  0.27  0.01  0.46   0.61      - *
+12 b2_gpu3_15       boltzgen-protein-b2   1.47  0.40  0.12  0.17   0.59      -
+13 nb3_gpu7_192     boltzgen-vhh-b3       1.44  0.41  0.01  0.29   0.43      - *
+14 nb3_gpu5_130     boltzgen-vhh-b3       1.41  0.32  0.13  0.50   0.35      - *
+15 b2_gpu4_26       boltzgen-protein-b2   1.24  0.27  0.20  0.26   0.41      -
+16 nanobody_0081    boltzgen-vhh          1.22  0.33  0.35  0.38   0.42      -
+17 b2_gpu3_27       boltzgen-protein-b2   1.21  0.32  0.46  0.22   0.61      -
+18 protein_0103     boltzgen-protein      1.18  0.12  0.02  0.50   0.49      -
+19 b2_gpu5_05       boltzgen-protein-b2   1.14  0.36  0.41  0.18   0.27      -
+20 b2_gpu5_37       boltzgen-protein-b2   1.11  0.17  0.04  0.35   0.12      -
+
+==============================================================================
+SWAP TRADES  (12 b3 enter, 12 incumbents drop)
+==============================================================================
+
+[swap 1] ADD nb3_gpu6_132 (boltzgen-vhh-b3)  <->  DROP rfd_des_173_m2
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.583        0.026        0.621  0.532  1.860       -
+  DROP(locked)         0.359        0.046       -0.122  0.286  1.219       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 2] ADD nb3_gpu3_307 (boltzgen-vhh-b3)  <->  DROP b2_gpu7_33
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.519        0.078        0.513  0.564  1.705       -
+  DROP(locked)         0.314        0.470        0.353  0.187  1.069       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 3] ADD b3_gpu7_181 (boltzgen-protein-b3)  <->  DROP b2_gpu7_02
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.526        0.014        0.564  0.282  1.681       -
+  DROP(locked)         0.128        0.041       -0.069  0.153  0.987       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 4] ADD b3_gpu5_072 (boltzgen-protein-b3)  <->  DROP b2_gpu5_13
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.618        0.073        0.446  0.155  1.660       -
+  DROP(locked)         0.238        0.511        0.385  0.146  0.868       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 5] ADD b3_gpu7_113 (boltzgen-protein-b3)  <->  DROP protein_0155
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.471        0.005        0.523  0.263  1.627       -
+  DROP(locked)         0.425        0.748        0.478  0.218  0.862       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 6] ADD b3_gpu7_136 (boltzgen-protein-b3)  <->  DROP protein_0212
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.557        0.205        0.510  0.247  1.581       -
+  DROP(locked)         0.232        0.508        0.178  0.164  0.845       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 7] ADD b3_gpu4_211 (boltzgen-protein-b3)  <->  DROP b2_gpu3_36
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.485        0.045        0.496  0.201  1.578       -
+  DROP(locked)         0.246        0.352        0.466  0.193  0.833       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 8] ADD b3_gpu5_174 (boltzgen-protein-b3)  <->  DROP b2_gpu5_19
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.550        0.225        0.489  0.288  1.538       -
+  DROP(locked)         0.189        0.073        0.187  0.345  0.797       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 9] ADD nb3_gpu6_432 (boltzgen-vhh-b3)  <->  DROP protein_0073
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.582        0.239        0.286  0.375  1.498       -
+  DROP(locked)         0.378        0.695        0.204  0.140  0.602       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 10] ADD nb3_gpu4_132 (boltzgen-vhh-b3)  <->  DROP b2_gpu5_27
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.266        0.015        0.607  0.464  1.477       -
+  DROP(locked)         0.153        0.457        0.137  0.285  0.520       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 11] ADD nb3_gpu7_192 (boltzgen-vhh-b3)  <->  DROP protein_0092
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.405        0.011        0.432  0.290  1.441       -
+  DROP(locked)         0.161        0.668        0.137  0.279  0.510       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+[swap 12] ADD nb3_gpu5_130 (boltzgen-vhh-b3)  <->  DROP protein_0025
+  axis            spec_scram  bh_e(lower)  promisc_mrg   grip    sel   mpnnD
+  ADD(b3)              0.320        0.131        0.350  0.500  1.409       -
+  DROP(locked)         0.230        0.827        0.295  0.173  0.440       -
+  -> DOMINANT: improves sel without regressing >=2 key axes. RECOMMEND swap.
+
+VERDICT: 12 dominant swap(s) recommended, 0 churn-risk (hold). Locked 20 untouched; this is a PROPOSAL (upload user-gated).

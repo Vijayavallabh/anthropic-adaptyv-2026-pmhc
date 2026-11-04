@@ -1,0 +1,43 @@
+# ── Python ──
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# ── Virtual environments (local, multi-GB) ──
+.venv/
+.venv-*/
+envs/
+env/
+
+# ── Secrets / credentials: NEVER commit ──
+.env
+*.env
+*.token
+*.key
+*secret*
+hf_token*
+*.lic
+
+# ── Third-party tools, model weights, structure DBs (vendored in-repo, GBs; rebuilt via init.sh) ──
+# foldseek binary + PDB DB, ProteinMPNN weights, Proteina, etc. live under tools/ — local-only, not redistributed.
+tools/
+third_party/
+weights/
+model_params/
+
+# ── Run outputs: ~138 GB of co-folds, PDBs, PAE .npz, Boltz YAMLs. ──
+# runs/ is ignored WHOLESALE; the curated, human-readable result files (submission.csv, *_ranked.tsv,
+# mpnn_diff*.tsv, SWAP_PROPOSAL*.txt, novelty csvs, survivors.txt) are force-added with `git add -f`.
+runs/
+outputs/
+designs/
+*.log
+
+# ── Reference crystal PDBs (public; re-fetchable by PDB id, e.g. 7PB2 / 7OW6) ──
+data/pdb/
+
+# ── Scratch / caches ──
+scratchpad/
+.cache/
+hf_home/
+*.prebakfix

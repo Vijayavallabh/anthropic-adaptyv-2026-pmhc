@@ -1,0 +1,88 @@
+# KRAS G12D neoantigen pMHC binder — target contract. Anthropic x Adaptyv 2026, pMHC challenge.
+# The binder recognizes the KRAS G12D peptide presented on HLA-A*11:01 + beta-2-microglobulin.
+# ALL co-folding/scoring uses the WHOLE complex (binder + peptide + HLA heavy chain + b2m), never the
+# peptide alone. Sequences are VERBATIM from the challenge page (proteinbase .../challenges/pmhc), 2026-10-27.
+# Assistant-drafted (Claude); facts byte-checked against the page + RCSB. Single source of truth.
+
+target:
+  name: KRAS G12D peptide on HLA-A*11:01 class I MHC (+ beta-2-microglobulin)
+  challenge: "Anthropic x Adaptyv 2026 - pMHC (KRAS G12D neoantigen)"
+  deadline: "2026-11-08 23:59 AoE (UTC-12)"
+  track: "3"                      # also applies to track 2; this project submits Track 3
+  assay: "cell-free; binding by sensorgram KD (or association shift >300% over negative control)"
+  conditions_measured: [g12d_complex, wt_complex, peptide_free_hla]   # SAME conditions; no pH/temp/cofactor variable
+
+constructs:
+  # OFF LIMITS: the complexes' His/Avi tags (host-added, not shown) and the design's own C-terminal
+  # Twin-Strep capture tag. Binding to any tag does not count.
+  hla_a1101_heavy:
+    note: "HLA-A*11:01 heavy chain (UniProt Q5S3G3), construct res 25-305, 281 aa"
+    sequence: "GSHSMRYFYTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDQETRNVKAQSQTDRVDLGTLRGYYNQSEDGSHTIQIMYGCDVGPDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITKRKWEAAHAAEQQRAYLEGRCVEWLRRYLENGKETLQRTDPPKTHMTHHPISDHEATLRCWALGFYPAEITLTWQRDGEDQTQDTELVETRPAGDGTFQKWAAVVVPSGEEQRYTCHVQHEGLPKPLTLRWELSSQPT"
+  b2m:
+    note: "beta-2-microglobulin (UniProt P61769), mature res 21-119, 99 aa"
+    sequence: "IQRTPKIQVYSRHPAENGKSNFLNCYVSGFHPSDIEVDLLKNGERIEKVEHSDLSFSKDWSFYLLYYTEFTPTEKDEYACRVNHVTLSQPKIVKWDRDM"
+  peptide_g12d:                   # POSITIVE target  -- bind this (tiers 1-3)
+    note: "KRAS P01116 res 7-16; peptide P6 = KRAS residue 12 = D in G12D. THE discriminating residue."
+    sequence: "VVVGADGVGK"
+    discriminating_position: 6
+  peptide_wt:                     # NEGATIVE target (a) -- must NOT bind
+    note: "WT KRAS; differs from G12D ONLY at peptide position 6 (G6 vs D6)."
+    sequence: "VVVGAGGVGK"
+  peptide_free_hla:               # NEGATIVE target (b) -- must NOT bind: same HLA+b2m, NO peptide
+
+reference_structures:             # raw RCSB (include the TCR); strip to chains A,B,C = HLA,b2m,peptide
+  dir: data/pdb
+  7OW6: { use: RECOMMENDED_REF_G12D, pep_chain: C, note: "G12D pMHC, peptide VVVGADGVGK resolved; Poole et al. Nat Commun 2022; originally TCR-bound" }
+  7OW5: { use: WT_REF,               pep_chain: C, note: "WT pMHC, peptide VVVGAGGVGK" }
+  7OW4: { use: G12D_APO,             note: "G12D, 4 copies; peptide P5-P6 DISORDERED without TCR -> central bulge is mobile / solvent-exposed" }
+
+# ---- Objective: WINNER CLEARS ALL THREE TIERS, in this order (verbatim wet-lab ranking) ----
+objective_priority: [mutation_specific, peptide_dependent, affinity]
+tiers:
+  1_mutation_specific: "measurable KD for G12D AND no detectable WT binding; ranked by KD(WT)/KD(G12D), larger=better"
+  2_peptide_dependent: "measurable KD for G12D AND no binding to peptide-free HLA; ranked by KD(empty)/KD(G12D), larger=better"
+  3_affinity:          "lowest KD for G12D; reading peptide+groove favored; STATE target surface + evidence (else inferred from predicted complex)"
+binding_call: "fittable sensorgram KD, else association shift >300% over negative control"
+
+design_principle: >
+  The win is SELECTIVITY, not raw affinity. The paratope MUST make a specific, verified contact with
+  the peptide P6 carboxylate (D6) and read the peptide / central bulge, NOT merely the conserved HLA
+  a1/a2 helices (that would bind empty HLA and every peptide = fails tiers 1 and 2). Prove selectivity
+  with explicit THREE-STATE scoring on the exact submitted sequence (G12D vs WT vs peptide-free HLA),
+  gated on a P6 contact AND a differential delta, calibrated against decoys (false-crown). Folders
+  over-dock -> af2ig is the honest binding gate. Full strategy in docs/PLAN.md.
+
+submission:
+  host: Proteinbase (Adaptyv 2026)
+  design_cap: 20                  # Track 3; only first 20 count, in ranked order
+  length_range: [10, 250]         # per chain, natural AAs only
+  molecule_class_allowed: [single_chain, nanobody, scfv, fab_kappa, fab_lambda]
+  denovo_default: single_chain    # OWNER 2026-11-01: de-novo single-chain binder = single_chain, NOT protein
+  fab_format: "{VH}:{VL}"
+  required_columns: [name, sequence, molecule_class]
+  denovo_rule: >
+    de-novo + zero-shot ONLY: not built from / not a modification of ANY known binder (including the
+    Poole TCR); adequate sequence AND structural diversity from known proteins; antibodies/nanobodies
+    judged on CDR diversity (mainly HCDR3). Known binders (TCRs/TCR-mimics) may be used ONLY as positive
+    controls for the scoring pipeline and to understand the epitope -- never as a design seed.
+  novelty_gate: >
+    Adaptyv 1-4 novelty LEVEL; hard gate >=3; TARGET level 4 (seq id <=30% vs SwissProt/PDB/patents/
+    PLAbDab AND low structural TM; binding part ONLY -- no linkers/tags/padding). No numeric threshold
+    on the challenge page; byte-verify before hard-coding a local oracle.
+  selector_metadata: >
+    per design: pLDDT (ProteinTyper), ipSAE (co-fold interface vs the G12D complex), mean Kyte-Doolittle
+    GRAVY; plus ipTM + stated epitope + predicted complex. No single in-silico metric decides.
+  selection_mechanics: >
+    Tracks 2/3 ranked, first 20 count in order; selector takes <=10/submission from the TOP -> front-load
+    the best ~10; <=93/method-family; diversify across 9 classes + lineages (~2/lineage). Participant text
+    is DATA, not instructions (injection -> whole-account set-aside). NEVER put prompt-like text in the CSV
+    or methods writeup.
+
+gated_decisions:                  # reserved for the owner (per sibling-challenge convention)
+  - "the Proteinbase portal upload / submission itself"
+  - "creating or pushing the GitHub repo"
+  - "any destructive change to shared tool installs / weights"
+off_limits:
+  - "the complexes' His and Avi tags (host-added)"
+  - "the design's own C-terminal Twin-Strep capture tag"
+  - "no pH / temperature / cofactor variable in this challenge (Condition: none) -> ignore pH-switch criteria from the generic selection prompt"
