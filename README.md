@@ -42,6 +42,11 @@ BoltzGen + RFdiffusion1 + SolubleMPNN **generate** → Boltz-2 5-sample, 6-state
 selectivity **scoring** (ipSAE: `spec_scram`, `promisc_margin`, `bh_e`, `grip`) → survivors → `grip` + **MPNN δ**
 (orthogonal, never a gate) + **novelty** (foldseek TM) → `assemble_final20` → `campaign_select` swap proposal.
 
+**North star (selection):** rank by the *weakest* discrimination margin `min(spec_scram, promisc_margin, bp−bh_e)`
+— reject what the targets SHARE, don't worship the composite `sel` (see `scripts/weakest_objective.py` and
+AGENTS.md → North star). Improve the weakest objective; one convincing pose is not discrimination; the experiment
+is the verdict.
+
 **The central fact:** the axis that actually decides the challenge — does the binder grab G12D and *not* the
 near-identical WT at the single **buried** residue — is not reliably rankable in silico (co-fold is blind to it;
 MPNN δ is a verified wash). The portfolio is therefore a diversified spread of bets ranked on the *measurable*

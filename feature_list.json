@@ -3,6 +3,7 @@
   "challenge": "Anthropic x Adaptyv 2026 Challenge 5 / Track 3 (pMHC): de-novo zero-shot binder selective for KRAS G12D VVVGADGVGK on HLA-A*11:01 + b2m",
   "deadline": "2026-11-08T23:59 AoE",
   "upload_gate": "USER-GATED (Proteinbase portal); never auto-upload",
+  "selection_principle": "North star: rank by the WEAKEST discrimination margin min(spec_scram, promisc_margin, bp-bh_e), not composite sel; improve the weakest objective; test all three targets (G12D/WT/empty); one convincing pose is not discrimination; submit diverse designs with honest reasoning; computational confidence is a hypothesis, the experiment is the verdict. What shows it recognizes the difference, not merely what the targets share?",
   "active_feature": "swap-decision",
   "features": [
     {
@@ -57,10 +58,10 @@
     },
     {
       "id": "swap-decision",
-      "desc": "User decides: full 12-swap / partial (diversity+novelty refinements) / keep locked 20; then gated upload",
+      "desc": "User selects the final 20 by the WEAKEST-objective (minimax) lens balanced with diversity; then gated upload",
       "status": "in_progress",
-      "evidence": "combined_submission.csv portal-format-validated (20/20 passed). Recommendation: full swap is stronger on all measurable axes; 2 optional refinements offered.",
-      "done_criteria": "user chooses portfolio; upload remains user-gated",
+      "evidence": "combined_submission.csv portal-format-validated (20/20 passed). Minimax lens (scripts/weakest_objective.py -> runs/campaign/weakest_objective.tsv): proposed 20 are ALL positive on the weakest margin; the 7 locked designs with a NEGATIVE weakest margin (bind empty groove or other peptides >= G12D) are EXACTLY the DROP set (a CONSISTENCY CHECK on the same co-fold scores that chose the swap, NOT independent evidence; it shows why the dropped designs are weak but does not predict lab behavior; wet-lab is the verdict). Proposed 20's own weakest links are retained incumbents (protein_0103 #155, b2_gpu5_37 #164) = a further minimax refinement option.",
+      "done_criteria": "final 20 chosen by weakest discrimination margin + diversity + honest reasoning (north star), not composite sel; upload remains user-gated",
       "blocked_on": "USER decision + USER upload (gated)"
     }
   ]

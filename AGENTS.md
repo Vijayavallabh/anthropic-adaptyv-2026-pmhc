@@ -19,6 +19,31 @@ Target neoantigen: `VVVGADGVGK` (KRAS 7–16, P6 = D). Target definition: `confi
 Submission: ≤20 designs, classes `{single_chain, nanobody, scfv, fab_kappa, fab_lambda, TCR}`, 10–250 aa,
 schema `name,sequence,molecule_class` (see `runs/submission.csv`).
 
+## North star (organizers' design philosophy — internalized)
+
+Let **discernment, not strength alone**, guide the work. Recognize G12D on HLA-A\*11:01 while leaving the
+**WT complex** and the **peptide-free MHC** untouched. Operating principles:
+
+1. **Rank by the weakest objective, not the highest score.** A design discriminates only as well as its weakest
+   "reject what they share" margin: `weakest = min(spec_scram, promisc_margin, bp−bh_e)` over
+   {scramble, other A\*11:01 peptides, empty HLA}. Improve the weakest margin; do not worship composite `sel`.
+   Lens: `scripts/weakest_objective.py` → `runs/campaign/weakest_objective.tsv`.
+2. **Test every design against all three targets** (G12D, WT, empty). Begin simply; obey the rules.
+3. **One convincing predicted pose is not proof of discrimination.** Co-fold gives a confident pose but is blind
+   to the single buried P6 residue. Add complexity only when it brings clearer evidence.
+4. **Diverse designs, honest reasoning.** A spread of bets across lineages; say what each design does and does not
+   show. Computational confidence is a **hypothesis**, selection an **opportunity**, the **experiment the verdict**.
+
+The recurring question for every design and every swap:
+> **"What shows that this design recognizes the difference, rather than merely what the targets share?"**
+
+Consistency check, NOT independent evidence (2026-11-04): because these margins are computed from the SAME co-fold
+ipSAE scores that `sel` and the swap already used, the minimax lens agreeing with the swap is expected — re-slicing
+one data source, not new proof. Its value is the ABSOLUTE sign: of the locked 20, the 7 designs with a *negative*
+weakest margin (they bind the empty groove or an unrelated peptide ≥ G12D = read what the targets SHARE) are
+exactly the DROP set, which shows *why* they are weak. Independent evidence requires an orthogonal source (a
+different folder, physics, or the bench); treat every in-silico score as a hypothesis — the wet-lab is the verdict.
+
 ## Invariants (do not violate)
 
 - **De-novo only, zero-shot only.** No seeding from known binders/TCRs/antibodies; no fine-tuning on the target.
@@ -59,7 +84,8 @@ schema `name,sequence,molecule_class` (see `runs/submission.csv`).
 | `esm` | ESMFold monomer pLDDT (foldability) | higher |
 | `maxtm` | foldseek structural-TM to PDB — novelty proxy for the sequence-based gate | **lower** |
 | `mpnnD` | ProteinMPNN differential logP(Asp)−logP(Gly) at buried P6 | orthogonal; **NEVER a gate** |
-| `sel` | composite ranking score used to order the portfolio | higher |
+| `sel` | composite ranking score (a convenience aggregate, NOT the final selector) | higher |
+| `weakest` | `min(spec_scram, promisc_margin, bp−bh_e)` — minimax discrimination across the 3 shared targets | **higher — the primary selection lens** |
 
 ## Verification / definition of done
 
@@ -67,6 +93,9 @@ schema `name,sequence,molecule_class` (see `runs/submission.csv`).
   sample is noise (gate on within-sample consistency + Cohen-d).
 - A **portfolio swap** is valid only if BOTH sides are scored on the **identical pipeline/ruler** (same TSV schema,
   byte-spot-checked). A swap that trades a higher axis for a lower one is churn, not progress.
+- **Select by the weakest objective, balanced with diversity** (north star): prefer designs robustly positive on
+  all three discrimination margins over one-axis spikers with a high `sel`. A negative weakest margin means the
+  design binds what the targets SHARE (empty groove or an unrelated peptide) — reject it. Never pick on `sel` alone.
 - An orthogonal/never-a-gate axis (MPNN δ) only "corroborates" a change if scored on **both** portfolios same-ruler.
 - Positive controls must fire (crystal binders 7PB2/7OW6 recover the buried Asp in the MPNN δ assay).
 - Record evidence in `progress.md` with the background-task id and `rc`. Never claim a tool ran unless it ran.

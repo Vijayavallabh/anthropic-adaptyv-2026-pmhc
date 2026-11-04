@@ -2,6 +2,36 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
+## 2026-11-04 (latest) — internalized the organizers' north star; built the WEAKEST-objective (minimax) lens
+
+Assistant-drafted (Claude). User gave the organizers' design philosophy ("discernment, not strength alone … improve
+the weakest objective rather than worship the highest score … one convincing pose is not proof of discrimination …
+what shows this recognizes the difference, rather than what the targets share?"). Internalized it into the harness
+and made the one unimplemented principle operational.
+
+- **New lens `scripts/weakest_objective.py`** → `runs/campaign/weakest_objective.tsv`. Three "reject what they
+  share" margins on the ipSAE scale: m_scram=spec_scram, m_promisc=promisc_margin, m_empty=bp−bh_e. A design's
+  discrimination = `weakest = min` of the three. Rank by `weakest`, not composite `sel` (minimax).
+- **Consistency check — NOT independent evidence** (flagged by a side agent, correctly; I had overstated it as
+  "striking validation"). The weakest margins are computed from the SAME Boltz-2 co-fold ipSAE scores
+  (spec_scram/promisc_margin/bh_e) that `sel` and the swap's dominance logic already used — so the agreement is
+  near-tautological, re-slicing one data source, not new proof. Its genuine value is the ABSOLUTE sign: of the
+  LOCKED 20, **7 designs have a NEGATIVE weakest margin** (they bind the empty groove or other peptides ≥ G12D =
+  read what the targets SHARE): protein_0155, b2_gpu7_02, protein_0073, protein_0212, rfd_des_173_m2, protein_0092,
+  protein_0025 — exactly the campaign DROP set; the PROPOSED 20 are positive on all three margins. That explains
+  *why* the dropped designs are weak (mechanism/interpretability), but does NOT independently predict lab behavior.
+  Independent evidence needs an orthogonal source (a different folder, physics, or the bench); the wet-lab is the
+  only verdict. [[lesson-orthogonal-method-control-isolates-bias-vs-intrinsic]]
+- **Refinement surfaced.** The proposed 20's own weakest links are the RETAINED incumbents (protein_0103
+  weakest-rank 155/1943, b2_gpu5_37 164, nanobody_0081 84, b2_gpu3_27 40) → a sharper minimax portfolio is
+  possible (replace lowest-weakest retained with higher-weakest survivors, preserving diversity). Logged as
+  option (b) in session-handoff; NOT acted on (selection + upload are USER-GATED).
+- **Harness updated wisely** (not bloated): AGENTS.md gains a "North star" section + `weakest` axis + a select-by-
+  weakest done-criterion; CLAUDE.md gains the discernment rule + the recurring question; feature_list.json gains
+  `selection_principle` + updated swap-decision; README + session-handoff reframed. [[lesson-rank-selectivity-not-affinity-and-catch-ig-folds]] [[feedback-diverse-not-cousins]]
+- **Caveat kept honest:** `weakest` ranks rejection of what the targets SHARE; it does NOT rank G12D-vs-WT (buried
+  P6) — that stays the bench verdict. Computational confidence = hypothesis; experiment = verdict.
+
 ## 2026-11-04 (late) — swap QUALITY-VERIFIED (novelty/dev/concentration); repo + harness initialized
 
 Assistant-drafted (Claude). User validated combined_submission.csv on the portal (20/20 passed — FORMAT only,

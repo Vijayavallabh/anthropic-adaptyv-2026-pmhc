@@ -20,14 +20,25 @@ Where things stand, for the next session. Newest state at top; full history in `
   blind to it and MPNN δ is a verified wash. So no portfolio "maximizes" the win; the swap improves the
   measurable bets only.
 
+### Selection lens — the north star (use this, not composite `sel`)
+Rank by the **weakest discrimination margin** `min(spec_scram, promisc_margin, bp−bh_e)` (reject what the targets
+SHARE — scramble, other peptides, empty HLA), balanced with diversity. Tool: `scripts/weakest_objective.py` →
+`runs/campaign/weakest_objective.tsv`. Finding (2026-11-04): the proposed 20 are all positive on the weakest
+margin; the **7 locked designs with a negative weakest margin are exactly the DROP set**. This is a **consistency
+check**, not independent proof — the margins come from the same co-fold scores that chose the swap — so it explains
+*why* the dropped designs are weak (they bind what the targets share) but does not predict lab behavior. The
+wet-lab assay is the only verdict.
+
 ### Pending decision (reserved for the USER)
 Choose one, then the (gated) portal upload is the user's to do:
-- **(a)** finalize the full 12-swap (`combined_submission.csv`) — recommended on the evidence;
-- **(b)** partial swap with two optional refinements first:
-  1. replace one near-cousin nanobody (nb3_gpu3_307 ~ nb3_gpu5_130, 0.88 whole-seq id) for diversity;
-  2. replace the one remaining `novelty_risk` design (retained `protein_0103`, TM 0.912) with a novel
-     high-sel survivor if one exists (needs a quick campaign-pool check);
-- **(c)** keep the locked 20 as-is.
+- **(a)** finalize the full 12-swap (`combined_submission.csv`) — recommended; all 20 are positive-weakest.
+- **(b)** a sharper **minimax refinement**: the proposed 20's own weakest links are retained incumbents
+  (`protein_0103` weakest-rank 155/1943, `b2_gpu5_37` 164, `nanobody_0081` 84, `b2_gpu3_27` 40). Replacing the
+  lowest-weakest retained designs with higher-weakest campaign survivors — while preserving lineage diversity and
+  the one near-cousin-nanobody nit (nb3_gpu3_307 ~ nb3_gpu5_130, 0.88) and the one `novelty_risk` design
+  (protein_0103, TM 0.912) — would yield a more balanced discriminator set. (Does not touch G12D-vs-WT, which
+  stays a bench call.)
+- **(c)** keep the locked 20 as-is (note: it carries 7 negative-weakest designs that bind what the targets share).
 
 ### Next actions (non-gated, if asked)
 - If (b): run the diversity swap + the protein_0103-replacement search, regenerate a tightened

@@ -17,6 +17,12 @@ verification, submission). This file adds the working rules.
 - **Trust only the 5-sample, 6-state panel.** Single-sample co-fold is noise. The G12D-vs-WT discrimination is
   a bench measurement — co-fold is blind to the single buried residue and MPNN δ is a verified wash; never
   present an in-silico number as ranking that axis.
+- **Discernment, not strength (north star).** Rank by the WEAKEST discrimination margin
+  `min(spec_scram, promisc_margin, bp−bh_e)`, not the highest `sel` — improve the weakest objective. For every
+  design and every swap, answer: *what shows it recognizes the difference, rather than merely what the targets
+  share?* A negative weakest margin = binds the shared platform/other peptides → reject. One convincing pose is
+  not discrimination; computational confidence is a hypothesis, the experiment is the verdict. See AGENTS.md →
+  North star and `scripts/weakest_objective.py`.
 - **Devil's-advocate, then revise.** For any design or selection strategy, argue the strongest case against it
   (reads the platform not the peptide? binds empty HLA? Ig-fold? truly de-novo? proxy-overfit?) before spending
   compute or recommending a swap.
