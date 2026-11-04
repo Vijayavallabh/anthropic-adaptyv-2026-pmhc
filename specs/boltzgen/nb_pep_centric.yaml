@@ -1,0 +1,25 @@
+# nanobody arm: de-novo CDRs on real VHH frameworks, directed at the peptide bulge C4,5,7,8.
+entities:
+  - file:
+      path: /home/prachh/v/anthropic-adaptyv-2026-pmhc/data/targets/g12d_pmhc.cif
+      include:
+        - chain:
+            id: A
+        - chain:
+            id: B
+        - chain:
+            id: C
+      binding_types:
+        - chain:
+            id: C
+            binding: 4,5,7,8
+      structure_groups: "all"
+  - file:
+      path:
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/nanobody_scaffolds/7eow.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/nanobody_scaffolds/7xl0.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/nanobody_scaffolds/8coh.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/nanobody_scaffolds/8z8v.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/nanobody_scaffolds/gontivimab.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/nanobody_scaffolds/isecarosmab.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/nanobody_scaffolds/sonelokimab.yaml

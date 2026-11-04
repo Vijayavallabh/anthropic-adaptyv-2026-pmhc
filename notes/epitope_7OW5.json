@@ -1,0 +1,154 @@
+{
+  "pdb": "7OW5.pdb",
+  "chains": {
+    "A": 275,
+    "B": 99,
+    "C": 10,
+    "D": 191,
+    "E": 246
+  },
+  "pep_chain": "C",
+  "pep_seq": "VVVGAGGVGK",
+  "hla_chain": "A",
+  "b2m_chain": "B",
+  "tcr_chains": [
+    "D",
+    "E"
+  ],
+  "pep_resseqs_resolved": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "per_position": [
+    {
+      "pos": 1,
+      "res": "VAL",
+      "aa": "V",
+      "resseq": 1,
+      "sasa_total_pmhc": 4.3,
+      "sasa_sidechain_pmhc": 4.3,
+      "rel_exposure_pct": 2.5,
+      "sasa_sidechain_full_withTCR": 4.3,
+      "buried_by_tcr_sidechain": 0.0
+    },
+    {
+      "pos": 2,
+      "res": "VAL",
+      "aa": "V",
+      "resseq": 2,
+      "sasa_total_pmhc": 1.3,
+      "sasa_sidechain_pmhc": 0.5,
+      "rel_exposure_pct": 0.7,
+      "sasa_sidechain_full_withTCR": 0.5,
+      "buried_by_tcr_sidechain": 0.0
+    },
+    {
+      "pos": 3,
+      "res": "VAL",
+      "aa": "V",
+      "resseq": 3,
+      "sasa_total_pmhc": 4.1,
+      "sasa_sidechain_pmhc": 3.0,
+      "rel_exposure_pct": 2.4,
+      "sasa_sidechain_full_withTCR": 2.3,
+      "buried_by_tcr_sidechain": 0.8
+    },
+    {
+      "pos": 4,
+      "res": "GLY",
+      "aa": "G",
+      "resseq": 4,
+      "sasa_total_pmhc": 33.1,
+      "sasa_sidechain_pmhc": 0,
+      "rel_exposure_pct": 31.8,
+      "sasa_sidechain_full_withTCR": 0,
+      "buried_by_tcr_sidechain": 0
+    },
+    {
+      "pos": 5,
+      "res": "ALA",
+      "aa": "A",
+      "resseq": 5,
+      "sasa_total_pmhc": 33.7,
+      "sasa_sidechain_pmhc": 8.9,
+      "rel_exposure_pct": 26.1,
+      "sasa_sidechain_full_withTCR": 0.5,
+      "buried_by_tcr_sidechain": 8.4
+    },
+    {
+      "pos": 6,
+      "res": "GLY",
+      "aa": "G",
+      "resseq": 6,
+      "sasa_total_pmhc": 34.3,
+      "sasa_sidechain_pmhc": 0,
+      "rel_exposure_pct": 33.0,
+      "sasa_sidechain_full_withTCR": 0,
+      "buried_by_tcr_sidechain": 0
+    },
+    {
+      "pos": 7,
+      "res": "GLY",
+      "aa": "G",
+      "resseq": 7,
+      "sasa_total_pmhc": 77.5,
+      "sasa_sidechain_pmhc": 0,
+      "rel_exposure_pct": 74.6,
+      "sasa_sidechain_full_withTCR": 0,
+      "buried_by_tcr_sidechain": 0
+    },
+    {
+      "pos": 8,
+      "res": "VAL",
+      "aa": "V",
+      "resseq": 8,
+      "sasa_total_pmhc": 63.2,
+      "sasa_sidechain_pmhc": 46.9,
+      "rel_exposure_pct": 36.3,
+      "sasa_sidechain_full_withTCR": 24.0,
+      "buried_by_tcr_sidechain": 22.9
+    },
+    {
+      "pos": 9,
+      "res": "GLY",
+      "aa": "G",
+      "resseq": 9,
+      "sasa_total_pmhc": 21.0,
+      "sasa_sidechain_pmhc": 0,
+      "rel_exposure_pct": 20.2,
+      "sasa_sidechain_full_withTCR": 0,
+      "buried_by_tcr_sidechain": 0
+    },
+    {
+      "pos": 10,
+      "res": "LYS",
+      "aa": "K",
+      "resseq": 10,
+      "sasa_total_pmhc": 5.5,
+      "sasa_sidechain_pmhc": 3.1,
+      "rel_exposure_pct": 2.3,
+      "sasa_sidechain_full_withTCR": 3.1,
+      "buried_by_tcr_sidechain": 0.0
+    }
+  ],
+  "P6": {
+    "pos": 6,
+    "res": "GLY",
+    "aa": "G",
+    "resseq": 6,
+    "sasa_total_pmhc": 34.3,
+    "sasa_sidechain_pmhc": 0,
+    "rel_exposure_pct": 33.0,
+    "sasa_sidechain_full_withTCR": 0,
+    "buried_by_tcr_sidechain": 0
+  },
+  "P6_tcr_sidechain_contacts": []
+}

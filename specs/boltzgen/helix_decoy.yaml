@@ -1,0 +1,20 @@
+# DECOY: de-novo binder directed at the HLA a1/a2 HELICES (peptide-INDEPENDENT) -> MUST FAIL the
+# loaded-vs-empty peptide-dependence gate. The should-fail control that calibrates the gate's null.
+entities:
+  - protein:
+      id: G
+      sequence: 55..120
+  - file:
+      path: /home/prachh/v/anthropic-adaptyv-2026-pmhc/data/targets/g12d_pmhc.cif
+      include:
+        - chain:
+            id: A
+        - chain:
+            id: B
+        - chain:
+            id: C
+      binding_types:
+        - chain:
+            id: A
+            binding: 58,62,65,69,72,76,79,80,138,142,146,150,151,155,158,162,166
+      structure_groups: "all"

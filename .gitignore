@@ -31,6 +31,7 @@ model_params/
 runs/
 outputs/
 designs/
+folds/
 *.log
 
 # ── Reference crystal PDBs (public; re-fetchable by PDB id, e.g. 7PB2 / 7OW6) ──

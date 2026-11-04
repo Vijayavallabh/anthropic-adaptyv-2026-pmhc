@@ -1,0 +1,32 @@
+# Fab arm: de-novo CDRs on real VH+VL Fab frameworks, directed at the peptide bulge C4,5,7,8.
+entities:
+  - file:
+      path: /home/prachh/v/anthropic-adaptyv-2026-pmhc/data/targets/g12d_pmhc.cif
+      include:
+        - chain:
+            id: A
+        - chain:
+            id: B
+        - chain:
+            id: C
+      binding_types:
+        - chain:
+            id: C
+            binding: 4,5,7,8
+      structure_groups: "all"
+  - file:
+      path:
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/adalimumab.6cr1.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/belimumab.5y9k.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/crenezumab.5vzy.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/dupilumab.6wgb.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/golimumab.5yoy.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/guselkumab.4m6m.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/mab1.3h42.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/necitumumab.6b3s.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/nirsevimab.5udc.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/sarilumab.8iow.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/secukinumab.6wio.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/tezepelumab.5j13.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/tralokinumab.5l6y.yaml
+        - /home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/boltzgen/example/fab_scaffolds/ustekinumab.3hmw.yaml

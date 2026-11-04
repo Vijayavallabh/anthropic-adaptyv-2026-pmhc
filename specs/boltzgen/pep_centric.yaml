@@ -1,0 +1,20 @@
+# pMHC peptide-centric BoltzGen spec: de-novo binder vs ORDERED G12D pMHC (VVVGADGVGK / HLA-A*11:01).
+# Binding directed to the EXPOSED central bulge C4,C5,C7,C8 (NOT buried P6, NOT the conserved a1/a2 helices).
+entities:
+  - protein:
+      id: G
+      sequence: 55..120
+  - file:
+      path: /home/prachh/v/anthropic-adaptyv-2026-pmhc/data/targets/g12d_pmhc.cif
+      include:
+        - chain:
+            id: A
+        - chain:
+            id: B
+        - chain:
+            id: C
+      binding_types:
+        - chain:
+            id: C
+            binding: 4,5,7,8
+      structure_groups: "all"
