@@ -19,6 +19,11 @@ evidence, novelty (4>3), diversity; **3 screens** (pLDDT, ipSAE, mean Kyte-Dooli
 - **First-principles backing:** deep-research (abstract math/physics/chem) validated the method and the ranking math
   — see [[ranked-submission-win-math-posterior-diversity-conjunctive]]. No new physics lever exists (buried-charge
   electrostatics angle returned nothing).
+- **Adversarial self-audit done** (`scripts/gate/selector_audit.py`): ran the published selection prompt's own
+  checks on our 20 — clean on all hard rules + set-aside flags (no Ig-V-domain misclassification: single_chain are
+  61-85 aa; no near-duplicate in the top-10: the one 0.88 nanobody pair shares the VHH framework but has distinct
+  HCDR3 0.55 with only one in the top-10; two mild disclosed within-class screen notes). `SUBMISSION_SUMMARY.md`
+  gained an "Integrity and anticipated checks" section pre-empting the flag list.
 - **Pending (USER):** if the portal accepts a method description, attach `SUBMISSION_SUMMARY.md` +
   `submission_screens.csv`; then Submit the (re-ranked) `submission.csv`. No design re-gen, no seeding.
 

@@ -25,6 +25,13 @@ confirmed claims) across abstract math/physics/chemistry; (2) the user shared th
   one-line reasons). Wrote `docs/SUBMISSION_SUMMARY.md` (rubric-aligned, publishable cover doc). submission.csv
   re-promoted (pure reorder: identical sequences, 13 sc + 7 nb, 21 lines CRLF); ruler-order kept as a backup.
   Earlier full-interleave rejected (it spent top-10 slots on weak/hydrophobic designs vs 'express+bind first').
+- **Adversarial selector self-audit (scripts/gate/selector_audit.py):** ran the published prompt's own checks on our
+  20 — ALL hard rules pass (length 10-250, valid class, no capture tags); NO Ig-V-domain misclassification (the 13
+  single_chain are 61-85 aa, far below an Ig VH/VHH ~110-125 aa, no Cys-pair/WGxG → ANARCI won't number them as
+  antibodies); only one pairwise identity >0.85 (nb3_gpu3_307~nb3_gpu5_130, shared VHH framework but DISTINCT HCDR3
+  0.55, and only one is in the top-10); two mild, disclosed within-class screen notes in the top-10 (b3_gpu4_211
+  KD +0.13; nb3_gpu7_192 ipSAE 0.45). Added an "Integrity and anticipated checks" section to SUBMISSION_SUMMARY.md
+  pre-empting the selector's flag list. Clean; no design/sequence change (commit e7328e8).
 - **NEXT (USER-GATED):** optionally attach `SUBMISSION_SUMMARY.md` + `submission_screens.csv` to the portal entry
   if it accepts a method description; then the user's Submit/re-order upload. No design re-gen, no seeding.
 

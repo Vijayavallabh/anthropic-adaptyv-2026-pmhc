@@ -4,7 +4,7 @@
   "deadline": "2026-11-08T23:59 AoE",
   "upload_gate": "USER-GATED (Proteinbase portal); never auto-upload",
   "selection_principle": "North star: rank by the WEAKEST discrimination margin min(spec_scram, promisc_margin, bp-bh_e), not composite sel; improve the weakest objective; test all three targets (G12D/WT/empty); one convincing pose is not discrimination; submit diverse designs with honest reasoning; computational confidence is a hypothesis, the experiment is the verdict. What shows it recognizes the difference, not merely what the targets share?",
-  "active_feature": "selection-rubric-alignment",
+  "active_feature": "integrity-audit",
   "features": [
     {
       "id": "generate",
@@ -108,6 +108,13 @@
       "evidence": "docs/SUBMISSION_SUMMARY.md (rubric-aligned, neutral/publishable cover doc) + runs/submission_screens.csv (per-design pLDDT/ipSAE/mean-Kyte-Doolittle-hydropathy/novelty + neutral one-line reasons, mirrors the selector's own CSV deliverable). docs/METHODS.md submitted-designs table rebuilt to the shipped order with screens.",
       "done_criteria": "self-contained, honest, publishable package ready to attach if the portal accepts a method description",
       "blocked_on": "USER to attach (if portal permits) + USER upload (gated)"
+    },
+    {
+      "id": "integrity-audit",
+      "desc": "Adversarial self-audit: run the published selection prompt's own checks (hard rules, 3 within-class screens, Ig-V-domain misclassification, near-duplicate, tag/gaming/derivation set-aside flags) against our own 20 and pre-empt every flag",
+      "status": "done",
+      "evidence": "scripts/gate/selector_audit.py: all hard rules pass (length 10-250, valid class, no capture tags); no Ig-V-domain misclassification (13 single_chain are 61-85 aa, far below an Ig VH/VHH ~110-125 aa, no Cys-pair/WGxG); only one pairwise identity >0.85 (nb3_gpu3_307~nb3_gpu5_130, shared VHH framework, DISTINCT HCDR3 0.55, only one in top-10); two mild disclosed within-class screen notes (b3_gpu4_211 KD +0.13; nb3_gpu7_192 ipSAE 0.45). docs/SUBMISSION_SUMMARY.md gained an 'Integrity and anticipated checks' section (commit e7328e8).",
+      "done_criteria": "zero avoidable flags in the top-10; anything unremovable disclosed up front in the package"
     }
   ]
 }
