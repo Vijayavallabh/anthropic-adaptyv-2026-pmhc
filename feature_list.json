@@ -4,7 +4,7 @@
   "deadline": "2026-11-08T23:59 AoE",
   "upload_gate": "USER-GATED (Proteinbase portal); never auto-upload",
   "selection_principle": "North star: rank by the WEAKEST discrimination margin min(spec_scram, promisc_margin, bp-bh_e), not composite sel; improve the weakest objective; test all three targets (G12D/WT/empty); one convincing pose is not discrimination; submit diverse designs with honest reasoning; computational confidence is a hypothesis, the experiment is the verdict. What shows it recognizes the difference, not merely what the targets share?",
-  "active_feature": "finalize-submission",
+  "active_feature": "selection-rubric-alignment",
   "features": [
     {
       "id": "generate",
@@ -93,6 +93,21 @@
       "evidence": "merge_and_emit.py (gate=FILTER not ranker; ruler ranks) -> final20_two_axis_recommended.csv, promoted to runs/submission.csv (byte-identical via cmp; 21 lines all-CRLF; 13 single_chain + 7 nanobody; rank-ordered). Prior locked set backed up to runs/submission.locked-2026-11-06.bak.csv. Portal parsed all 20 as Passed / 0 needing fixes (lengths + sequence ends byte-matched to submission.csv).",
       "done_criteria": "submission.csv = the chosen 20, portal-format-validated; upload remains the user's to click",
       "blocked_on": "USER upload (gated) to Proteinbase"
+    },
+    {
+      "id": "selection-rubric-alignment",
+      "desc": "Align ranking + evidence to the competition's published design-selection prompt (cap 10/submission taken in our order then graded globally; express+bind first; 3 screens pLDDT/ipSAE/hydropathy; selectivity evidence; novelty 4>3; diversity)",
+      "status": "done",
+      "evidence": "Deep-research (task wvfui62jh) validated the ranking math (posterior/conjunctive-minimax/diversity/equilibrium-ceiling) -> memory ranked-submission-win-math-posterior-diversity-conjunctive. Re-ranked (scripts/gate/rank_and_evidence.py) to a moderate lineage hedge: top-10 = 2 credible selectives + 6 strongest ruler designs + 2 best soluble independent-lineage designs (b2_gpu3_36 #4, b2_gpu7_33 #10); weak/hydrophobic/debunked kept below the cut. Top-10 spans 2 independent lineages + both classes; all express (pLDDT 80-95) and soluble. Pure reorder (sequences byte-identical).",
+      "done_criteria": "ranking optimizes the top-10 under the cap on the published criteria; no re-gen, no seeding; honest (predictions labeled, no tag-targeting, no novelty gaming)"
+    },
+    {
+      "id": "evidence-package",
+      "desc": "Build the publishable method + evidence package the selector reads (foreground selectivity evidence, the 3 screens, novelty, epitope)",
+      "status": "done",
+      "evidence": "docs/SUBMISSION_SUMMARY.md (rubric-aligned, neutral/publishable cover doc) + runs/submission_screens.csv (per-design pLDDT/ipSAE/mean-Kyte-Doolittle-hydropathy/novelty + neutral one-line reasons, mirrors the selector's own CSV deliverable). docs/METHODS.md submitted-designs table rebuilt to the shipped order with screens.",
+      "done_criteria": "self-contained, honest, publishable package ready to attach if the portal accepts a method description",
+      "blocked_on": "USER to attach (if portal permits) + USER upload (gated)"
     }
   ]
 }

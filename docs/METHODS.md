@@ -142,31 +142,32 @@ share) plus five anti-selectives, and the locked set contained neither credible 
 only to filter, never to rank, and remains the assay's call.
 
 ## Submitted designs
-Ranked final set (`runs/submission.csv`; rationale `runs/campaign/final20_two_axis_rationale.tsv`). The ranking is
-the weakest-objective ruler with the gate as a filter. `gate ΔΔG` (kcal/mol, G12D − WTmut; more negative =
-G12D-selective) is a *confirmatory* value, **NOT a rank**, and is credible only on a PRESERVED pose with a CI
-excluding 0 — tier-1 is not an in-silico claim for any design (it is the assay's). `weakest` is the minimax
-discrimination margin (higher = better); `pose` is the native-Asp6-bridge realism check.
+Ranked final set (`runs/submission.csv`; per-design screens + one-line reasons in `runs/submission_screens.csv`).
+Ordered selectivity-evidence-first (the 2 credible MM-GBSA selectives lead), then by the weakest-margin ruler, and
+**diversified across generation lineages** so the assayed top is not a single lineage (cap is 10 designs/submission).
+Three screens per design (read within class): ESMFold **pLDDT**, **ipSAE** to the G12D complex, and mean
+Kyte-Doolittle **hydropathy** (KD; <=0 soluble). `gate ddG` (kcal/mol, G12D - WTmut) is a *confirmatory* value,
+NOT a rank, credible only on a preserved pose with a CI excluding 0 - tier-1 is the assay's call, not in-silico.
 
-| # | design | class | tier | pose | gate ΔΔG [95% CI] | weakest | limiting |
-|--:|--------|-------|------|------|------------------:|--------:|----------|
-| 1 | b3_gpu7_113 | single_chain | credible G12D-selective | preserved | −9.29 [−14.2,−4.3] | +0.471 | scram |
-| 2 | nb3_gpu4_132 | nanobody | credible G12D-selective | preserved | −7.27 [−11.7,−2.8] | +0.266 | scram |
-| 3 | nb3_gpu6_132 | nanobody | ruler-top; gate over-docked (no credit) | broken | −11.72 [−15.6,−8.0] | +0.583 | scram |
-| 4 | b3_gpu7_181 | single_chain | ruler core (gate null) | preserved | +4.22 [−0.7,+8.8] | +0.526 | scram |
-| 5 | b3_gpu5_174 | single_chain | ruler core (gate null) | preserved | +1.67 [−6.1,+9.1] | +0.489 | promisc |
-| 6 | b3_gpu4_211 | single_chain | ruler core (gate null) | preserved | +4.88 [−1.7,+11.6] | +0.485 | scram |
-| 7 | nb3_gpu3_307 | nanobody | ruler core (gate null) | broken | +2.93 [−6.0,+12.8] | +0.460 | empty |
-| 8 | nb3_gpu7_192 | nanobody | ruler core (gate null) | preserved | +4.79 [−2.5,+11.8] | +0.405 | scram |
-| 9 | nb3_gpu5_130 | nanobody | ruler core (gate lean, CI incl 0) | broken | −2.68 [−8.3,+2.8] | +0.320 | scram |
-| 10 | nb3_gpu6_432 | nanobody | ruler core (rescue→null; was over-dock) | preserved | +7.39 [−0.3,+14.8] | +0.286 | promisc |
-| 11 | b2_gpu3_36 | single_chain | ruler core (gate null) | preserved | +0.41 [−4.1,+4.9] | +0.246 | scram |
-| 12 | b2_gpu7_33 | single_chain | ruler core (gate null) | near | +4.00 [−0.7,+9.6] | +0.141 | empty |
-| 13 | protein_0103 | single_chain | ruler core (rescue→null; was over-dock) | preserved | +1.94 [−1.7,+5.8] | +0.121 | scram |
-| 14 | b2_gpu5_13 | single_chain | ruler core (gate null) | preserved | +1.00 [−7.6,+8.9] | +0.090 | empty |
-| 15 | b2_gpu5_27 | single_chain | ruler core (gate null) | preserved | +4.57 [−0.7,+9.4] | +0.030 | empty |
-| 16 | b3_gpu7_136 | single_chain | padding (anti-selective) | preserved | +13.55 [+7.0,+20.0] | +0.510 | promisc |
-| 17 | b3_gpu5_072 | single_chain | padding (anti-selective) | preserved | +5.92 [+2.5,+9.7] | +0.446 | promisc |
-| 18 | nanobody_0202 | nanobody | padding (anti-selective) | preserved | +5.13 [+1.9,+9.3] | +0.439 | promisc |
-| 19 | b2_gpu3_15 | single_chain | padding (anti-selective) | preserved | +6.13 [+1.7,+10.7] | +0.396 | scram |
-| 20 | b2_gpu4_26 | single_chain | padding (anti-selective) | preserved | +7.76 [+2.6,+12.7] | +0.271 | scram |
+| # | design | class | pLDDT | ipSAE | KD | novelty | weakest | gate ddG [CI] |
+|--:|--------|-------|------:|------:|---:|---------|--------:|--------------:|
+| 1 | b3_gpu7_113 | single_chain | 94.000 | 0.808 | -0.237 | 0.768 | +0.471 | -9.29 [-14.2,-4.3] |
+| 2 | nb3_gpu4_132 | nanobody | 81.000 | 0.616 | -0.216 | CDR-judged(HCDR3) | +0.266 | -7.27 [-11.7,-2.8] |
+| 3 | nb3_gpu6_132 | nanobody | 95.000 | 0.642 | -0.331 | CDR-judged(HCDR3) | +0.583 | -11.72 [-15.6,-8.0] |
+| 4 | b2_gpu3_36 | single_chain | 90.000 | 0.657 | -0.290 | 0.932 | +0.246 | +0.41 [-4.1,+4.9] |
+| 5 | b3_gpu7_181 | single_chain | 91.000 | 0.774 | -0.330 | 0.881 | +0.526 | +4.22 [-0.7,+8.8] |
+| 6 | b3_gpu5_174 | single_chain | 89.000 | 0.729 | -0.151 | 0.864 | +0.489 | +1.67 [-6.1,+9.1] |
+| 7 | b3_gpu4_211 | single_chain | 94.000 | 0.666 | +0.129 | 0.801 | +0.485 | +4.88 [-1.7,+11.6] |
+| 8 | nb3_gpu3_307 | nanobody | 89.000 | 0.538 | -0.156 | CDR-judged(HCDR3) | +0.460 | +2.93 [-6.0,+12.8] |
+| 9 | nb3_gpu7_192 | nanobody | 88.000 | 0.446 | -0.234 | CDR-judged(HCDR3) | +0.405 | +4.79 [-2.5,+11.8] |
+| 10 | b2_gpu7_33 | single_chain | 87.000 | 0.611 | -0.497 | 0.813 | +0.141 | +4.00 [-0.7,+9.6] |
+| 11 | nb3_gpu5_130 | nanobody | 91.000 | 0.679 | -0.258 | CDR-judged(HCDR3) | +0.320 | -2.68 [-8.3,+2.8] |
+| 12 | nb3_gpu6_432 | nanobody | 80.000 | 0.690 | -0.006 | CDR-judged(HCDR3) | +0.286 | +7.39 [-0.3,+14.8] |
+| 13 | protein_0103 | single_chain | 92.000 | 0.781 | +0.054 | 0.912 | +0.121 | +1.94 [-1.7,+5.8] |
+| 14 | b2_gpu5_13 | single_chain | 91.000 | 0.601 | -0.174 | 0.901 | +0.090 | +1.00 [-7.6,+8.9] |
+| 15 | b2_gpu5_27 | single_chain | 93.000 | 0.487 | -0.700 | 0.929 | +0.030 | +4.57 [-0.7,+9.4] |
+| 16 | b3_gpu7_136 | single_chain | 89.000 | 0.827 | -0.618 | 0.776 | +0.510 | +13.55 [+7.0,+20.0] |
+| 17 | b3_gpu5_072 | single_chain | 89.000 | 0.646 | +0.054 | 0.811 | +0.446 | +5.92 [+2.5,+9.7] |
+| 18 | nanobody_0202 | nanobody | 91.000 | 0.693 | -0.151 | CDR-judged(HCDR3) | +0.439 | +5.13 [+1.9,+9.3] |
+| 19 | b2_gpu3_15 | single_chain | 89.000 | 0.676 | +0.190 | 0.864 | +0.396 | +6.13 [+1.7,+10.7] |
+| 20 | b2_gpu4_26 | single_chain | 95.000 | 0.679 | -0.109 | 0.826 | +0.271 | +7.76 [+2.6,+12.7] |

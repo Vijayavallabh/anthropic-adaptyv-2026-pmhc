@@ -2,7 +2,33 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-06 (latest) — DEEPENING: b3_gpu4_161 → NULL (no 3rd credible); POSE-RESCUE: BOTH candidates FAIL on realistic poses → credible set DEFINITIVELY 2
+## 2026-11-06 (latest) — ABSTRACT-FIRST-PRINCIPLES DEEP-RESEARCH + the published SELECTION PROMPT → selection-aligned re-rank + evidence package
+
+Assistant-drafted (Claude). Two inputs: (1) a cross-disciplinary deep-research run (task wvfui62jh, 103 agents, 18
+confirmed claims) across abstract math/physics/chemistry; (2) the user shared the competition's actual published
+**design-selection prompt** (a Claude workflow the organizers run).
+- **Deep-research VALIDATED our method from first principles** and found the win is in the MATH of ranking, not new
+  chemistry (the on-point buried-charge electrostatics angle returned ZERO verified claims). Levers: rank by a
+  precision-aware POSTERIOR (= our gate-as-filter + CI-excludes-0); fuse signals CONJUNCTIVELY/minimax (= our
+  weakest-objective ruler, a weighted sum is provably suboptimal); cap WITHIN-LINEAGE correlation for P(>=1 win)
+  (= our "diverse not cousins"); equilibrium ceiling selectivity <= exp(ΔΔG/RT) ~tens-fold (= our mechanism memo).
+  Full memory: [[ranked-submission-win-math-posterior-diversity-conjunctive]].
+- **Selection prompt changed the ranking calculus:** cap **10 designs/submission, taken in our order "without
+  second-guessing," then graded globally**; priority **express+bind FIRST**, then selectivity evidence, novelty 4>3,
+  diversity; **3 screens** pLDDT/ipSAE/mean-Kyte-Doolittle-hydropathy; the selector **reads our method description**.
+  => only our TOP ~10 matter; our selectivity evidence (gate+pose-realism+2 credible selectives) is a differentiator.
+- **Actions (scripts/gate/rank_and_evidence.py):** re-ranked to a **moderate lineage hedge** — top-10 = the 2
+  credible selectives + 6 strongest co-fold-ruler designs + the 2 best SOLUBLE independent-lineage designs
+  (b2_gpu3_36 #4, b2_gpu7_33 #10); weak/hydrophobic/debunked designs (protein_0103 etc.) kept below the cut. Top-10
+  spans 2 independent lineages + both classes; all express (pLDDT 80-95) and are soluble (KD<=0 except one mild).
+  Computed the 3 screens for all 20 (Kyte-Doolittle was new) -> `runs/submission_screens.csv` (publishable, neutral
+  one-line reasons). Wrote `docs/SUBMISSION_SUMMARY.md` (rubric-aligned, publishable cover doc). submission.csv
+  re-promoted (pure reorder: identical sequences, 13 sc + 7 nb, 21 lines CRLF); ruler-order kept as a backup.
+  Earlier full-interleave rejected (it spent top-10 slots on weak/hydrophobic designs vs 'express+bind first').
+- **NEXT (USER-GATED):** optionally attach `SUBMISSION_SUMMARY.md` + `submission_screens.csv` to the portal entry
+  if it accepts a method description; then the user's Submit/re-order upload. No design re-gen, no seeding.
+
+## 2026-11-06 — DEEPENING: b3_gpu4_161 → NULL (no 3rd credible); POSE-RESCUE: BOTH candidates FAIL on realistic poses → credible set DEFINITIVELY 2
 
 Assistant-drafted (Claude). Deepening (task bfh9oyi12, exit 0, 12-rep, GPUs 2-7) + pose-rescue (task bcbrdabt6, exit 0, 12-rep, GPUs 2-7).
 - **b3_gpu4_161 does NOT promote.** The prize near-threshold design regressed with more sampling: 6-rep −5.3 (ci_hi +0.26) →

@@ -2,6 +2,26 @@
 
 Where things stand, for the next session. Newest state at top; full history in `progress.md`.
 
+## As of 2026-11-06 (late) — selection-prompt-aligned re-rank + evidence package
+
+The competition's published **design-selection prompt** (a Claude workflow) is now known: **cap 10 designs per
+submission, taken in our ranked order, then graded globally**; priority **express+bind first**, then selectivity
+evidence, novelty (4>3), diversity; **3 screens** (pLDDT, ipSAE, mean Kyte-Doolittle hydropathy); the selector
+**reads the method description**. So only our **top ~10** matter, and our selectivity evidence is a differentiator.
+- **`runs/submission.csv` re-ranked to a moderate lineage hedge** (`scripts/gate/rank_and_evidence.py`): top-10 =
+  the 2 credible selectives (`b3_gpu7_113`, `nb3_gpu4_132`) + the 6 strongest co-fold-ruler designs + the 2 best
+  **soluble independent-lineage** designs (`b2_gpu3_36` #4, `b2_gpu7_33` #10); weak/hydrophobic/debunked designs
+  kept below the cut. Pure reorder (sequences byte-identical; ruler-order kept at
+  `runs/submission.ruler-order-2026-11-06.bak.csv`).
+- **Evidence package (publishable, neutral):** `docs/SUBMISSION_SUMMARY.md` (rubric-aligned cover doc) +
+  `runs/submission_screens.csv` (per-design pLDDT/ipSAE/hydropathy/novelty + one-line reasons). `docs/METHODS.md`
+  table rebuilt to the shipped order with screens.
+- **First-principles backing:** deep-research (abstract math/physics/chem) validated the method and the ranking math
+  — see [[ranked-submission-win-math-posterior-diversity-conjunctive]]. No new physics lever exists (buried-charge
+  electrostatics angle returned nothing).
+- **Pending (USER):** if the portal accepts a method description, attach `SUBMISSION_SUMMARY.md` +
+  `submission_screens.csv`; then Submit the (re-ranked) `submission.csv`. No design re-gen, no seeding.
+
 ## As of 2026-11-06
 
 **Status: submission FINALIZED and portal-validated. The only remaining step is the user's gated portal submit.**
