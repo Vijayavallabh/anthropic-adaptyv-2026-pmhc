@@ -50,12 +50,13 @@ selectives at #1–2. Within the peptide-selective tier the order balances the r
 and expression. Because model error is correlated within a single generator, the top 10 is **diversified across
 two independent generators — BoltzGen and Genie3 (an orthogonal diffusion model) — and both fold classes**
 (single-chain miniproteins and VHH nanobodies): the assayed top 10 holds the 2 credible selectives, 5 BoltzGen
-ruler designs, and **3 orthogonal Genie3 designs** (one structurally novel at maxTM 0.68, one gate-leaning
-selective). This directly reduces generator-level correlated-failure risk. The Genie3 designs were put through the
-*identical* funnel (co-fold panel → weakest-margin ruler → MM-GBSA gate + pose-realism); the single strongest
-co-fold margin in the campaign came from Genie3 but was **gate-refuted as wild-type-leaning** and is not featured,
-and a gate-selective Genie3 pose that proved an over-dock artifact was denied credit — the gate stays an honest
-filter. All 20 are positive on the weakest-margin ruler (no anti-selective padding); lower ranks are well-folded
+ruler designs, and **3 orthogonal Genie3 designs** (one structurally novel at maxTM 0.68; all preserved-pose,
+peptide-selective on the panel). This directly reduces generator-level correlated-failure risk. The Genie3 designs
+were put through the *identical* funnel (co-fold panel → weakest-margin ruler → MM-GBSA gate + pose-realism); none
+is gate-confirmed selective (a 12-replica deepening showed the two best Genie3 gate ΔΔGs were small-sample noise
+that regressed to ≈−2 kcal/mol, CI spanning 0), the single strongest co-fold margin in the campaign came from
+Genie3 but was **gate-refuted as wild-type-leaning** and is not featured, and a gate-selective Genie3 pose that
+proved an over-dock artifact was denied credit — the gate stays an honest filter. All 20 are positive on the weakest-margin ruler (no anti-selective padding); lower ranks are well-folded
 peptide-specific long shots not gate-confirmed. Every in-silico number is a prediction; the wet-lab assay is the
 verdict.
 

@@ -9,7 +9,9 @@ run an orthogonal generator, and it succeeded. **Genie3** (rebuilt from the offi
 backbones → PULCHRA full-bb → SolubleMPNN (97% foldable, median pLDDT 93) → g12d triage → the SAME 5-sample 6-state
 panel + weakest ruler + MM-GBSA gate, all isolated under `runs/genie3/` (never touched `runs/campaign/`).
 - **No 3rd credible selective** (honest): the top co-fold design (0.670, beats our best 0.583) was gate-**refuted**
-  as WT-favored; the one gate-selective was an over-dock artifact. Credible selectives stay 2 (both BoltzGen, #1-2).
+  as WT-favored; the one gate-selective was an over-dock artifact; and a **12-rep deepening** of the two
+  gate-*leaning* Genie3 designs showed the 6-rep −5.2/−5.3 were small-n noise (regressed to −2.3/−1.6, CI-incl-0).
+  Credible selectives stay **2** (both BoltzGen, #1-2, 12-rep-confirmed). Screens/docs carry the 12-rep values.
 - **But the orthogonal hedge is real:** 5 Genie3 designs are preserved-pose, positive-weakest, not-WT-favored.
   `scripts/gate/rerank_v3.py` promoted them — **3 into the assayed top-10** (`genie3_8_m0` 0.49, `genie3_g4_121_m1`
   0.42 novel, `genie3_g6_148_m1` 0.38 gate-leaning), 2 hydrophobic ones in reserve. New top-10 = 2 credible

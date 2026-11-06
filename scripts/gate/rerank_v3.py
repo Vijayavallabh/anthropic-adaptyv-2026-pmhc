@@ -23,6 +23,11 @@ g3pl={r["name"]:float(r["plddt"])*100 for r in csv.DictReader(open(f"{G}/funnel/
 g3panel={r["name"]:r for r in csv.DictReader(open(f"{G}/funnel/panel_reval.tsv"),delimiter="\t")}
 g3wk={r["name"]:float(r["weakest"]) for r in csv.DictReader(open(f"{G}/funnel/weakest.tsv"),delimiter="\t")}
 g3gate={r["design"]:(float(r["ddG"]),float(r["ci_lo"]),float(r["ci_hi"]),r["verdict"]) for r in csv.DictReader(open(f"{G}/gate/gate_results_genie3.tsv"),delimiter="\t")}
+# prefer the DEEPER 12-rep estimate where available (the 6-rep gate-lean on 148/72 was small-n noise)
+_deep=f"{G}/gate/gate_results_genie3_deep.tsv"
+if os.path.exists(_deep):
+    for r in csv.DictReader(open(_deep),delimiter="\t"):
+        g3gate[r["design"]]=(float(r["ddG"]),float(r["ci_lo"]),float(r["ci_hi"]),r["verdict"])
 g3nov={r["name"]:float(r["singleseq_maxTM_pdb"]) for r in csv.DictReader(open(f"{G}/funnel/genie3_novelty.csv"))}
 g3pose={ # Asp6<->HLA salt-bridge (computed): all 5 promotable preserved (<4A)
  "rfd_des_pmhc_g12d_8_m0":2.59,"rfd_des_g4_pmhc_g12d_121_m1":2.76,"rfd_des_g6_pmhc_g12d_142_m1":2.78,

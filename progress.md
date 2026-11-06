@@ -28,6 +28,12 @@ GPUs. It PAID OFF (well beyond the "lottery" framing).
   Dropped the 5 BoltzGen WT-favored pads → **all-20 positive-weakest**. 13 single + 7 nanobody. Integrity audit
   re-passed (Genie3 single-chains 0-Cys/no-WGxG = non-Ig; no new near-dups; 2 mild disclosed KD). CRLF intact;
   backups `runs/submission*.pre-genie3-2026-11-06.bak.csv`. Docs synced. **Upload USER-GATED.**
+- **Gate DEEPENING (12-rep) on the 2 gate-leaning Genie3 (`_148_m1`,`_72_m0`) — REFUTED the lean (honest).** The
+  6-rep −5.2/−5.3 were small-n noise; at 12-rep they regressed to −2.28 [−8.1,+3.6] and −1.56 [−7.7,+4.5] (both
+  CI-incl-0). **No 3rd credible selective; count stays 2** (both BoltzGen, 12-rep-confirmed). Screens/docs updated to
+  the 12-rep values (`gate_results_genie3_deep.tsv`; `rerank_v3.py` prefers the deep estimate). RANKING UNCHANGED —
+  `_148_m1` stays #10 (still beats the pure-ruler alt `b3_gpu3_164` on gate-direction −2.28 vs +4.81-WT, novelty 0.87
+  vs 0.95-risk, + generator diversity). Pushed to origin.
 
 ## 2026-11-06 — DEVIL'S-ADVOCATE audit of the ranking → novelty-aware re-rank (strict top-10 upgrade)
 
