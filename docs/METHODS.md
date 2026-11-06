@@ -143,8 +143,10 @@ only to filter, never to rank, and remains the assay's call.
 
 ## Submitted designs
 Ranked final set (`runs/submission.csv`; per-design screens + one-line reasons in `runs/submission_screens.csv`).
-Ordered selectivity-evidence-first (the 2 credible MM-GBSA selectives lead), then by the weakest-margin ruler, and
-**diversified across generation lineages** so the assayed top is not a single lineage (cap is 10 designs/submission).
+Ordered selectivity-evidence-first (the 2 credible MM-GBSA selectives lead), then by the weakest-margin ruler
+balanced against novelty and pose-realism, so the assayed top 10 (cap is 10 designs/submission) carries no
+structural-novelty-risk designs and no over-docked poses, and spans both fold families (single-chain miniprotein +
+VHH nanobody). Two higher-margin but novelty-risk designs are held as ranked reserve at #11-12 (disclosed).
 Three screens per design (read within class): ESMFold **pLDDT**, **ipSAE** to the G12D complex, and mean
 Kyte-Doolittle **hydropathy** (KD; <=0 soluble). `gate ddG` (kcal/mol, G12D - WTmut) is a *confirmatory* value,
 NOT a rank, credible only on a preserved pose with a CI excluding 0 - tier-1 is the assay's call, not in-silico.
@@ -154,18 +156,18 @@ NOT a rank, credible only on a preserved pose with a CI excluding 0 - tier-1 is 
 | 1 | b3_gpu7_113 | single_chain | 94.000 | 0.808 | -0.237 | 0.768 | +0.471 | -9.29 [-14.2,-4.3] |
 | 2 | nb3_gpu4_132 | nanobody | 81.000 | 0.616 | -0.216 | CDR-judged(HCDR3) | +0.266 | -7.27 [-11.7,-2.8] |
 | 3 | nb3_gpu6_132 | nanobody | 95.000 | 0.642 | -0.331 | CDR-judged(HCDR3) | +0.583 | -11.72 [-15.6,-8.0] |
-| 4 | b2_gpu3_36 | single_chain | 90.000 | 0.657 | -0.290 | 0.932 | +0.246 | +0.41 [-4.1,+4.9] |
-| 5 | b3_gpu7_181 | single_chain | 91.000 | 0.774 | -0.330 | 0.881 | +0.526 | +4.22 [-0.7,+8.8] |
-| 6 | b3_gpu5_174 | single_chain | 89.000 | 0.729 | -0.151 | 0.864 | +0.489 | +1.67 [-6.1,+9.1] |
-| 7 | b3_gpu4_211 | single_chain | 94.000 | 0.666 | +0.129 | 0.801 | +0.485 | +4.88 [-1.7,+11.6] |
-| 8 | nb3_gpu3_307 | nanobody | 89.000 | 0.538 | -0.156 | CDR-judged(HCDR3) | +0.460 | +2.93 [-6.0,+12.8] |
-| 9 | nb3_gpu7_192 | nanobody | 88.000 | 0.446 | -0.234 | CDR-judged(HCDR3) | +0.405 | +4.79 [-2.5,+11.8] |
-| 10 | b2_gpu7_33 | single_chain | 87.000 | 0.611 | -0.497 | 0.813 | +0.141 | +4.00 [-0.7,+9.6] |
-| 11 | nb3_gpu5_130 | nanobody | 91.000 | 0.679 | -0.258 | CDR-judged(HCDR3) | +0.320 | -2.68 [-8.3,+2.8] |
-| 12 | nb3_gpu6_432 | nanobody | 80.000 | 0.690 | -0.006 | CDR-judged(HCDR3) | +0.286 | +7.39 [-0.3,+14.8] |
-| 13 | protein_0103 | single_chain | 92.000 | 0.781 | +0.054 | 0.912 | +0.121 | +1.94 [-1.7,+5.8] |
-| 14 | b2_gpu5_13 | single_chain | 91.000 | 0.601 | -0.174 | 0.901 | +0.090 | +1.00 [-7.6,+8.9] |
-| 15 | b2_gpu5_27 | single_chain | 93.000 | 0.487 | -0.700 | 0.929 | +0.030 | +4.57 [-0.7,+9.4] |
+| 4 | b3_gpu7_181 | single_chain | 91.000 | 0.774 | -0.330 | 0.881 | +0.526 | +4.22 [-0.7,+8.8] |
+| 5 | b3_gpu5_174 | single_chain | 89.000 | 0.729 | -0.151 | 0.864 | +0.489 | +1.67 [-6.1,+9.1] |
+| 6 | b3_gpu4_211 | single_chain | 94.000 | 0.666 | +0.129 | 0.801 | +0.485 | +4.88 [-1.7,+11.6] |
+| 7 | nb3_gpu3_307 | nanobody | 89.000 | 0.538 | -0.156 | CDR-judged(HCDR3) | +0.460 | +2.93 [-6.0,+12.8] |
+| 8 | nb3_gpu7_192 | nanobody | 88.000 | 0.446 | -0.234 | CDR-judged(HCDR3) | +0.405 | +4.79 [-2.5,+11.8] |
+| 9 | nb3_gpu7_029 | nanobody | 92.000 | 0.620 | -0.137 | CDR-judged(HCDR3) | +0.324 | +0.38 [-5.8,+6.0] |
+| 10 | b3_gpu4_161 | single_chain | 91.000 | 0.615 | -0.052 | 0.850 | +0.316 | -2.37 [-5.9,+1.0] |
+| 11 | b2_gpu3_36 | single_chain | 90.000 | 0.657 | -0.290 | 0.932 | +0.246 | +0.41 [-4.1,+4.9] |
+| 12 | b3_gpu3_164 | single_chain | 92.000 | 0.773 | -0.738 | 0.946 | +0.423 | +4.81 [-1.6,+11.5] |
+| 13 | nb3_gpu2_108 | nanobody | 90.000 | 0.645 | -0.151 | CDR-judged(HCDR3) | +0.346 | -5.11 [-13.7,+4.2] |
+| 14 | b3_gpu6_132 | single_chain | 92.000 | 0.489 | -0.132 | 0.869 | +0.262 | +10.11 [-1.1,+19.8] |
+| 15 | nb3_gpu6_432 | nanobody | 80.000 | 0.690 | -0.006 | CDR-judged(HCDR3) | +0.286 | +7.39 [-0.3,+14.8] |
 | 16 | b3_gpu7_136 | single_chain | 89.000 | 0.827 | -0.618 | 0.776 | +0.510 | +13.55 [+7.0,+20.0] |
 | 17 | b3_gpu5_072 | single_chain | 89.000 | 0.646 | +0.054 | 0.811 | +0.446 | +5.92 [+2.5,+9.7] |
 | 18 | nanobody_0202 | nanobody | 91.000 | 0.693 | -0.151 | CDR-judged(HCDR3) | +0.439 | +5.13 [+1.9,+9.3] |

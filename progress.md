@@ -2,7 +2,37 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-06 (latest) — ABSTRACT-FIRST-PRINCIPLES DEEP-RESEARCH + the published SELECTION PROMPT → selection-aligned re-rank + evidence package
+## 2026-11-06 (latest) — DEVIL'S-ADVOCATE audit of the ranking → novelty-aware re-rank (strict top-10 upgrade)
+
+Assistant-drafted (Claude). User ran `/devil-advocate` on the finalized 20 ("brutally rank even if most need
+replacing; winning is the only goal"). One cold adversary (Sonnet, claim-block + raw data only) + full in-context
+verification of every named check (`scripts/gate/rerank_v2.py`, scratch `advocate_checks.py`/`joint_rerank.py`).
+- **Kill shot SPLIT.** TRUE half: the prior order buried stronger survivors — on the pre-registered weakest-margin
+  ruler, `b3_gpu4_161` (wk 0.316, preserved pose, gate -2.37 leaning-sel, **novel** maxTM 0.85) was omitted while
+  `b2_gpu3_36` (wk 0.246, gate +0.41 WT-ward, **novelty-risk** 0.93) sat at #4, and 0.03-0.14 b2 designs sat in the
+  set. REBUTTED half: "#1-2 are winner's-curse" — they are the UNIQUE intersection of positive-weakest AND
+  gate-SELECTIVE AND preserved-pose among 58 gated (only 2 of 4 preserved+SEL have positive weakest), and #1
+  dominates #2 on every axis. Decisive nuance the adversary (and its naive "rank by weakest") MISSED: the omitted
+  high-weakest designs are mostly **novelty-risk** (maxTM 0.95-0.98) — ranking by weakest alone pulls look-alikes
+  into the assayed top-10. A side-agent independently flagged the same novelty tradeoff.
+- **Attacks:** (1) ruler vs gate "disagree" — Spearman = **-0.028** = orthogonal BY DESIGN (two independent axes),
+  gate is a filter not a ranker → REBUT; (2) single-pose anchoring → REBUT (gate mutates Asp6->Gly6; rescue already
+  demoted the over-docks), residual = bench call, disclosed; (3) **all 20 are BoltzGen** (zero orthogonal designs in
+  the pool) → **CONCEDE** (the one material surviving risk).
+- **Fix applied (`scripts/gate/rerank_v2.py`, strict multi-axis upgrade; backups `*.pre-advocate-2026-11-06.bak`):**
+  swapped 5 — IN `b3_gpu4_161`,`nb3_gpu7_029`,`b3_gpu3_164`,`nb3_gpu2_108`,`b3_gpu6_132`; OUT `b2_gpu7_33`,
+  `nb3_gpu5_130`,`protein_0103`,`b2_gpu5_13`,`b2_gpu5_27`. **Top-10: meanWeak 0.407->0.433, min 0.141->0.316,
+  novelty-risk 1->0, both novelty-risk designs demoted to reserve #11-12; dropping `nb3_gpu5_130` also resolves the
+  one flagged near-dup pair.** 12 single_chain + 8 nanobody; CRLF intact; 0 drift on retained designs; integrity
+  audit re-passed. Docs synced (SUBMISSION_SUMMARY, METHODS table).
+- **Attack 3 / regenerate lever — NOT pursued (reasoned, not sunk-cost):** no orthogonal generator is installed
+  (only BoltzGen+ProteinMPNN); installing RFdiffusion3/Genie + weights is hours of env-drift-risk that would eat the
+  ~1.5-day window, and the one prior orthogonal attempt (`rfd_des_173_m2`) scored anti-selective on our ruler. Low
+  feasibility x low yield. Submission spans 2 fold families (miniprotein + VHH) = partial decorrelation; generator
+  monoculture disclosed as residual. Offer standing: attempt the orthogonal campaign if the user wants to spend the
+  window on a low-probability diversity lottery. **VERDICT: PROCEED (re-ranked 20); upload USER-GATED.**
+
+## 2026-11-06 — ABSTRACT-FIRST-PRINCIPLES DEEP-RESEARCH + the published SELECTION PROMPT → selection-aligned re-rank + evidence package
 
 Assistant-drafted (Claude). Two inputs: (1) a cross-disciplinary deep-research run (task wvfui62jh, 103 agents, 18
 confirmed claims) across abstract math/physics/chemistry; (2) the user shared the competition's actual published

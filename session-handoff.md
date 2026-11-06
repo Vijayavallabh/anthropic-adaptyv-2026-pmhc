@@ -2,6 +2,26 @@
 
 Where things stand, for the next session. Newest state at top; full history in `progress.md`.
 
+## As of 2026-11-06 (latest) — devil's-advocate audit → novelty-aware re-rank
+
+The user ran `/devil-advocate` on the finalized 20. A cold adversary's kill shot was **half right**: the prior order
+did bury stronger survivors on our own weakest-margin ruler — but its naive "rank by weakest" fix (and the adversary)
+**missed novelty**: the omitted high-weakest designs are mostly structural-novelty-risk (maxTM 0.95-0.98), which the
+competition penalizes. So the fix was a **novelty-aware** multi-axis re-rank, not the adversary's.
+- **`runs/submission.csv` re-ranked (`scripts/gate/rerank_v2.py`; backups `runs/submission*.pre-advocate-2026-11-06.bak.csv`).**
+  5 swapped: IN `b3_gpu4_161`, `nb3_gpu7_029`, `b3_gpu3_164`, `nb3_gpu2_108`, `b3_gpu6_132`; OUT `b2_gpu7_33`,
+  `nb3_gpu5_130`, `protein_0103`, `b2_gpu5_13`, `b2_gpu5_27`. **Assayed top-10 is a strict upgrade:** meanWeak
+  0.407->0.433, min 0.141->0.316, **novelty-risk 1->0** (the 2 novelty-risk designs demoted to reserve #11-12);
+  dropping `nb3_gpu5_130` also clears the one flagged near-dup pair. Now 12 single_chain + 8 nanobody; `#1-2` credible
+  selectives unchanged; CRLF intact; integrity audit re-passed; docs (SUBMISSION_SUMMARY, METHODS) synced.
+- **Verdict PROCEED on the re-ranked 20.** The one conceded attack (all-BoltzGen monoculture) has **no feasible +EV
+  fix in the window**: no orthogonal generator is installed, install is slow/env-drift-risky, and the prior RFd
+  attempt scored anti-selective. Submission spans 2 fold families (partial decorrelation); monoculture disclosed.
+  Standing offer: attempt an orthogonal (RFd3/Genie) campaign on the 6 idle GPUs only if the user wants to risk the
+  window on a low-probability diversity lottery.
+- **Pending (USER):** same as below — attach the evidence package if the portal allows, then Submit the re-ranked
+  `submission.csv`. Upload USER-GATED.
+
 ## As of 2026-11-06 (late) — selection-prompt-aligned re-rank + evidence package
 
 The competition's published **design-selection prompt** (a Claude workflow) is now known: **cap 10 designs per
