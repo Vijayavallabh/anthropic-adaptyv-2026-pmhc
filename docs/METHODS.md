@@ -96,46 +96,77 @@ Boltz-2 panel. The honest reading is that absolute in-silico binder docking is r
 novo binders, which is one more reason absolute affinity and the single-residue discrimination are treated
 as experimental questions rather than in-silico claims.
 
-## On tier-1 selectivity
-Co-folding cannot resolve the single-residue G12D-versus-WT difference (the predicted interface scores for
-the two peptides are statistically indistinguishable), and the intrinsic selectivity is an intra-pMHC
-electrostatic/conformational effect that is largely binder-independent. In-silico scores are therefore used
-to rank the proxies for selectivity (peptide-shape specificity and peptide grip), while true G12D-versus-WT
-discrimination is treated as a measurement for the experimental assay rather than an in-silico claim.
+## On tier-1 selectivity (G12D-vs-WT) and the confirmatory physics gate
+Co-folding cannot *rank* the single-residue G12D-versus-WT difference (the predicted interface scores for the two
+peptides are statistically indistinguishable), and the intrinsic selectivity is an intra-pMHC
+electrostatic/conformational effect that is largely binder-independent. The co-fold panel therefore ranks only the
+measurable proxies (sequence-order and peptide-identity specificity, peptide dependence, grip), and true
+G12D-versus-WT is left to the assay.
+
+An orthogonal **ensemble MM-GBSA physics gate** (OpenMM, GBn2/mbondi3, single-trajectory, replica-bootstrapped
+confidence intervals; `scripts/gate/`) was added as a *confirmatory filter* — never a ranker — for that buried
+axis. On a matched system it scores ΔΔG = ΔG_bind(G12D) − ΔG_bind(in-silico Asp6→Gly6 WTmut) over 6–12 independent
+MD replicas per state. It was calibrated to fire correctly before use: it recovered the Poole ground-truth
+matched-scaffold window (ΔΔG = −4.36 kcal/mol, 95% CI [−7.0, −1.6]; experimental −4.9) and returned ~0 on a
+WT-vs-WT null (CI including 0 → a structural/build noise floor ≈ 1.9 kcal/mol). A design is called
+G12D-SELECTIVE only if ΔΔG ≤ −4 kcal/mol **and** its CI excludes 0. (The ante-MMPBSA→sander MM-PBSA path was found
+corrupt in this environment — phantom energies from an atom-order mismatch — so the self-consistent OpenMM GBn2
+path is used throughout.)
+
+**Pose realism is mandatory.** The gate scores whatever pose the co-folder produced, and the co-folder frequently
+*over-docks* the buried Asp6 — swinging it ~8 Å out of the groove to hydrogen-bond the binder's carboxylate
+directly, destroying the native Asp6↔HLA-Arg114 salt bridge. The single-trajectory MM-GBSA then reports a strong
+but artefactual "selectivity" (the WTmut merely loses that direct binder–Asp6 bond, while the buried bridge the
+real geometry would have to pay for is already broken in the pose). A geometry audit (`scan_saltbridge_all.py` →
+`runs/campaign/gate/pose_realism.tsv`) classifies every scored pose: PRESERVED (native bridge intact, <4 Å →
+through-space discrimination, the intended non-mimetic mechanism) vs BROKEN (over-dock artifact). Across the 58
+gated designs, 42 preserve the bridge and 15 break it. Only a **preserved-pose** selective call is credible; an
+over-docked selective is denied gate credit and ranked on the ruler. A pose-rescue (`find_rescue_poses.py`)
+re-gated the two over-docked selectives that had a preserved co-fold shard — both went null on the realistic pose
+(ΔΔG flipped from ≈ −11 / −6 to +7.4 / +1.9), confirming their apparent selectivity was the artifact.
+
+On this honest bar, exactly **two** designs are credible, pose-verified G12D-selectives: `b3_gpu7_113`
+(single_chain, ΔΔG −9.29 [−14.2, −4.3], bridge preserved at 2.98 Å) and `nb3_gpu4_132` (nanobody, −7.27
+[−11.7, −2.8], 2.61 Å). They lead the submission. The gate stays a filter: the overall ranking is the
+pre-registered weakest-objective ruler, and the final verdict on G12D-vs-WT is the wet-lab assay.
 
 ## Selection
-The submitted set is front-loaded by the selectivity conjunction above and ordered so the strongest, most
-confidently selective designs come first (the submission is ranked; only the top entries are expected to be
-assayed). The top of the list spans distinct binding hypotheses — sequence-specificity-dominant designs, a
-peptide-grip-dominant design, and two de novo nanobodies for class diversity — and is deliberately hedged on
-structural novelty (dominated by novelty-safe designs, with the strongest high-TM binders retained lower
-down). The two lowest-ranked entries are reserves that did not clear the promiscuity gate and are included
-only to complete the list; they are not expected to be assayed.
+The 20 are ranked by the north-star weakest-objective ruler, with the confirmatory gate acting only as a filter:
+the two credible, pose-verified G12D-selectives (`b3_gpu7_113`, `nb3_gpu4_132`) are floated to the top; the
+ruler-clean core follows in weakest-margin order; designs whose gate-selectivity rests on an over-docked pose are
+kept only on their ruler merit and flagged (e.g. `nb3_gpu6_132`, the ruler leader at +0.583); and five
+anti-selective designs (gate WT-favored on realistic poses) with positive ruler margins fill the last five slots
+as explicit padding. This finalized set replaced an earlier locked 20 (overlap 8/20): the 12 dropped designs were
+verified on the identical ruler to be seven platform-binders (negative weakest margin — they bind what the targets
+share) plus five anti-selectives, and the locked set contained neither credible selective. True G12D-vs-WT is used
+only to filter, never to rank, and remains the assay's call.
 
 ## Submitted designs
-Ranked final set (metrics are five-sample co-fold means; bh_e is the empty-HLA / peptide-dependence axis,
-lower = better; max-TM is single-sequence ESMFold vs PDB, lower = more structurally novel). Tier-1
-(G12D-vs-WT) is not an in-silico claim for any design (see above) — it is the experimental measurement.
+Ranked final set (`runs/submission.csv`; rationale `runs/campaign/final20_two_axis_rationale.tsv`). The ranking is
+the weakest-objective ruler with the gate as a filter. `gate ΔΔG` (kcal/mol, G12D − WTmut; more negative =
+G12D-selective) is a *confirmatory* value, **NOT a rank**, and is credible only on a PRESERVED pose with a CI
+excluding 0 — tier-1 is not an in-silico claim for any design (it is the assay's). `weakest` is the minimax
+discrimination margin (higher = better); `pose` is the native-Asp6-bridge realism check.
 
-| # | design | class | spec_scram | promisc_margin | bh_e | grip | ESM pLDDT | max-TM | rationale |
-|--:|--------|-------|-----------:|---------------:|-----:|-----:|----------:|-------:|-----------|
-| 1 | nanobody_0202 | nanobody | 0.49 | 0.44 | 0.20 | 0.33 | 0.91 | — (CDR-judged) | de novo CDR3 nanobody; high seq-specificity, clean tier-2, grips peptide |
-| 2 | b2_gpu3_15 | single_chain | 0.40 | 0.59 | 0.12 | 0.17 | 0.89 | 0.86 | high seq-specificity, clean tier-2, novelty-safe |
-| 3 | b2_gpu4_26 | single_chain | 0.27 | 0.41 | 0.20 | 0.26 | 0.95 | 0.83 | seq-specific, clean tier-2, novelty-safe |
-| 4 | nanobody_0081 | nanobody | 0.33 | 0.42 | 0.35 | 0.38 | 0.86 | — (CDR-judged) | de novo CDR3 nanobody; seq-specific, grips peptide |
-| 5 | b2_gpu3_27 | single_chain | 0.32 | 0.61 | 0.46 | 0.22 | 0.89 | 0.88 | seq-specific, high identity-margin, novelty-safe |
-| 6 | protein_0103 | single_chain | 0.12 | 0.49 | 0.02 | 0.50 | 0.92 | 0.91 | strongest peptide grip + cleanest tier-2; novelty-risk |
-| 7 | b2_gpu5_05 | single_chain | 0.36 | 0.27 | 0.41 | 0.18 | 0.89 | 0.86 | high seq-specificity, novelty-safe |
-| 8 | b2_gpu5_37 | single_chain | 0.17 | 0.12 | 0.04 | 0.35 | 0.91 | 0.88 | clean tier-2, grips peptide, novelty-safe |
-| 9 | b2_gpu7_33 | single_chain | 0.31 | 0.35 | 0.47 | 0.19 | 0.87 | 0.81 | seq-specific, best structural novelty |
-| 10 | protein_0155 | single_chain | 0.42 | 0.48 | 0.75 | 0.22 | 0.89 | 0.89 | high seq-specificity (tier-2 weaker) |
-| 11 | protein_0212 | single_chain | 0.23 | 0.18 | 0.51 | 0.16 | 0.81 | 0.88 | seq-specific, novelty-safe |
-| 12 | protein_0073 | single_chain | 0.38 | 0.20 | 0.69 | 0.14 | 0.93 | 0.95 | high seq-specificity (tier-2 weaker; novelty-risk) |
-| 13 | protein_0092 | single_chain | 0.16 | 0.14 | 0.67 | 0.28 | 0.86 | 0.90 | seq-specific, grips peptide (tier-2 weaker) |
-| 14 | protein_0025 | single_chain | 0.23 | 0.29 | 0.83 | 0.17 | 0.87 | 0.94 | seq-specific (tier-2 weaker; novelty-risk) |
-| 15 | b2_gpu5_13 | single_chain | 0.24 | 0.39 | 0.51 | 0.15 | 0.91 | 0.90 | seq-specific (novelty-risk) |
-| 16 | b2_gpu3_36 | single_chain | 0.25 | 0.47 | 0.35 | 0.19 | 0.90 | 0.93 | seq-specific, moderate tier-2 (novelty-risk) |
-| 17 | b2_gpu5_19 | single_chain | 0.19 | 0.19 | 0.07 | 0.34 | 0.83 | 0.94 | clean tier-2, grips peptide (novelty-risk) |
-| 18 | b2_gpu5_27 | single_chain | 0.15 | 0.14 | 0.46 | 0.28 | 0.93 | 0.93 | seq-specific, grips peptide (novelty-risk) |
-| 19 | rfd_des_173_m2 | single_chain | 0.36 | -0.12 | 0.05 | 0.29 | 0.85 | 0.60 | reserve (RFdiffusion; fails promiscuity gate) |
-| 20 | b2_gpu7_02 | single_chain | 0.13 | -0.07 | 0.04 | 0.15 | 0.89 | 0.86 | reserve (fails promiscuity gate) |
+| # | design | class | tier | pose | gate ΔΔG [95% CI] | weakest | limiting |
+|--:|--------|-------|------|------|------------------:|--------:|----------|
+| 1 | b3_gpu7_113 | single_chain | credible G12D-selective | preserved | −9.29 [−14.2,−4.3] | +0.471 | scram |
+| 2 | nb3_gpu4_132 | nanobody | credible G12D-selective | preserved | −7.27 [−11.7,−2.8] | +0.266 | scram |
+| 3 | nb3_gpu6_132 | nanobody | ruler-top; gate over-docked (no credit) | broken | −11.72 [−15.6,−8.0] | +0.583 | scram |
+| 4 | b3_gpu7_181 | single_chain | ruler core (gate null) | preserved | +4.22 [−0.7,+8.8] | +0.526 | scram |
+| 5 | b3_gpu5_174 | single_chain | ruler core (gate null) | preserved | +1.67 [−6.1,+9.1] | +0.489 | promisc |
+| 6 | b3_gpu4_211 | single_chain | ruler core (gate null) | preserved | +4.88 [−1.7,+11.6] | +0.485 | scram |
+| 7 | nb3_gpu3_307 | nanobody | ruler core (gate null) | broken | +2.93 [−6.0,+12.8] | +0.460 | empty |
+| 8 | nb3_gpu7_192 | nanobody | ruler core (gate null) | preserved | +4.79 [−2.5,+11.8] | +0.405 | scram |
+| 9 | nb3_gpu5_130 | nanobody | ruler core (gate lean, CI incl 0) | broken | −2.68 [−8.3,+2.8] | +0.320 | scram |
+| 10 | nb3_gpu6_432 | nanobody | ruler core (rescue→null; was over-dock) | preserved | +7.39 [−0.3,+14.8] | +0.286 | promisc |
+| 11 | b2_gpu3_36 | single_chain | ruler core (gate null) | preserved | +0.41 [−4.1,+4.9] | +0.246 | scram |
+| 12 | b2_gpu7_33 | single_chain | ruler core (gate null) | near | +4.00 [−0.7,+9.6] | +0.141 | empty |
+| 13 | protein_0103 | single_chain | ruler core (rescue→null; was over-dock) | preserved | +1.94 [−1.7,+5.8] | +0.121 | scram |
+| 14 | b2_gpu5_13 | single_chain | ruler core (gate null) | preserved | +1.00 [−7.6,+8.9] | +0.090 | empty |
+| 15 | b2_gpu5_27 | single_chain | ruler core (gate null) | preserved | +4.57 [−0.7,+9.4] | +0.030 | empty |
+| 16 | b3_gpu7_136 | single_chain | padding (anti-selective) | preserved | +13.55 [+7.0,+20.0] | +0.510 | promisc |
+| 17 | b3_gpu5_072 | single_chain | padding (anti-selective) | preserved | +5.92 [+2.5,+9.7] | +0.446 | promisc |
+| 18 | nanobody_0202 | nanobody | padding (anti-selective) | preserved | +5.13 [+1.9,+9.3] | +0.439 | promisc |
+| 19 | b2_gpu3_15 | single_chain | padding (anti-selective) | preserved | +6.13 [+1.7,+10.7] | +0.396 | scram |
+| 20 | b2_gpu4_26 | single_chain | padding (anti-selective) | preserved | +7.76 [+2.6,+12.7] | +0.271 | scram |

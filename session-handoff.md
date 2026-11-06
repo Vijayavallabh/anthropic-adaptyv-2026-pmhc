@@ -2,6 +2,49 @@
 
 Where things stand, for the next session. Newest state at top; full history in `progress.md`.
 
+## As of 2026-11-06
+
+**Status: submission FINALIZED and portal-validated. The only remaining step is the user's gated portal submit.**
+
+### What is in `runs/submission.csv` (the finalized 20)
+The user chose the **"Recommended 20"** (2026-11-06) — the ruler+gate+pose-realism portfolio. It replaced the
+earlier locked 20 (overlap was only 8/20); the prior set is preserved at `runs/submission.locked-2026-11-06.bak.csv`.
+- 13 single_chain + 7 nanobody, rank-ordered, portal-parsed as **20/20 Passed, 0 needing fixes** (lengths +
+  sequence ends byte-matched to the file).
+- Rank structure: **#1–2 `b3_gpu7_113`, `nb3_gpu4_132`** = the two credible, pose-verified G12D-selectives;
+  **#3 `nb3_gpu6_132`** tops the north-star ruler (0.583) but its gate-selectivity is a flagged over-dock artifact
+  (no gate credit); **#4–15** ruler-ranked core; **#16–20** anti-selective padding (ranked last).
+- Generator: `scripts/gate/merge_and_emit.py` → `runs/campaign/final20_two_axis_recommended.csv` →
+  promoted to `runs/submission.csv`. Rationale: `runs/campaign/final20_two_axis_rationale.tsv`.
+
+### The decisive new axis (since the 2026-11-04 handoff): an orthogonal physics gate + pose-realism
+Co-fold is still blind to the buried P6 and MPNN δ is still a wash — but an **ensemble MM-GBSA physics gate**
+(OpenMM GBn2, matched in-silico Asp6→Gly6 mutation, replica-bootstrap CIs; `scripts/gate/`) recovers a
+**confirmatory** G12D-vs-WT signal. It is a **FILTER, never a ranker** (the pre-registered ruler still orders the
+portfolio), so the invariant "G12D-vs-WT is a bench measurement, not an in-silico rank" **still holds**.
+- Calibrated: recovered the Poole ground-truth matched-scaffold ΔΔG = −4.36 [−7.0,−1.6] (exp −4.9) and nulled a
+  WT-vs-WT control (noise floor ~1.9). Criterion: SELECTIVE iff ΔΔG ≤ −4 **and** CI excludes 0.
+- **MANDATORY pose-realism check** (`scripts/gate/scan_saltbridge_all.py` → `runs/campaign/gate/pose_realism.tsv`):
+  the co-folder often **over-docks** — swings the buried Asp6 ~8 Å out of the groove to H-bond the binder — and the
+  naive gate scores those as falsely selective. Only poses that PRESERVE the native Asp6↔HLA-Arg114 bridge
+  (through-space discrimination) are credible. 42/58 preserved, 15/58 broken.
+- **Pose-rescue** (re-gate over-docked selectives on a preserved shard): both rescuable ones (`nb3_gpu6_432`,
+  `protein_0103`) went **null** on their realistic poses → their selectivity was the over-dock artifact, confirmed.
+- **Result: credible G12D-selective count is DEFINITIVELY 2** (`b3_gpu7_113`, `nb3_gpu4_132`). Earlier "5 selectives"
+  framing was over-docked artifact and has been corrected. Gate tables: `runs/campaign/gate/gate_results_*.tsv`.
+
+### Pending (reserved for the USER)
+- **The portal submit of `runs/submission.csv` to Proteinbase** — the user's to click (USER-GATED). The loaded set
+  is validated and correct; deadline 2026-11-08 23:59 AoE (~2.5-day buffer).
+
+### Next actions (non-gated, if asked)
+- Optional "best-quality 20": the base-32 pool has only 15 ruler-clean, non-anti-selective designs; #16–20 are
+  anti-selective padding. Vetting 5 ruler-clean designs from the expansion pool to replace the padding would need
+  a short compute pass (the user declined this for now, chose the Recommended 20 as-is).
+- Optional hardening: several `scripts/*.py` carry hardcoded absolute paths (boltz venv, sibling repos); the gate
+  scripts (`scripts/gate/*.py`) likewise. Refactor to dynamic roots with a byte-identical regression check — not
+  before the deadline.
+
 ## As of 2026-11-04
 
 **Status: the whole in-silico funnel is exhausted. One decision is pending (the user's), then a gated upload.**

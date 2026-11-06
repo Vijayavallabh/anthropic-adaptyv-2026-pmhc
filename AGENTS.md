@@ -49,13 +49,17 @@ different folder, physics, or the bench); treat every in-silico score as a hypot
 - **De-novo only, zero-shot only.** No seeding from known binders/TCRs/antibodies; no fine-tuning on the target.
   (Antibody/nanobody *framework* is allowed for the nanobody class; CDRs are de-novo.)
 - **Upload is USER-GATED.** The Proteinbase portal upload/submission is the user's decision — never upload.
-  `runs/submission.csv` is the locked, portal-accepted 20.
+  `runs/submission.csv` is the finalized, portal-validated 20 (the ruler+gate+pose "Recommended 20", chosen
+  2026-11-06; the prior locked set is backed up to `runs/submission.locked-2026-11-06.bak.csv`).
 - **Keep raw sequences in files, not chat.** Reference designs by name.
 - **8× H100 local. GPUs 0,1 are FOREIGN** — never clobber them. Campaign uses GPUs 2–7. Verify with `nvidia-smi`,
   one process per GPU, cap CPU threads.
 - **No AI attribution** in commits/PRs. Repo-local git identity is `Vijayavallabh` (see CLAUDE.md). Private repo.
-- **The deciding axis (G12D-vs-WT) is a BENCH measurement.** Co-fold is blind to the single buried residue, and
-  MPNN δ does not rank it either (verified wash). Do not claim an in-silico method ranks G12D-vs-WT selectivity.
+- **The deciding axis (G12D-vs-WT) is a BENCH measurement — never RANKED in silico.** Co-fold is blind to the
+  single buried residue and MPNN δ does not rank it (verified wash). The ensemble MM-GBSA gate (see the funnel) is
+  a *confirmatory binary FILTER* on a pose-realistic shortlist, not a ranker: it may promote or flag a design, but
+  the pre-registered weakest-objective ruler does the ordering. Never present an in-silico number as a RANK of
+  G12D-vs-WT.
 
 ## The funnel (generate → fold → score → select)
 
@@ -71,6 +75,13 @@ different folder, physics, or the bench); treat every in-silico score as a hypot
    **MPNN δ** (`mpnn_differential.py`) + **novelty** (`robust_novelty.py`, foldseek structural TM).
 6. **Assemble + select** (`assemble_final20.py --with-campaign`, `campaign_select.py`): rank by `sel`, catch
    Ig-folds/low-complexity, propose same-ruler swaps vs the locked 20.
+7. **Confirmatory physics gate + pose-realism** (`scripts/gate/`, OpenMM GBn2 ensemble MM-GBSA): on a co-fold-stable
+   shortlist, score ΔΔG(G12D − in-silico Asp6→Gly6 WTmut) with replica-bootstrap CIs (`gate_prep/run/score/analyze.py`),
+   calibrated to recover the Poole ground truth and null a WT-vs-WT control (SELECTIVE iff ΔΔG ≤ −4 **and** CI excludes 0).
+   **MANDATORY pose-realism check** (`scan_saltbridge_all.py`): a selective call counts only if the pose PRESERVES the
+   native buried Asp6↔Arg114 bridge; over-docked poses (Asp6 swung out to grab the binder) fake selectivity and get no
+   credit (`find_rescue_poses.py` re-gates any that have a preserved shard). `merge_and_emit.py` emits the final-20 —
+   **the ruler ranks, the gate only filters.** GOTCHA: the ante-MMPBSA/sander path is corrupt here; use the OpenMM GBn2 path.
 
 ## Scoring axes (what each means)
 
@@ -86,6 +97,8 @@ different folder, physics, or the bench); treat every in-silico score as a hypot
 | `mpnnD` | ProteinMPNN differential logP(Asp)−logP(Gly) at buried P6 | orthogonal; **NEVER a gate** |
 | `sel` | composite ranking score (a convenience aggregate, NOT the final selector) | higher |
 | `weakest` | `min(spec_scram, promisc_margin, bp−bh_e)` — minimax discrimination across the 3 shared targets | **higher — the primary selection lens** |
+| `gate_ΔΔG` | ensemble MM-GBSA ΔΔG(G12D − WTmut) — confirmatory G12D-vs-WT **FILTER** (only on a preserved pose, CI-excl-0) | more negative = G12D-selective; **a filter, never a rank** |
+| `pose_realism` | native Asp6↔HLA-Arg114 salt bridge preserved (<4 Å) vs broken (over-dock artifact) | **preserved** = credible; broken = no gate credit |
 
 ## Verification / definition of done
 
@@ -97,6 +110,11 @@ different folder, physics, or the bench); treat every in-silico score as a hypot
   all three discrimination margins over one-axis spikers with a high `sel`. A negative weakest margin means the
   design binds what the targets SHARE (empty groove or an unrelated peptide) — reject it. Never pick on `sel` alone.
 - An orthogonal/never-a-gate axis (MPNN δ) only "corroborates" a change if scored on **both** portfolios same-ruler.
+- The **G12D-vs-WT confirmatory gate** is trusted only when (a) calibrated (recovers the Poole ground-truth ΔΔG and
+  nulls a WT-vs-WT control, noise floor ~1.9) and (b) on a **pose-realistic** co-fold (native Asp6 burial preserved).
+  A credible selective is the intersection of **preserved pose AND CI-excludes-0**; an over-docked-pose selective call
+  is an artifact — deny it gate credit and rank the design on the ruler. More replicas sharpen the number but never
+  fix a wrong pose.
 - Positive controls must fire (crystal binders 7PB2/7OW6 recover the buried Asp in the MPNN δ assay).
 - Record evidence in `progress.md` with the background-task id and `rc`. Never claim a tool ran unless it ran.
 

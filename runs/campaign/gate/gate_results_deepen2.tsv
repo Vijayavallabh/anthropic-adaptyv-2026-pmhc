@@ -1,0 +1,6 @@
+design	nG	nW	gmean	wmean	ddG	ci_lo	ci_hi	p	verdict
+nb3_gpu7_040	12	12	-61.85	-44.06	-17.79	-22.01	-13.82	0.0	G12D-SELECTIVE
+nb3_gpu4_093	12	12	-41.84	-31.14	-10.69	-14.76	-6.46	0.0	G12D-SELECTIVE
+nb3_gpu6_086	12	12	-56.54	-54.07	-2.47	-8.52	3.5	0.436	null(CI-incl-0)
+b3_gpu4_161	12	12	-53.46	-51.09	-2.37	-5.86	0.96	0.173	null(CI-incl-0)
+b3_gpu7_017	12	12	-59.85	-58.93	-0.92	-5.24	3.78	0.674	null(CI-incl-0)

@@ -2,7 +2,221 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-04 (latest) — internalized the organizers' north star; built the WEAKEST-objective (minimax) lens
+## 2026-11-06 (latest) — DEEPENING: b3_gpu4_161 → NULL (no 3rd credible); POSE-RESCUE: BOTH candidates FAIL on realistic poses → credible set DEFINITIVELY 2
+
+Assistant-drafted (Claude). Deepening (task bfh9oyi12, exit 0, 12-rep, GPUs 2-7) + pose-rescue (task bcbrdabt6, exit 0, 12-rep, GPUs 2-7).
+- **b3_gpu4_161 does NOT promote.** The prize near-threshold design regressed with more sampling: 6-rep −5.3 (ci_hi +0.26) →
+  12-rep **−2.37 [−5.86, +0.96]**, CI still spans 0 → null. The earlier near-miss was noise pulling toward the ~1.9 floor. The other
+  deepened nulls held (nb3_gpu6_086 −2.47, b3_gpu7_017 −0.92). **Deepening added NO new credible selective — credible set holds at 2.**
+- **The 2 over-docked expansion selectives are reproducibly "selective" at 12-rep** (nb3_gpu7_040 −17.79 [−22.0,−13.8]; nb3_gpu4_093
+  −10.69 [−14.8,−6.5], both CI excl 0) — which confirms the over-dock ΔΔG is *reproducible*, NOT that it's *credible*: both break the
+  buried bridge in 0/7 shards. They stay flagged and are NOT injected into the base-32 / final-20.
+- **POSE-RESCUE DONE (bcbrdabt6, exit 0) — BOTH FAIL, artifacts confirmed.** Re-gated on PRESERVED (Asp6-buried) poses the only 2
+  over-docked selectives that have a preserved+bound+near shard — nb3_gpu6_432_r (5/7 preserved; shard conf 0.947) and protein_0103_r
+  (1/5; conf 0.967), 12 rep/state, 48 MD legs. **Result (`gate/gate_results_rescue.tsv`): both go NULL on the realistic pose —
+  nb3_gpu6_432 −10.71 → +7.39 [−0.3,+14.8] (actually leans WT-favored!); protein_0103 −5.56 → +1.94 [−1.7,+5.8].** So the −10.71/−5.56
+  were ENTIRELY the over-dock artifact: with Asp6 buried, the discrimination vanishes. Neither rescued. The other 3 over-docked
+  selectives (nb3_gpu6_132 ex-flagship, nb3_gpu7_040, nb3_gpu4_093) over-dock in 0/7 shards → intrinsically unrescuable, never tested.
+  Finder: `scratchpad/find_rescue_poses.py` → `gate/rescue_poses.tsv`. **Credible G12D-selective count: 2, DEFINITIVE** (no lever left).
+- **Integration DONE (`merge_and_emit.py` rescue overlay):** the preserved-pose ΔΔG became the authoritative gate call for the two;
+  both null → re-labelled tier "4-null-on-realistic-pose(rescue→artifact)", ranked on ruler (gate credit was already 0, so positions
+  UNCHANGED). Over-docked-selective list drops 3→1 (only nb3_gpu6_132, unrescuable, #3). final-20 regenerated + byte-verified (21 lines
+  all-CRLF, 13 single_chain + 7 nanobody, 0 missing). Membership & order unchanged — the rescue only removed ambiguity, it moved no one.
+- **FINAL-20 FINALIZED — user chose "Recommended 20" (AskUserQuestion, 2026-11-06).** Promoted `runs/campaign/final20_two_axis_recommended.csv`
+  → `runs/submission.csv` (byte-identical via cmp; 21 lines all-CRLF; 13 single_chain + 7 nanobody; rank-ordered). Prior locked set preserved
+  at `runs/submission.locked-2026-11-06.bak.csv`. Order: #1 b3_gpu7_113 (CREDIBLE-SEL), #2 nb3_gpu4_132 (CREDIBLE-SEL), #3 nb3_gpu6_132 (best
+  ruler 0.583, gate withheld/over-docked), #4-15 ruler order, #16-20 WT-favored padding. Vs the old locked set this DROPS 7 platform-binders
+  (neg weakest, ruler-reject — incl 2 gate-"selective" but platform-binding: b2_gpu7_02, protein_0092) + 5 anti-selectives, and ADDS both
+  credible selectives (which locked lacked). Credible selectivity = 2, honest and final.
+- **ONLY remaining step: the user's manual upload of `runs/submission.csv` to Proteinbase (USER-GATED; I do not upload).** Deadline 2026-11-08
+  23:59 AoE (~2.5 days buffer). [[lesson-pmhc-g12d-mechanism-induced-electrostatic]] [[feedback-pmhc-weakest-objective-north-star]]
+
+## 2026-11-05 — POSE-REALISM AUDIT: most gate-selectives are OVER-DOCK ARTIFACTS; only 2 credible; expansion gave 2 new (both over-docked)
+
+Assistant-drafted (Claude). Gate expansion (task bpnfk2pvz, exit 0, 26/26 built, 0 fails, 58-design unified table) surfaced
+2 new gate-selectives — nb3_gpu7_040 (ΔΔG **−21.19** [−26,−17]) and nb3_gpu4_093 (−8.03). The −21 (2× the prior best) tripped
+a devil's-advocate POSE CHECK that became the session's decisive finding — and a side agent independently flagged the same thing.
+- **The gate scored POSES that break the known buried-Asp6 geometry.** Audited the Asp6↔HLA-Arg114 native salt bridge across
+  all 58 g12d co-fold poses (`scratchpad/analyze_pose.py`, `analyze_p6.py`, `scan_saltbridge_all.py` → `runs/campaign/gate/pose_realism.tsv`).
+  **42/58 PRESERVE it** (Asp6 buried, bridged ~2.5-3.0 Å → through-space discrimination = credible); **15/58 BREAK it** (Asp6 swung
+  ~8 Å out, 7-9 Å from any HLA base, direct H-bond to binder carboxylate at ~1.9-2.3 Å = OVER-DOCK artifact the co-folder hallucinates).
+  The naive gate scores broken poses as strongly selective, but that ΔΔG is fake (single-traj MM-GBSA never pays the cost of breaking the
+  buried bridge). Gate self-protection does NOT catch it — an over-docked pose is stable and reproducibly (falsely) selective.
+- **Only 2 of the gate-selectives are CREDIBLE** (preserved pose + ruler>0): **b3_gpu7_113** (−9.29, sb 2.98, binder-Asp6 4.18 = through-space; ruler 0.471)
+  and **nb3_gpu4_132** (−7.27, sb 2.61; ruler 0.266). OVER-DOCKED/suspect: **nb3_gpu6_132** (the all-session #1; sb 7.46 broken), nb3_gpu6_432,
+  protein_0103, and both new expansion selectives (nb3_gpu7_040 sb 8.85, nb3_gpu4_093 sb 8.22). So the expansion added NO credible pick.
+- **Recommendation rebuilt** (`merge_and_emit.py` now reads pose_realism.tsv): gate = FILTER, not ranker — a selective is promoted ONLY if
+  its pose is preserved; over-docked selectives get no gate credit and rank on the pre-registered ruler (flagged). New order: **#1 b3_gpu7_113
+  (CREDIBLE-SEL), #2 nb3_gpu4_132 (CREDIBLE-SEL), #3 nb3_gpu6_132 (best ruler 0.583, gate withheld as over-docked)**, rest by ruler. Core
+  membership unchanged (15); CSV re-byte-verified (20 rows, 0 missing). Credible 4-axis count: **2, not 5** — selectivity is THINNER than the
+  earlier "5 selectives" update implied (own it). Sensitivity `gate/two_axis_sensitivity.tsv` (filter-rank GP vs pure-ruler RP).
+- **Deepening LAUNCHED (task bfh9oyi12, GPUs 2-7):** 6→12 rep on the PRESERVED near-threshold designs — b3_gpu4_161 (−5.3, ci_hi +0.26,
+  ruler 0.316, preserved) is the prize: if it tightens below 0 it's a credible 3rd with a BETTER ruler than nb3_gpu4_132. + nb3_gpu6_086, b3_gpu7_017, and the 2 new selectives for 12-rep consistency.
+- **NEXT (USER-GATED):** compose + upload. My steer: lead credible pair (b3_gpu7_113, nb3_gpu4_132); keep nb3_gpu6_132 high on ruler with an
+  over-docked caveat; fold b3_gpu4_161 if deepening promotes it. Candidate: re-gate over-docked selectives on a PRESERVED shard if one exists (pose rescue).
+  [[lesson-pmhc-g12d-mechanism-induced-electrostatic]] [[lesson-cofold-epitope-needs-unavailable-blind-dock-gate]] [[feedback-pmhc-weakest-objective-north-star]]
+
+## 2026-11-05 — DEVIL'S-ADVOCATE on the ranking: gate re-scoped to CONFIRMER-ONLY (lean credit removed); ruler-primary sensitivity added
+
+Assistant-drafted (Claude). A cold-context note challenged the final-20: "the physics gate is now RANKING, not just
+confirming," though CLAUDE.md says the G12D-vs-WT axis is not computer-rankable. Verified against the artifacts and revised:
+- **Real defect found + fixed:** the old rank key gave a +1 "lean" bonus to nb3_gpu5_130 (ΔΔG −2.68, CI **[−8.3,+2.8] —
+  includes 0**), floating it to rank 6 over better-ruler nulls. A CI spanning 0 is gate NOISE (CLAUDE.md: "never present
+  an in-silico number as ranking that axis"). Fixed in `scratchpad/merge_and_emit.py`: gate now earns rank credit ONLY on
+  CI-excludes-0 calls (+3 confirmed-selective, −3 confirmed-anti-selective); a lean = 0 credit, ranked by the
+  pre-registered ruler like any null. nb3_gpu5_130 correctly fell rank 6→11.
+- **Critique's other claims checked:** within-tier order was ALWAYS by the ruler (not fine ΔΔG), so no fine-gap ranking
+  was happening. Of the 12 dropped locked designs, **7 are dropped by the RULER** (weakest≤0, platform-binders — nothing
+  to do with the gate) and **5 by the gate** (confirmed anti-selective, ΔΔG≥+7.5, CI excl 0, 2–14 kcal/mol — far outside
+  noise, symmetric to the selective calls, and only from the OPTIONAL padding slots 16-20).
+- **Ruler-primary SENSITIVITY added** → `runs/campaign/gate/two_axis_sensitivity.tsv` (gate-rank vs ruler-only-rank, Δ,
+  robust flag). Only **2 picks are axis-ROBUST (top-5 under BOTH):** nb3_gpu6_132 (GP1/RP1) and b3_gpu7_113 (GP2/RP5). The
+  other 3 selectives are **gate-promoted**: nb3_gpu6_432 (RP9), nb3_gpu4_132 (RP10), protein_0103 (RP13 — also thin ruler
+  .121 AND novelty-risk=True, the softest of the 5). Ranks 6-15 are pure ruler either way.
+- **Net:** 15-core membership UNCHANGED; only nb3_gpu5_130's rank moved. CSV re-byte-verified (20 rows, 0 missing seq,
+  CRLF matches original `submission.csv`). The gated question is sharpened: **trust the gate as a RANKER (lead with all 5
+  selectives) or as a FILTER for clear winners (lead with the 2 robust, rest by ruler)?** My steer: gate as confirmer —
+  selectives lead (they carry positive evidence on the one axis the ruler is blind to) but #3-5 flagged gate-dependent.
+  [[lesson-ensemble-win-on-small-n-is-noise]] [[feedback-pmhc-weakest-objective-north-star]]
+
+## 2026-11-05 — DEEPENING COMPLETE: 12-replica gate CONFIRMS a 5-design selective core; recommendation artifacts updated to 12-rep evidence
+
+Assistant-drafted (Claude). Deepening (task bzbf75k9x, exit 0, 96 new legs 6→12 rep/state on the core-8, GPUs 2-7,
+resume-safe) → `runs/campaign/gate/core8_deep_results.tsv`. Doubling replicas did exactly what a confirmatory pass
+should — promoted under-powered true-positives, demoted noise-leans:
+
+- **5 designs now gate-SELECTIVE (ΔΔG≤−4, CI excl 0), up from 3** — all ruler-OK ⇒ **5 TRUE 4-AXIS SELECTIVE**:
+  **nb3_gpu6_132** nb −11.72 [−15.6,−8.0] p0.000 (wk .583) · **nb3_gpu6_432** nb −10.71 [−16.9,−4.6] p0.000 (wk .286, ⬆PROMOTED from null) ·
+  **b3_gpu7_113** sc −9.29 [−14.2,−4.4] p0.000 (wk .471, marginal cihi −1.17→−4.35 now SOLID) · **nb3_gpu4_132** nb −7.27 [−11.7,−2.8] p0.001 (wk .266) ·
+  **protein_0103** sc −5.56 [−9.0,−2.1] p0.001 (wk .121, ⬆PROMOTED from null). 4 nanobody-fold + ... (3 nb + 2 sc).
+- **3 core designs resolved to NULL (were "lean" at n=6):** b3_gpu5_174 −6.5→**+1.67** [−6.1,+9.1] (6-rep CI was [−18.9,+5.0] — that lean was pure noise;
+  textbook self-protection), nb3_gpu5_130 −3.09→−2.68 [−8.3,+2.8], b2_gpu5_13 −3.47→+1.0 [−7.6,+8.9]. They STAY in-core (ruler-ok, not WT-favored) but drop in rank.
+- **Clean-core membership UNCHANGED (still the same 15; 6 nanobody + 9 single_chain).** Demotions went selective→null, not into anti-selective. Only the
+  RANKING changed: ranks 1-5 are now the 5 confirmed selectives (two freshly promoted). Artifacts regenerated with a `nrep` audit column (12 for core-8, 6 for the rest):
+  `runs/campaign/gate/{gate_results_merged.tsv,two_axis_decision.tsv}`, `runs/campaign/final20_two_axis_recommended.csv` (byte-verified: 20 rows, no SEQ_MISSING, 61-133 aa), `…final20_two_axis_rationale.tsv`.
+- **Upshot:** the core submission story strengthened from 3→5 physics-confirmed selectives, and the one marginal call (b3_gpu7_113) is now bulletproof. Still in-silico; bench is the verdict. [[lesson-ensemble-win-on-small-n-is-noise]] [[lesson-pmhc-g12d-mechanism-induced-electrostatic]]
+- **GATE EXPANSION LAUNCHED (task bpnfk2pvz) — idle-GPU "maximize chances" move under the exhaust-GPUs directive.**
+  The ruler-top (weakest≥0.40) is already ~fully gated (the decision pool was ruler-selected). But the gate axis is
+  ORTHOGONAL to the ruler, so peptide-specific designs in the ruler 0.25–0.40 band — never gate-tested — can still be
+  G12D-selective. Gating the **26 ungated, pose-having designs at weakest≥0.25 (15 vhh-b3 + 10 protein-b3 + 1 — the two
+  WINNING lineages)** on the exact validated pipeline (gate_prep→run 6rep→score→analyze), best-confidence pose per
+  design. 312 legs, GPUs 2-7, ETA ~13 h → `gate_results_expansion.tsv` + unified `gate_results_unified.tsv` (58
+  designs). Self-protecting (weak pose→null, never false-selective), so an expansion screen is safe; any new 4-axis
+  selective becomes a candidate to REPLACE a null/padding slot in the final 20. No new tooling; reversible research compute.
+- **NEXT unchanged — USER-GATED final-20 composition + upload.** (1) lock the 15 clean core; (2) pad to 20 (ranks 16-20 are ruler-ok but gate-WT-favored); (3) amplify (Phase-2 generation). My steer: submit 15 (there is no clean 20), and fold in any new selectives the expansion surfaces. Upload prepared, NOT sent.
+
+## 2026-11-05 — PHASE-1b COMPLETE: full decision pool gated on BOTH axes; two-axis final-20 recommendation prepared
+
+Assistant-drafted (Claude). Phase-1b (task bssyipl1z, exit 0, 0 prep failures) gated the remaining 23 decision-set
+designs → **all 32 designs (the entire locked-20 ∪ proposed-20 pool) now have G12D-vs-WT physics + co-fold ruler**.
+Unified table `runs/campaign/gate/gate_results_all.tsv`; two-axis evidence `…/gate/two_axis_decision.tsv`.
+
+- **5 designs gate-SELECTIVE (ΔΔG≤−4, CI excl 0); 3 are ALSO peptide-specific on all co-fold axes = TRUE 4-AXIS
+  SELECTIVE** (discriminate WT via gate AND scramble/other-epitopes/empty via co-fold, all margins >0):
+  **nb3_gpu6_132** (ΔΔG −9.81 [−14.9,−5.2]; scram .58/promisc .62/empty .62), **b3_gpu7_113** (−8.29 [−15.1,−1.2];
+  .47/.52/.80), **nb3_gpu4_132** (−9.25 [−16.4,−2.4]; .27/.61/.60). All novelty_risk=False; nanobodies maxTM 0.0
+  (structurally novel); ESM pLDDT 81–95; the 3 are sequence-DIVERSE (20–44% pairwise id, not cousins).
+- **2 gate-selective but EXCLUDED as platform-binders:** protein_0092 (ΔΔG −6.80 but empty-margin −0.201 = binds
+  empty groove) and b2_gpu7_02 (−4.44, promisc −0.069). Physics G12D-pref is real but moot if they bind empty HLA /
+  other epitopes in the assay. Hard-filter (ruler weakest>0) correctly drops them. (A user MAY reinstate as bets.)
+- **Sobering baseline:** of the LOCKED 20, only 2 are gate-selective (both platform-binders), **10 are physics-WT-
+  FAVORED (anti-selective)**, 8 null. The locked set was ruler-picked and never saw the deciding axis. MPNN-δ remains
+  anti-informative (confirmed again). [[lesson-pmhc-mpnn-delta-wash-bh-e-separates]]
+- **TWO-AXIS RECOMMENDATION (prepared; NOT uploaded — USER-GATED).** Policy: HARD-FILTER ruler weakest>0 (peptide-
+  specific), then rank by gate-selectivity + ruler. Yields a **15-design CLEAN CORE** (3 selective + 5 lean-selective
+  [ddG<0, CI incl 0] + 7 clean-nulls; 6 nanobody + 9 single_chain; lineages vhh-b3/protein-b3/protein-b2/protein)
+  with NO anti-selective design, + 5 OPTIONAL padding (highest-ruler but gate-WT-favored) to reach 20 if desired.
+  This is a PARETO improvement over both locked-20 and proposed-20 (adds ruler-ok gate-selectives, removes ruler-weak
+  gate-anti-selectives — not an axis tradeoff → defeats the churn objection). Artifacts:
+  `runs/campaign/final20_two_axis_recommended.csv` (ranked, submission format) + `…final20_two_axis_rationale.tsv`.
+  [[lesson-portfolio-swap-verify-all-axes-same-pipeline]] [[feedback-pmhc-weakest-objective-north-star]]
+- **DEVIL'S-ADVOCATE (honest caveats):** BOTH axes are in-silico — the gate is calibrated MM-GBSA (recovers the Poole
+  window) but single-trajectory, n=6×5 ns, conditioned on co-fold pose correctness; the bench is the verdict. The 3
+  SEL have CIs excluding 0 (nb3_gpu6_132 most robust, cihi −5.2); the marginal ones (b3_gpu7_113 cihi −1.17) are less
+  bulletproof → deepening launched. Only ~15 designs are non-anti-selective → there is no clean 20 (submit 15, or pad).
+- **DEEPENING LAUNCHED (task bzbf75k9x):** 6→12 replicas/state on the 8-design selective+lean core (96 new legs,
+  GPUs 2-7, resume-safe) → `core8_deep_results.tsv`. Tightens the decision-relevant CIs; idle-GPU use, no new tooling.
+- **NEXT — USER-GATED decision on the final 20 + upload.** Options for the remaining ~3.5 days: (1) lock in the
+  15-design clean core (strongest, most honest); (2) pad to 20; (3) amplify — Phase-2 non-mimetic generation
+  (charge-sensor paratope + multistate-negative) around the winning vhh-b3 mechanism to try for MORE 4-axis
+  selectives (higher-variance, needs tool-building, tight but feasible). Recommendation + my steer surfaced to user.
+
+## 2026-11-04 — PHASE-1 GATE RESULT: a physics-confirmed G12D-selective design exists; Phase-1b extends to the full decision set
+
+Assistant-drafted (Claude). Phase-1 (task betr84pb9, exit 0) scored the 9 MPNN-δ-shortlist designs on the validated
+MM-GBSA selectivity gate. **The fork resolved to the POSITIVE branch.** Results `runs/campaign/gate/gate_results.tsv`:
+
+- **nb3_gpu6_132 = PHYSICS-CONFIRMED G12D-SELECTIVE. ΔΔG(G12D−WTmut) = −9.81 kcal/mol, 95% CI [−14.87, −5.2],
+  p=0.0.** Clean, NOT a single-replica confound: all 6 G12D replicas (−32.7..−47.0) bind tighter than 5/6 WT
+  replicas (−23.6..−31.8); every G12D leg beats the WT mean. This is >2× the calibration Poole anchor (−4.36),
+  whole CI below the −4 floor → the strongest in-silico evidence in the campaign on the deciding (buried-Asp) axis.
+  It is in-silico, not a bench verdict — but it is the ONLY tool that sees this axis, and it is calibrated.
+- **The gate discriminated correctly (self-protecting).** It REJECTED the imposter: b3_gpu5_174 ΔΔG −6.5 but CI
+  [−18.85, 4.98] incl 0 (p=0.29) — driven by 2 unstable WT legs (r1/r2 −69/−68, std ~13 = binder partially
+  detached), not real G12D preference. An unstable pose inflates variance → null, so no false *selective* call
+  can come from a bad pose. b3_gpu7_181 null (+4.2, CI incl 0).
+- **6 of 9 are physics-WT-FAVORED (anti-selective), CI excludes 0:** nanobody_0202 +5.1, b2_gpu3_15 +6.1,
+  b2_gpu3_27 +7.5, b2_gpu4_26 +7.8, b2_gpu5_37 +10.2, b3_gpu7_136 +13.6. **=> the MPNN-δ shortlist went 6/9 the
+  WRONG way → MPNN δ (buried-Asp preference) is ANTI-informative for real selectivity. The gate is the signal; δ
+  was noise.** Strengthens [[lesson-pmhc-mpnn-delta-wash-bh-e-separates]].
+- **Ruler cross-check — the two axes AGREE, no tradeoff.** nb3_gpu6_132 is ALSO #1 on the north-star weakest-
+  objective (weakest 0.583, sel 1.86 — both highest in `weakest_objective.tsv`). Top ruler design = the physics-
+  selective design. Conversely the WT-favored locked picks sit at the ruler bottom (b2_gpu5_37 weakest 0.115,
+  b2_gpu3_27 0.258, b2_gpu4_26 0.271) → weak on BOTH axes = clear demotion candidates. [[lesson-portfolio-swap-verify-all-axes-same-pipeline]]
+- **Decision-relevant membership:** the ONE selective design (nb3_gpu6_132) is a PROPOSED swap-in, NOT locked.
+  Five WT-favored designs are in the LOCKED 20 (nanobody_0202, b2_gpu3_15, b2_gpu3_27, b2_gpu4_26, b2_gpu5_37).
+  So the proposed swap already moves in the right direction on the deciding axis; the gate now quantifies it.
+- **PHASE-1b LAUNCHED (task bssyipl1z).** Gate the 23 untested decision-set designs (union of locked-20 and
+  proposed-20 minus the 9 done) — all have g12d poses; WT built by in-silico Asp6→Gly6. 276 legs on GPUs 2-7,
+  Tier-A first (proposed newcomers + nb3 nanobodies = lineage-mates of the selective standout), then locked
+  incumbents. Final analyze unifies all 32 → `runs/campaign/gate/gate_results_all.tsv`. ETA ~15 h. GPUs 0/1
+  foreign untouched (72641/64983 MiB); 2-7 were idle at launch.
+- **NEXT (on Phase-1b):** assemble the final-20 recommendation ranked on BOTH axes (weakest-objective ruler +
+  gate ΔΔG) — maximize the count of physics-selective designs while preserving lineage diversity and the ruler;
+  demote ruler-weak + physics-anti-selective locked picks. Prepare as a swap proposal. **Upload stays USER-GATED.**
+  Phase-2 (charge-sensor + multistate generation) now OPTIONAL (we already have a confirmed selective design);
+  consider only if Phase-1b leaves too few selective designs for a diverse 20.
+
+## 2026-11-04 — calibration PASSED (conditional); building the design MM-GBSA selectivity gate
+
+Assistant-drafted (Claude). Physics calibration subagent (ad01feaa0481ae4bb) returned. Decisive reordering:
+physics-gate the EXISTING co-fold-stable designs BEFORE any new generation.
+
+- **CALIBRATION VERDICT — conditional PASS.** Open-source ensemble MM-GBSA (OpenMM GBn2/mbondi3, n=6×5 ns/state,
+  bootstrap) recovered the clean matched-scaffold Poole window: ΔΔG(G12D−WTmut) = **−4.36 kcal/mol, 95% CI
+  [−7.0,−1.6], p=0.002** (exp −4.9); NULL WT-vs-WT = −1.87, CI incl 0 (noise floor ≈1.9 kcal/mol); two-crystal
+  7OW6−7OW5 n.s. (confounded — must use matched in-silico mutation, not two crystals). Task 3 (apo α1/α2 dynamics)
+  NULL (RMSF Δ ~0.006 Å, r=0.90) → the "dynamic gate" route is DEAD; signal is a near-contact charge read only
+  (Task 1 APBS: supra-kT differential only <3 Å above the surface over P6). => physics is a SHORTLIST confirmatory
+  gate (needs a stable co-fold pose; ~12 MD legs/design; resolves only ≳4-kcal/tens-fold windows), NOT a primary
+  ranker. GOTCHA: the MMPBSA.py/sander path is corrupt here (phantom +132..314 kcal/mol); use the OpenMM GBn2 path.
+  Full: runs/campaign/calibration/calibration_report.md. [[lesson-pmhc-g12d-mechanism-induced-electrostatic]]
+- **KEY REORDERING.** The proposed-20 + top weakest-objective survivors ALREADY have stable 5-sample 6-state
+  co-fold poses → they satisfy the gate's one precondition NOW. Phase 1 = run the validated gate on existing designs
+  (no new generation): does ANYTHING we have carry a confirmed G12D>WT window? That is the only in-silico evidence
+  possible on the deciding axis. Phase 2 (charge-sensor + multistate generation) is CONTINGENT on Phase-1's result.
+- **GATE MACHINERY BUILT.** runs/campaign/gate/: gate_prep.py (co-fold pose → matched design:G12D + design:WTmut
+  Asp6→Gly6 solvated systems; ligand=pMHC chains A/B/C FIRST = res 1-390, receptor=binder) + gate_run.py (6-GPU MD
+  scheduler, GPUs 2-7, resume-safe). Reuses the calibration's validated build_md/md_run/build_parmed/score_gbsa
+  verbatim (copied in). Replication checks passed (clean-PDB renumber, disulfide-via-CONECT, build_md template).
+- **SHORTLIST by MPNN δ (gate most-likely-positive first):** nb3_gpu6_132 (δ+2.41, argmaxD 1.0 — the standout),
+  then b3_gpu7_136/b2_gpu3_27/b3_gpu5_174/b2_gpu5_37/b2_gpu4_26/b3_gpu7_181/nanobody_0202/b2_gpu3_15 (δ 0.27–0.51,
+  argmaxD 1.0). Positive control: reuse calibration 7OW6/7OW5 (ΔΔG −4.36).
+- **VALIDATED + LAUNCHED (task betr84pb9).** Matched-mutation correctness confirmed (g12d vs wtmut net charge
+  −17 vs −16 = exactly the Asp→Gly swap; split lig=pMHC 6177 atoms res 1-390 / rec=binder 1827 atoms). Raw-pose
+  single-frame ΔG was +1799 (un-minimized strain), but after min+equil+0.1 ns nb3_gpu6_132 gave ΔG_bind
+  = **−41.0 ± 5.7 kcal/mol** (sane; calib TCR was −60..−74, a nanobody at −41 is right) → pipeline validated
+  end-to-end. All 9 shortlist systems built. PHASE-1 MD running: 9 designs × {g12d,wtmut} × 6 rep × 5 ns = 108
+  legs on GPUs 2-7 (0/1 foreign untouched; confirmed 0% util at launch) → gate_score (GBn2, GPU 2) → gate_analyze
+  bootstrap → runs/campaign/gate/gate_results.tsv. ETA ~7-8 h. Scripts: runs/campaign/gate/gate_{prep,run,score,
+  analyze,sanity}.py (+ copied calib build_md/md_run/build_parmed/score_gbsa).
+- **FORK on Phase-1 result:** any design with ΔΔG ≤ ~−4 kcal/mol & CI excluding 0 = physics-confirmed G12D-selective
+  (the only in-silico evidence on the deciding axis) → promote as candidate swap (same-ruler vs locked/proposed 20).
+  If all null (expected — the mimetic recipe never selected on this axis) → launch Phase-2 (charge-sensor +
+  multistate-negative generation) to TRY to create gate-passing designs. Either way upload stays USER-GATED.
+- Nothing gated touched. Locked 20 + proposed 12-swap untouched; Proteinbase upload remains USER-GATED.
+
+## 2026-11-04 — internalized the organizers' north star; built the WEAKEST-objective (minimax) lens
 
 Assistant-drafted (Claude). User gave the organizers' design philosophy ("discernment, not strength alone … improve
 the weakest objective rather than worship the highest score … one convincing pose is not proof of discrimination …

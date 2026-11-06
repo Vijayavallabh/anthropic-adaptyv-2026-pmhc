@@ -1,0 +1,16 @@
+gate_rank	ruler_rank	delta	name	cls	gate_status	realism	wk	ddG	CI	robust_top5	note
+1	5	+4	b3_gpu7_113	single_chain	CRED-SEL	preserved	+0.471	-9.29	[-14.2,-4.3]	True	ROBUST(top5 both axes)
+2	10	+8	nb3_gpu4_132	nanobody	CRED-SEL	preserved	+0.266	-7.27	[-11.7,-2.8]	False	gate-promoted
+3	1	-2	nb3_gpu6_132	nanobody	od-sel	broken	+0.583	-11.72	[-15.6,-8.0]	True	ROBUST(top5 both axes)
+4	2	-2	b3_gpu7_181	single_chain	null	preserved	+0.526	+4.22	[-0.7,+8.8]	True	ROBUST(top5 both axes)
+5	3	-2	b3_gpu5_174	single_chain	null	preserved	+0.489	+1.67	[-6.1,+9.1]	True	ROBUST(top5 both axes)
+6	4	-2	b3_gpu4_211	single_chain	null	preserved	+0.485	+4.88	[-1.7,+11.6]	False	
+7	6	-1	nb3_gpu3_307	nanobody	null	broken	+0.460	+2.93	[-6.0,+12.8]	False	
+8	7	-1	nb3_gpu7_192	nanobody	null	preserved	+0.405	+4.79	[-2.5,+11.8]	False	
+9	8	-1	nb3_gpu5_130	nanobody	lean	broken	+0.320	-2.68	[-8.3,+2.8]	False	
+10	9	-1	nb3_gpu6_432	nanobody	null	preserved	+0.286	+7.39	[-0.3,+14.8]	False	
+11	11	+0	b2_gpu3_36	single_chain	null	preserved	+0.246	+0.41	[-4.1,+4.9]	False	
+12	12	+0	b2_gpu7_33	single_chain	null	near	+0.141	+4.00	[-0.7,+9.6]	False	
+13	13	+0	protein_0103	single_chain	null	preserved	+0.121	+1.94	[-1.7,+5.8]	False	
+14	14	+0	b2_gpu5_13	single_chain	null	preserved	+0.090	+1.00	[-7.6,+8.9]	False	
+15	15	+0	b2_gpu5_27	single_chain	null	preserved	+0.030	+4.57	[-0.7,+9.4]	False	

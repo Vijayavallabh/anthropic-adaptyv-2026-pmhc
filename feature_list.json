@@ -4,7 +4,7 @@
   "deadline": "2026-11-08T23:59 AoE",
   "upload_gate": "USER-GATED (Proteinbase portal); never auto-upload",
   "selection_principle": "North star: rank by the WEAKEST discrimination margin min(spec_scram, promisc_margin, bp-bh_e), not composite sel; improve the weakest objective; test all three targets (G12D/WT/empty); one convincing pose is not discrimination; submit diverse designs with honest reasoning; computational confidence is a hypothesis, the experiment is the verdict. What shows it recognizes the difference, not merely what the targets share?",
-  "active_feature": "swap-decision",
+  "active_feature": "finalize-submission",
   "features": [
     {
       "id": "generate",
@@ -59,10 +59,40 @@
     {
       "id": "swap-decision",
       "desc": "User selects the final 20 by the WEAKEST-objective (minimax) lens balanced with diversity; then gated upload",
-      "status": "in_progress",
-      "evidence": "combined_submission.csv portal-format-validated (20/20 passed). Minimax lens (scripts/weakest_objective.py -> runs/campaign/weakest_objective.tsv): proposed 20 are ALL positive on the weakest margin; the 7 locked designs with a NEGATIVE weakest margin (bind empty groove or other peptides >= G12D) are EXACTLY the DROP set (a CONSISTENCY CHECK on the same co-fold scores that chose the swap, NOT independent evidence; it shows why the dropped designs are weak but does not predict lab behavior; wet-lab is the verdict). Proposed 20's own weakest links are retained incumbents (protein_0103 #155, b2_gpu5_37 #164) = a further minimax refinement option.",
-      "done_criteria": "final 20 chosen by weakest discrimination margin + diversity + honest reasoning (north star), not composite sel; upload remains user-gated",
-      "blocked_on": "USER decision + USER upload (gated)"
+      "status": "done",
+      "evidence": "User chose 'Recommended 20' (2026-11-06). The ruler+gate recommendation overlaps the prior locked 20 only 8/20; all 12 dropped verified on the IDENTICAL ruler to be 7 platform-binders (negative weakest margin, ruler-reject) + 5 anti-selectives, and the locked set lacked both credible selectives.",
+      "done_criteria": "final 20 chosen by weakest discrimination margin + diversity + honest reasoning (north star), not composite sel; upload remains user-gated"
+    },
+    {
+      "id": "physics-gate-g12d",
+      "desc": "Orthogonal ensemble MM-GBSA physics gate (OpenMM GBn2) as a CONFIRMATORY FILTER for the buried G12D-vs-WT axis co-fold is blind to — NEVER a ranker",
+      "status": "done",
+      "evidence": "gate_prep/run/score/analyze (scripts/gate/). Calibrated: recovered the Poole ground-truth matched-scaffold ddG=-4.36 [-7.0,-1.6] (exp -4.9, p=0.002) AND nulled a WT-vs-WT control (noise floor ~1.9). Criterion SELECTIVE iff ddG<=-4 AND CI excludes 0. Applied to the 32 decision-set + 26 expansion designs (12-rep deepening on the core) -> runs/campaign/gate/gate_results_{all,unified,merged,deepen2}.tsv. GOTCHA: ante-MMPBSA/sander path is corrupt here (phantom energies) -> use the OpenMM GBn2 path.",
+      "done_criteria": "gate calibrated (recovers ground-truth, nulls a null), self-protecting (unstable pose -> null), used only as a filter; ruler still ranks",
+      "notes": "Consistent with the invariant 'G12D-vs-WT is a bench measurement': the gate is a binary credible/not FILTER on a shortlist, never an in-silico RANK of the axis."
+    },
+    {
+      "id": "pose-realism-audit",
+      "desc": "Mandatory pose-realism check: a gate-selective call is only credible if the co-fold pose PRESERVES the native buried Asp6<->HLA-Arg114 salt bridge (through-space discrimination), not if it over-docks (swings Asp6 out to grab the binder)",
+      "status": "done",
+      "evidence": "scripts/gate/scan_saltbridge_all.py -> runs/campaign/gate/pose_realism.tsv. 42/58 preserve the bridge (<4A), 15/58 broken (~8A out = over-dock artifact). The naive gate scores broken poses as falsely selective (single-traj MM-GBSA never pays the cost of breaking the buried bridge). Only preserved-pose selectives are credible.",
+      "done_criteria": "every gate-selective call pose-checked; over-docked selectives flagged and denied gate credit (ranked on the ruler)"
+    },
+    {
+      "id": "pose-rescue",
+      "desc": "Re-gate the over-docked selectives on a PRESERVED co-fold shard (if one exists) to test whether their selectivity survives on realistic (Asp6-buried) geometry",
+      "status": "done",
+      "evidence": "scripts/gate/find_rescue_poses.py -> rescue_poses.tsv; re-gated nb3_gpu6_432 (5/7 preserved shards) + protein_0103 (1/5), 12-rep -> runs/campaign/gate/gate_results_rescue.tsv. BOTH went NULL on the realistic pose (nb3_gpu6_432 -10.71 -> +7.39, even leans WT; protein_0103 -5.56 -> +1.94) = their selectivity was the over-dock artifact, confirmed. The other 3 over-docked selectives over-dock in 0/7 shards = unrescuable.",
+      "done_criteria": "rescuable over-docked selectives re-gated on preserved poses; rescued iff still selective, else artifact confirmed",
+      "notes": "Result: credible G12D-selective count is DEFINITIVELY 2 (b3_gpu7_113, nb3_gpu4_132)."
+    },
+    {
+      "id": "finalize-submission",
+      "desc": "Promote the chosen Recommended-20 to runs/submission.csv and confirm portal validation",
+      "status": "done",
+      "evidence": "merge_and_emit.py (gate=FILTER not ranker; ruler ranks) -> final20_two_axis_recommended.csv, promoted to runs/submission.csv (byte-identical via cmp; 21 lines all-CRLF; 13 single_chain + 7 nanobody; rank-ordered). Prior locked set backed up to runs/submission.locked-2026-11-06.bak.csv. Portal parsed all 20 as Passed / 0 needing fixes (lengths + sequence ends byte-matched to submission.csv).",
+      "done_criteria": "submission.csv = the chosen 20, portal-format-validated; upload remains the user's to click",
+      "blocked_on": "USER upload (gated) to Proteinbase"
     }
   ]
 }
