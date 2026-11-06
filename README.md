@@ -15,6 +15,7 @@ empty HLA groove. Deadline **2026-11-08 23:59 AoE**. Submission upload is **user
 | `CLAUDE.md` | Working rules (autonomy, GPU, git, devil's-advocate) |
 | `progress.md` | Newest-first running log with evidence (task ids, `rc`) |
 | `session-handoff.md` | Where things stand right now + next actions + pending gated decision |
+| `docs/ELIGIBILITY_PROVENANCE.md` | De-novo justification per class (framework+CDR provenance), prescreen status, verify-list |
 | `configs/target.yaml`, `data/targets/` | Target definition (HLA, β2m, peptide states, crystal refs) |
 | `docs/` | Deeper notes: `METHODS.md`, `PLAN.md`, `RESEARCH_SOTA.md`, `RECON.md` |
 | `specs/` | BoltzGen generation specs (pep-centric, nanobody, fab, helix-decoy) |

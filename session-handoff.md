@@ -37,6 +37,13 @@ portfolio), so the invariant "G12D-vs-WT is a bench measurement, not an in-silic
 - **The portal submit of `runs/submission.csv` to Proteinbase** — the user's to click (USER-GATED). The loaded set
   is validated and correct; deadline 2026-11-08 23:59 AoE (~2.5-day buffer).
 
+### Eligibility / provenance (recorded 2026-11-06)
+`docs/ELIGIBILITY_PROVENANCE.md` holds the de-novo justification for the finalized 20 under the organizers' Slack
+clarifications (2026-11-04/05: constant framework + regenerated CDRs = de novo, contingent on the submission novelty
+checker). Our 7 nanobodies are public VHH-framework + de-novo CDRs (not seeded); the 13 single_chain are de-novo
+non-Ig. Portal prescreen passed all 20 — keep that result with the submission record. Verify directly (NOT settled by
+the brief): current deadline + track allowance, and Modal/Claude credit balances + expiry.
+
 ### Next actions (non-gated, if asked)
 - Optional "best-quality 20": the base-32 pool has only 15 ruler-clean, non-anti-selective designs; #16–20 are
   anti-selective padding. Vetting 5 ruler-clean designs from the expansion pool to replace the padding would need
