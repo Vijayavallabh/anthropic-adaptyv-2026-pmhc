@@ -39,10 +39,13 @@ Full sequences: `runs/submission.csv`. Per the challenge rules, nanobody novelty
 and is not penalized. This is exactly the case the organizers sanctioned.
 
 ### Single-chain miniproteins (13 of 20) — de novo, non-immunoglobulin
-Generated zero-shot by BoltzGen (protein-anything) and RFdiffusion1 + SolubleMPNN against the ordered pMHC; the
-sequences are co-designed de novo, folded directly, never re-sequenced from a natural protein. A sequence/topology
-classifier removed any immunoglobulin V-domain emitted by the single-chain route, so the single-chain set is
-genuinely non-antibody. No single-chain-TCR-mimetic or constant-domain format is used, so the open organizer
+Generated zero-shot by **two independent generators** against the ordered pMHC: BoltzGen (protein-anything) for the
+`b2_*`/`b3_*` designs, and **Genie3** — an orthogonal diffusion backbone model (official
+`anthropics/uplifting-biomolecular-modeling`) — for the five `genie3_*` designs, whose backbones were generated de
+novo and then sequence-designed with SolubleMPNN (no Cys); neither route seeds from a known binder. All sequences
+are co-designed de novo, folded directly, never re-sequenced from a natural protein. A sequence/topology classifier
+removed any immunoglobulin V-domain emitted by the single-chain route (every single-chain design carries zero
+cysteines and no WGxG motif), so the single-chain set is genuinely non-antibody. No single-chain-TCR-mimetic or constant-domain format is used, so the open organizer
 question about that specific format does not bear on this submission.
 
 ### Prescreen status (the checker the organizers point to)

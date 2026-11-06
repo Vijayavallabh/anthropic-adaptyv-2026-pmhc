@@ -11,8 +11,8 @@ import argparse, csv, glob, json, os, re, subprocess, shutil
 from pathlib import Path
 
 MPNN_PY = Path("/home/prachh/v/sepiq-2026-challenge/.venv-boltz/bin/python")  # has torch
-MPNN = Path("/home/prachh/v/anthropic-adaptyv-2026-tfr1/third_party/proteinmpnn/stock/src")
-WEIGHTS = Path("/home/prachh/v/anthropic-adaptyv-2026-tfr1/weights/proteinmpnn/vanilla_model_weights")
+MPNN = Path("/home/prachh/v/anthropic-adaptyv-2026-pmhc/tools/proteinmpnn/src")
+WEIGHTS = Path("/home/prachh/v/anthropic-adaptyv-2026-pmhc/tools/proteinmpnn/weights")
 ROOT = Path(__file__).resolve().parent.parent
 _v = re.findall(r'^\s+sequence:\s*"([A-Z]+)"', open(ROOT / "configs/target.yaml").read(), re.M)
 TARGET_SEQS = {s for s in _v}  # HLA, b2m, peptides -- the binder matches none of these

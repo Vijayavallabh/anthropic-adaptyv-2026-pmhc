@@ -1,0 +1,9 @@
+design	nG	nW	gmean	wmean	ddG	ci_lo	ci_hi	p	verdict
+rfd_des_g2_pmhc_g12d_87_m0	6	6	-53.39	-47.12	-6.27	-12.82	-1.28	0.004	G12D-SELECTIVE
+rfd_des_g5_pmhc_g12d_72_m0	6	6	-54.76	-49.44	-5.31	-14.57	4.18	0.278	null(CI-incl-0)
+rfd_des_g6_pmhc_g12d_148_m1	6	6	-70.72	-65.48	-5.24	-11.08	0.58	0.082	null(CI-incl-0)
+rfd_des_pmhc_g12d_8_m0	6	6	-45.51	-43.55	-1.96	-10.31	6.15	0.65	null(CI-incl-0)
+rfd_des_g6_pmhc_g12d_142_m1	6	6	-37.62	-36.1	-1.52	-5.01	1.8	0.383	null(CI-incl-0)
+rfd_des_g4_pmhc_g12d_121_m1	6	6	-47.53	-50.1	2.58	-3.54	8.43	0.405	null(CI-incl-0)
+rfd_des_g2_pmhc_g12d_169_m0	6	6	-37.12	-43.37	6.25	0.92	11.01	0.023	WT-favored
+rfd_des_g5_pmhc_g12d_176_m1	6	6	-37.85	-44.84	6.99	2.66	11.44	0.001	WT-favored

@@ -1,0 +1,12 @@
+name,singleseq_maxTM_pdb,top_hit,verdict
+rfd_des_g4_pmhc_g12d_121_m1,0.682,1vhb-assembly1_B,novel
+rfd_des_g3_pmhc_g12d_78_m0,0.792,7wio-assembly1_A,novel
+rfd_des_g5_pmhc_g12d_176_m1,0.809,8ek4-assembly1_A,borderline
+rfd_des_pmhc_g12d_8_m0,0.84,2rd0-assembly1_B,borderline
+rfd_des_g6_pmhc_g12d_148_m1,0.866,7jzn-assembly1_E,borderline
+rfd_des_g5_pmhc_g12d_72_m0,0.893,4uos-assembly1_A,borderline
+rfd_des_g2_pmhc_g12d_169_m0,0.911,6b87-assembly2_B-3,risk
+rfd_des_g6_pmhc_g12d_142_m1,0.932,4abm-assembly1_B,risk
+rfd_des_pmhc_g12d_168_m1,0.936,6prh-assembly1_A,risk
+rfd_des_g6_pmhc_g12d_16_m0,0.939,7aoi-assembly1_AY,risk
+rfd_des_g2_pmhc_g12d_87_m0,0.952,7f6j-assembly1_C,risk

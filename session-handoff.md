@@ -2,7 +2,28 @@
 
 Where things stand, for the next session. Newest state at top; full history in `progress.md`.
 
-## As of 2026-11-06 (latest) — devil's-advocate audit → novelty-aware re-rank
+## As of 2026-11-06 (latest) — ORTHOGONAL Genie3 run → 2-generator hedge in the assayed top-10
+
+The devil's-advocate verdict's one conceded risk (all-BoltzGen monoculture) is now **resolved**: the user opted to
+run an orthogonal generator, and it succeeded. **Genie3** (rebuilt from the official anthropics repo) generated 1200
+backbones → PULCHRA full-bb → SolubleMPNN (97% foldable, median pLDDT 93) → g12d triage → the SAME 5-sample 6-state
+panel + weakest ruler + MM-GBSA gate, all isolated under `runs/genie3/` (never touched `runs/campaign/`).
+- **No 3rd credible selective** (honest): the top co-fold design (0.670, beats our best 0.583) was gate-**refuted**
+  as WT-favored; the one gate-selective was an over-dock artifact. Credible selectives stay 2 (both BoltzGen, #1-2).
+- **But the orthogonal hedge is real:** 5 Genie3 designs are preserved-pose, positive-weakest, not-WT-favored.
+  `scripts/gate/rerank_v3.py` promoted them — **3 into the assayed top-10** (`genie3_8_m0` 0.49, `genie3_g4_121_m1`
+  0.42 novel, `genie3_g6_148_m1` 0.38 gate-leaning), 2 hydrophobic ones in reserve. New top-10 = 2 credible
+  selectives + 5 BoltzGen + 3 Genie3 (two generators + both classes); the added Genie3 OUTRANK the displaced
+  BoltzGen on the ruler = strict gain + diversity gain. All 20 now positive-weakest (dropped the WT-favored pads).
+- **`runs/submission.csv` is the new hedged 20** (13 single + 7 nanobody); backups
+  `runs/submission*.pre-genie3-2026-11-06.bak.csv` (and `*.pre-advocate-*`). Integrity audit re-passed. Docs synced.
+- Genie3 infra (gitignored): `third_party/uplifting-biomolecular-modeling`, `weights/genie3`; scripts
+  `setup_genie3_pmhc.sh`, `prep_genie3_pmhc.py`, `gen_genie3_pmhc.sh`, `build_genie3_fullbb_pmhc.py`,
+  `funnel_genie3_pmhc.sh`, `gate/gate_genie3.sh`, `gate/rerank_v3.py`. PULCHRA at the `.claude-private/jobs/5045f83d`
+  recon venv. `mpnn_binder.py` now points at vendored `tools/proteinmpnn`.
+- **Pending (USER):** attach the evidence package if the portal allows, then Submit the 20. Upload USER-GATED.
+
+## As of 2026-11-06 — devil's-advocate audit → novelty-aware re-rank
 
 The user ran `/devil-advocate` on the finalized 20. A cold adversary's kill shot was **half right**: the prior order
 did bury stronger survivors on our own weakest-margin ruler — but its naive "rank by weakest" fix (and the adversary)

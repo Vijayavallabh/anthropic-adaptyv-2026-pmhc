@@ -2,7 +2,34 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-06 (latest) — DEVIL'S-ADVOCATE audit of the ranking → novelty-aware re-rank (strict top-10 upgrade)
+## 2026-11-06 (latest) — ORTHOGONAL-GENERATOR run (Genie3) → 2-lineage hedge, assayed top-10 upgraded
+
+Assistant-drafted (Claude). The devil's-advocate verdict conceded one material risk — the submission was an
+all-BoltzGen monoculture (correlated-failure). The user chose to attempt an orthogonal-generator run on the 6 idle
+GPUs. It PAID OFF (well beyond the "lottery" framing).
+- **Stood up Genie3 from scratch** (official `github.com/anthropics/uplifting-biomolecular-modeling`; the TNF/TfR1
+  installs were gone): `scripts/setup_genie3_pmhc.sh` (user ran via `!` — install was sandbox-gated). Target =
+  7OW6-derived G12D pMHC, hotspot C4,5,7,8, **Asp6 (C6) in extended** (bias to the discriminating residue):
+  `scripts/prep_genie3_pmhc.py`.
+- **Funnel (all isolated under `runs/genie3/`, never touched `runs/campaign`):** 1200 backbones
+  (`gen_genie3_pmhc.sh`, GPUs 2-7) → PULCHRA full-bb (`build_genie3_fullbb_pmhc.py`) → SolubleMPNN
+  (`mpnn_binder.py`, repointed to vendored `tools/proteinmpnn`) = 2800 seqs, **97% foldable, median ESMFold
+  pLDDT 93** → g12d triage (top 150) → TRUSTED 5-sample 6-state panel → same weakest ruler (`funnel_genie3_pmhc.sh`).
+- **Result:** 11 Genie3 designs weakest ≥0.30; top `rfd_des_g5_..._176` = **0.670, BEATS our best BoltzGen (0.583)**
+  — BUT the gate **REFUTED it as WT-favored** (over-stated co-fold), and the one gate-selective (`_87` -6.27) was an
+  **over-dock artifact** (Asp6 10 Å out). So **no 3rd credible selective** (mirrors BoltzGen; still 2). HONEST.
+- **But 5 Genie3 are preserved-pose, positive-weakest, not-WT-favored** (same tier as our BoltzGen core; 2 lean
+  gate-selective -5.2/-5.3). Gated top 8 (`scripts/gate/gate_genie3.sh`), pose-realism + novelty (foldseek, same
+  method) computed. **Promoted 5 Genie3** (`scripts/gate/rerank_v3.py`): 3 into the **assayed top-10**
+  (`genie3_8_m0` 0.49 soluble, `genie3_g4_121_m1` 0.42 **novel maxTM 0.68**, `genie3_g6_148_m1` 0.38 gate-lean);
+  the 2 hydrophobic ones (KD +0.6/+0.8) held in reserve (expression-first).
+- **New top-10 = 2 credible selectives + 5 BoltzGen + 3 Genie3**, two independent generators + both classes; the
+  3 Genie3 added (0.38-0.49) OUTRANK the 3 BoltzGen displaced (0.32-0.41) = strict ruler gain + diversity gain.
+  Dropped the 5 BoltzGen WT-favored pads → **all-20 positive-weakest**. 13 single + 7 nanobody. Integrity audit
+  re-passed (Genie3 single-chains 0-Cys/no-WGxG = non-Ig; no new near-dups; 2 mild disclosed KD). CRLF intact;
+  backups `runs/submission*.pre-genie3-2026-11-06.bak.csv`. Docs synced. **Upload USER-GATED.**
+
+## 2026-11-06 — DEVIL'S-ADVOCATE audit of the ranking → novelty-aware re-rank (strict top-10 upgrade)
 
 Assistant-drafted (Claude). User ran `/devil-advocate` on the finalized 20 ("brutally rank even if most need
 replacing; winning is the only goal"). One cold adversary (Sonnet, claim-block + raw data only) + full in-context

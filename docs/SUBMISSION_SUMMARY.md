@@ -13,11 +13,13 @@ designs avoid the conserved α1/α2 helix surfaces (which would give a peptide-i
 All co-folding models the whole complex (binder + peptide + heavy chain + β2m), not the peptide alone.
 
 ## Chance to express and bind (the first screen)
-12 single-chain miniproteins + 8 nanobodies, 61–133 aa, all within class limits. Per-design screens are in
-`runs/submission_screens.csv`: **ESMFold pLDDT** (single-chain 89–95; nanobodies 80–95, read within-class, as
+13 single-chain miniproteins + 7 nanobodies, 57–133 aa, all within class limits. Per-design screens are in
+`runs/submission_screens.csv`: **ESMFold pLDDT** (single-chain 89–96; nanobodies 80–95, read within-class, as
 single-sequence predictors score nanobodies lower), **ipSAE to the G12D complex** (0.45–0.83), and **mean
-Kyte–Doolittle hydropathy** (17/20 soluble, mean −0.18; three designs mildly positive, disclosed in the table).
-No design targets a tag; no linkers/padding/extra domains are used to dilate novelty.
+Kyte–Doolittle hydropathy** (16/20 soluble, mean −0.11; four mildly positive — two of them held in reserve, not
+in the assayed top 10 — disclosed in the table). No design targets a tag; no linkers/padding/extra domains are
+used to dilate novelty. The set is produced by **two independent generators** — BoltzGen and (for the five
+`genie3_*` designs) Genie3 diffusion backbones + SolubleMPNN — all run zero-shot, de novo.
 
 ## Evidence for the hardest goals — selectivity (the differentiator)
 The single buried-residue G12D-vs-WT discrimination is not resolvable by co-folding alone, and we treat it as a
@@ -43,21 +45,26 @@ frameworks, as the rules specify (framework TM is expectedly high and not penali
 known binder; generators were run zero-shot (details and framework/CDR provenance in `ELIGIBILITY_PROVENANCE.md`).
 
 ## Ranking and diversity
-Ranked selectivity-evidence-first, then by the weakest-margin ruler, with the two credible selectives at #1–2.
-Within the peptide-selective tier the order balances the ruler against novelty and pose-realism, so the assayed
-top 10 carries no structural-novelty-risk designs and no over-docked poses; two higher-margin but
-structural-novelty-risk designs (maxTM ≈ 0.93–0.95) are kept as ranked reserve at #11–12 and disclosed. The top 10
-span **both molecule classes — de-novo single-chain miniproteins and VHH nanobodies, two distinct fold families**;
-all were produced by one generator family (BoltzGen), so generator-level correlated error is a residual risk the
-two-fold-family split only partly offsets. Lower ranks include well-folded, soluble designs that are
-peptide-specific on the co-fold panel but not gate-confirmed (honest long shots), and designs the gate reads as
-wild-type-leaning are ranked last. Every in-silico number is a prediction; the wet-lab assay is the verdict.
+Ranked selectivity-evidence-first, then by the weakest-margin ruler, with the two gate-confirmed credible
+selectives at #1–2. Within the peptide-selective tier the order balances the ruler against novelty, pose-realism
+and expression. Because model error is correlated within a single generator, the top 10 is **diversified across
+two independent generators — BoltzGen and Genie3 (an orthogonal diffusion model) — and both fold classes**
+(single-chain miniproteins and VHH nanobodies): the assayed top 10 holds the 2 credible selectives, 5 BoltzGen
+ruler designs, and **3 orthogonal Genie3 designs** (one structurally novel at maxTM 0.68, one gate-leaning
+selective). This directly reduces generator-level correlated-failure risk. The Genie3 designs were put through the
+*identical* funnel (co-fold panel → weakest-margin ruler → MM-GBSA gate + pose-realism); the single strongest
+co-fold margin in the campaign came from Genie3 but was **gate-refuted as wild-type-leaning** and is not featured,
+and a gate-selective Genie3 pose that proved an over-dock artifact was denied credit — the gate stays an honest
+filter. All 20 are positive on the weakest-margin ruler (no anti-selective padding); lower ranks are well-folded
+peptide-specific long shots not gate-confirmed. Every in-silico number is a prediction; the wet-lab assay is the
+verdict.
 
 ## Integrity and anticipated checks
 We pre-empt the standard selection flags:
-- **Not immunoglobulin V-domains.** The 13 single-chain designs are 61–85 aa — far shorter than an Ig VH/VHH
-  (~110–125 aa) — with no Ig framework (no conserved Cys pair, no WGxG motif), so a numbering tool (e.g. ANARCI)
-  will not number them as antibody chains. The 7 nanobodies are correctly declared as nanobody.
+- **Not immunoglobulin V-domains.** The 13 single-chain designs are 57–105 aa with **no Ig framework at all — zero
+  cysteines and no WGxG motif in any of them** — so even the longest (two Genie3 designs at 104–105 aa) carry none
+  of the Ig hallmarks and a numbering tool (e.g. ANARCI) will not number them as antibody chains. The 7 nanobodies
+  are correctly declared as nanobody.
 - **No near-duplicates in the assayed set.** The single-chain designs have low pairwise identity. The nanobodies
   share the standard VHH framework (expected, and de novo under the organizers' ruling when the CDRs are
   regenerated), so a few exceed 0.85 whole-sequence identity — e.g. `nb3_gpu4_132`/`nb3_gpu7_029` (0.87) and
