@@ -2,7 +2,34 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-06 (latest) — ORTHOGONAL-GENERATOR run (Genie3) → 2-lineage hedge, assayed top-10 upgraded
+## 2026-11-07 (latest) — EXPANSION GATE: apply the selectivity judge across the un-gated pool (RUNNING)
+
+Assistant-drafted (Claude). User lift (`/ambition-lift`): "2 days 10h left — replace the worst designs with
+genuinely new strong ones." Reframed honestly: strength is **yield-limited, not time-limited** (2 credibles /
+~5100 designs). The real un-exhausted lever: the MM-GBSA gate (only judge that sees G12D-vs-WT) was only ever run
+on the ~68 co-fold-ruler-TOP designs; the ruler is **blind to the buried residue**, so credibles may sit at
+ruler-rank 40–300, never gated. Inventory: **1943 BoltzGen + 150 Genie3 paneled, only 68 gated** → ~2025 un-gated
+with poses on disk (5201 campaign + 900 genie3 G12D model_0 PDBs). GPUs 2–7 idle (0,1 foreign).
+- **Cheap geometric "charge-sensor" prior = DEAD** (`scripts/gate/charge_sensor_prior.py`). Control check:
+  ranked the 2 real credibles 1513th/867th and the **over-dock artifact 142nd** — ANTI-correlated. Confirms the
+  G12D mechanism is through-space/induced, not buried-contact (direct-capture is dead). NOT used to rank.
+- **Validated pose-realism sub-signal** from the same table: `native_bridge` (Asp6↔HLA-Arg114). Both credibles
+  intact (2.6–3.0 Å), over-dock artifact broken (7.5 Å). → pre-filter: 299 un-gated realistic-pose designs
+  (144 vhh + 97 protein + 58 genie3).
+- **Side-agent note (CORRECT, acted on):** a 95% bar across ~100 designs manufactures ~1–2 fake winners
+  (look-elsewhere). **Pre-registered the bar BEFORE results** → `docs/EXPANSION_GATE_PREREG.md` (C1 pose-realism,
+  C2 2-rep/2ns screen prioritizer, **C3 confirm ΔΔG≤−4 & CI excl 0 @ 6-rep/5ns, C4 12-rep HOLD, C5 dynamic bridge
+  ≥80% frames, C6 BH-FDR q=0.05, C7 adversarial read**). Defeats random noise + look-elsewhere + systematic bias.
+- **RUNNING (task `bsxkzuez4`):** prep (100 designs, done, 100/100 real prmtops) → 2-rep/2ns SCREEN on
+  58 genie3 + 21 vhh + 21 protein (GPUs 2–7, ~13h). Isolated outroot `runs/gate_expand/` (never clobbers
+  campaign/genie3 gate). Budget: screen ~13h + confirm ≤20h + deepen ~7h ≈ 40h of 58h; ~18h buffer.
+- **RESUME (stage-gated on completion notifications):** `next_stage_list.py confirm screen/gate_results_screen.tsv`
+  → `gate_expand.sh confirm` → `next_stage_list.py deepen confirm/gate_results_confirm.tsv` → `gate_expand.sh
+  deepen` → `next_stage_list.py promote confirm/gate_results_deepen.tsv` (+C5/C7) → promote survivors into
+  `runs/submission.csv` via `rerank_v3.py`-style, update screens/docs. **Honest null (0 new credibles) keeps
+  count at 2.** Upload stays USER-GATED.
+
+## 2026-11-06 — ORTHOGONAL-GENERATOR run (Genie3) → 2-lineage hedge, assayed top-10 upgraded
 
 Assistant-drafted (Claude). The devil's-advocate verdict conceded one material risk — the submission was an
 all-BoltzGen monoculture (correlated-failure). The user chose to attempt an orthogonal-generator run on the 6 idle
