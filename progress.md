@@ -2,7 +2,27 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-08 (latest) — EXPANSION GATE COMPLETE: 2 new Genie3 credibles PROMOTED → 4 total, 2 generators
+## 2026-11-08 (latest) — POSE-ROBUSTNESS CORRECTION: credibles 5→3 (one false top pick CAUGHT + dropped)
+
+Assistant-drafted (Claude). Two more side-agent reviews, both acted on:
+- **(a) Consistency:** g2_141 cleared the exact 12-rep bar the original credibles passed but was blocked only by
+  FDR (which the originals never faced). User approved the uniform 12-rep-replication standard (AskUserQuestion)
+  → g2_141 briefly promoted to #5 (rerank_v5), credibles 4→5. Documented in EXPANSION_GATE_PREREG.md addendum 1.
+- **(b) Pose reliability (DECISIVE):** the 3 Genie3 credibles rested on LOW binder-peptide ipSAE (0.46–0.59 vs
+  0.72–0.75 for the BoltzGen credibles). Re-gated each on an INDEPENDENT co-fold pose (6-rep/5ns, task bfngcaef2):
+  **g2_103 −12.51 → +0.99 (p=0.76) COLLAPSED → DROPPED** (single-pose artifact on a 0.47 interface);
+  **g2_141 −5.0 → −4.0 CI-incl-0 (p=0.08) pose-sensitive → demoted to #20 reserve**;
+  **g6_28 −7.66 → −7.8 (p=0) ROBUST → retained**. So the expansion gate netted ONE robust new credible, not 3.
+- **FINAL (rerank_v6.py):** credible tier = **3 POSE-ROBUST selectives, reliability-first**: #1 b3_gpu7_113
+  (−9.29, ipSAE 0.75 stable), #2 genie3_g6_28_m0 (−7.66, held on both poses), #3 nb3_gpu4_132 (−7.27, ipSAE 0.72).
+  b3_gpu7_113 leads (not the shaky −12.5). Submission = **13 BoltzGen + 7 Genie3, 14 single_chain + 6 nanobody**;
+  assayed top-10 = 3 credibles (2 BoltzGen + 1 Genie3) + 7 co-fold. ipSAE column = binder-peptide (C-P) for the
+  credibles (like-for-like). Integrity audit PASS; CRLF; backups runs/submission*.pre-{g2141,robust}-2026-11-08.
+  (Note: an earlier failed v6 run truncated submission.csv; rebuilt from the two clean backups. g2_103 still has
+  intact co-fold panel data; it is simply excluded.) Docs synced (SUBMISSION_SUMMARY, METHODS table+prose,
+  ELIGIBILITY, EXPANSION_GATE_PREREG addenda 1+2). Upload USER-GATED.
+
+## 2026-11-08 — EXPANSION GATE: 2 new Genie3 credibles promoted → 4 total (superseded by pose-robustness above)
 
 Assistant-drafted (Claude). The 12-rep deepen HELD — the search found **2 genuinely new credible selectives,
 both Genie3** (orthogonal generator). This is the diversity win: credible count **2 → 4, now 2 BoltzGen +

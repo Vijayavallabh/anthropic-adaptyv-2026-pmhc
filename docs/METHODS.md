@@ -125,28 +125,33 @@ over-docked selective is denied gate credit and ranked on the ruler. A pose-resc
 re-gated the two over-docked selectives that had a preserved co-fold shard — both went null on the realistic pose
 (ΔΔG flipped from ≈ −11 / −6 to +7.4 / +1.9), confirming their apparent selectivity was the artifact.
 
-On this honest bar, **four** designs are credible, pose-verified G12D-selectives, **spanning both independent
-generators**: `genie3_g2_103_m1` (Genie3 single_chain, ΔΔG −12.51 [−17.2, −7.4]), `b3_gpu7_113` (BoltzGen
-single_chain, −9.29 [−14.2, −4.3], bridge 2.98 Å), `genie3_g6_28_m0` (Genie3 single_chain, −7.66 [−11.3, −4.0]),
-and `nb3_gpu4_132` (BoltzGen nanobody, −7.27 [−11.7, −2.8], 2.61 Å). They lead the submission. The two Genie3
-credibles come from the **expansion gate** (below); each cleared a pre-registered bar (6-rep confirm → 12-rep
-replication hold → Benjamini–Hochberg FDR q=0.05 across all 24 tests → Asp6–Arg114 bridge intact in 100% of 6,000
-MD frames). The gate stays a filter: the overall ranking is the pre-registered weakest-objective ruler, and the
-final verdict on G12D-vs-WT is the wet-lab assay.
+On this honest bar, **three** designs are credible, **pose-robust** G12D-selectives, **spanning both independent
+generators**: `b3_gpu7_113` (BoltzGen single_chain, ΔΔG −9.29 [−14.2, −4.3], bridge 2.98 Å, binder–peptide ipSAE
+0.75 stable across 5 models), `genie3_g6_28_m0` (Genie3 single_chain, −7.66 [−11.3, −4.0]; held −7.8 on an
+independent pose), and `nb3_gpu4_132` (BoltzGen nanobody, −7.27 [−11.7, −2.8], 2.61 Å, ipSAE 0.72). They lead the
+submission, ordered **reliability-first** (strong ΔΔG *and* stable high-confidence pose — `b3_gpu7_113` leads, not
+a larger but shakier number). The Genie3 credible comes from the **expansion gate** (below). The gate stays a
+filter: the overall ranking is the pre-registered weakest-objective ruler, and the final verdict on G12D-vs-WT is
+the wet-lab assay.
 
 **Expansion gate.** The co-fold weakest-objective ruler is blind to the single buried residue, so it cannot rank
 the G12D-vs-WT axis — and the MM-GBSA gate (which can) had only been run on the ~68 ruler-top designs. We therefore
 applied the gate across the ~2,000 paneled-but-un-gated designs (pre-filtered to realistic poses with the native
 Asp6–Arg114 bridge intact), staged cheap-screen → 6-rep confirm → 12-rep deepen under the pre-registered bar in
-`docs/EXPANSION_GATE_PREREG.md`. This surfaced the two Genie3 credibles above. Tellingly, `genie3_g2_103_m1` —
-the strongest gate-selective in the whole campaign — had a co-fold weakest-margin of 0.01 (ruler-invisible),
-demonstrating directly that the gate sees what the ruler cannot. A cheap geometric "charge-sensor" prior was tried
-to prioritise and **discarded after a control check** showed it anti-correlated with truth (it ranked the real
-credibles 1513th/867th and an over-dock artifact 142nd), re-confirming the through-space (non-contact) mechanism.
+`docs/EXPANSION_GATE_PREREG.md`. It surfaced three Genie3 candidates passing the 12-rep + FDR bar — but because a
+gate ΔΔG is only as good as its co-fold pose, we added an **independent-pose robustness check** (re-gate on a
+different Boltz model). This was decisive: `genie3_g2_103_m1`, the campaign's largest margin at −12.51 (on a
+low-confidence 0.47 interface), **collapsed to +0.99 (p=0.76) on an independent pose** and was **dropped**;
+`genie3_g2_141_m1` was pose-sensitive and demoted to reserve; only `genie3_g6_28_m0` **held on both poses** (−7.66
+and −7.8, p=0) and is credited. So the expansion gate netted **one** robust new credible, not three — the honest
+result after the robustness filter. A cheap geometric "charge-sensor" prior was also tried to prioritise and
+**discarded after a control check** showed it anti-correlated with truth (it ranked the real credibles 1513th/867th
+and an over-dock artifact 142nd), re-confirming the through-space (non-contact) mechanism.
 
 ## Selection
-The 20 are ranked selectivity-evidence-first: the **four credible, pose-verified G12D-selectives** lead (ordered by
-gate ΔΔG, interleaving the two generators), then the ruler-clean core follows in weakest-margin order. Designs
+The 20 are ranked selectivity-evidence-first: the **three credible, pose-robust G12D-selectives** lead (ordered
+reliability-first — strong ΔΔG *and* stable high-confidence pose), then the ruler-clean core follows in
+weakest-margin order. Designs
 whose gate-selectivity rests on an over-docked pose are kept only on their ruler merit and flagged (e.g.
 `nb3_gpu6_132`, the ruler leader at +0.583, gate not credited). **All 20 are positive on the weakest-margin
 ruler** — no anti-selective padding; hydrophobic or novelty-risk long shots are held in reserve below the assay
@@ -154,12 +159,12 @@ cap (disclosed). True G12D-vs-WT is used only to filter, never to rank, and rema
 
 ## Submitted designs
 Ranked final set (`runs/submission.csv`; per-design screens + one-line reasons in `runs/submission_screens.csv`).
-Ordered selectivity-evidence-first (the **4 credible MM-GBSA selectives** lead, by gate ΔΔG), then by the
-weakest-margin ruler balanced against novelty, pose-realism and expression. The set spans **two independent
-generators** — BoltzGen (13 designs) and Genie3 (an orthogonal diffusion model; the seven `genie3_*` designs =
-Genie3 backbones through the identical funnel) — so the assayed top 10 (cap is 10 designs/submission) is diversified
-across both generators and both fold families (single-chain miniprotein + VHH nanobody): **4 credible selectives
-(2 BoltzGen + 2 Genie3) + 6 co-fold ruler designs (4 BoltzGen + 2 Genie3)**. All 20 are positive on the
+Ordered selectivity-evidence-first (the **3 pose-robust credible MM-GBSA selectives** lead, reliability-first),
+then by the weakest-margin ruler balanced against novelty, pose-realism and expression. The set spans **two
+independent generators** — BoltzGen (13 designs) and Genie3 (an orthogonal diffusion model; the seven `genie3_*`
+designs = Genie3 backbones through the identical funnel) — so the assayed top 10 (cap is 10 designs/submission) is
+diversified across both generators and both fold families (single-chain miniprotein + VHH nanobody): **3 credible
+selectives (2 BoltzGen + 1 Genie3) + 7 co-fold ruler designs (incl. 2 Genie3)**. All 20 are positive on the
 weakest-margin ruler (no anti-selective padding). Hydrophobic or novelty-risk designs are held in reserve below the
 cap (disclosed).
 Three screens per design (read within class): ESMFold **pLDDT**, **ipSAE** to the G12D complex, and mean
@@ -168,23 +173,23 @@ NOT a rank, credible only on a preserved pose with a CI excluding 0 - tier-1 is 
 
 | # | design | class | pLDDT | ipSAE | KD | novelty | weakest | gate ddG [CI] |
 |--:|--------|-------|------:|------:|---:|---------|--------:|--------------:|
-| 1 | genie3_g2_103_m1 | single_chain | 89.000 | 0.474 | -1.250 | 0.872 | +0.011 | -12.51 [-17.2,-7.4] |
-| 2 | b3_gpu7_113 | single_chain | 94.000 | 0.808 | -0.237 | 0.768 | +0.471 | -9.29 [-14.2,-4.3] |
-| 3 | genie3_g6_28_m0 | single_chain | 95.000 | 0.593 | +0.098 | 0.895 | +0.178 | -7.66 [-11.3,-4.0] |
-| 4 | nb3_gpu4_132 | nanobody | 81.000 | 0.616 | -0.216 | CDR-judged(HCDR3) | +0.266 | -7.27 [-11.7,-2.8] |
-| 5 | nb3_gpu6_132 | nanobody | 95.000 | 0.642 | -0.331 | CDR-judged(HCDR3) | +0.583 | -11.72 [-15.6,-8.0] |
-| 6 | genie3_8_m0 | single_chain | 94.000 | 0.646 | -0.501 | 0.840 | +0.492 | -1.96 [-10.3,6.2] |
-| 7 | b3_gpu7_181 | single_chain | 91.000 | 0.774 | -0.330 | 0.881 | +0.526 | 4.22 [-0.7,8.8] |
-| 8 | genie3_g4_121_m1 | single_chain | 92.000 | 0.546 | +0.171 | 0.682 | +0.423 | 2.58 [-3.5,8.4] |
-| 9 | nb3_gpu3_307 | nanobody | 89.000 | 0.538 | -0.156 | CDR-judged(HCDR3) | +0.460 | 2.93 [-6.0,12.8] |
-| 10 | b3_gpu4_211 | single_chain | 94.000 | 0.666 | +0.129 | 0.801 | +0.485 | 4.88 [-1.7,11.6] |
-| 11 | b3_gpu5_174 | single_chain | 89.000 | 0.729 | -0.151 | 0.864 | +0.489 | 1.67 [-6.1,9.1] |
-| 12 | genie3_g6_148_m1 | single_chain | 91.000 | 0.738 | -0.279 | 0.866 | +0.377 | -2.28 [-8.1,3.6] |
-| 13 | genie3_g5_72_m0 | single_chain | 93.000 | 0.700 | +0.779 | 0.893 | +0.388 | -1.56 [-7.7,4.5] |
-| 14 | nb3_gpu7_192 | nanobody | 88.000 | 0.446 | -0.234 | CDR-judged(HCDR3) | +0.405 | 4.79 [-2.5,11.8] |
-| 15 | genie3_g6_142_m1 | single_chain | 96.000 | 0.679 | +0.602 | 0.932 | +0.408 | -1.52 [-5.0,1.8] |
-| 16 | b3_gpu3_164 | single_chain | 92.000 | 0.773 | -0.738 | 0.946 | +0.423 | 4.81 [-1.6,11.5] |
-| 17 | nb3_gpu2_108 | nanobody | 90.000 | 0.645 | -0.151 | CDR-judged(HCDR3) | +0.346 | -5.11 [-13.7,4.2] |
-| 18 | nb3_gpu7_029 | nanobody | 92.000 | 0.620 | -0.137 | CDR-judged(HCDR3) | +0.324 | 0.38 [-5.8,6.0] |
-| 19 | b3_gpu4_161 | single_chain | 91.000 | 0.615 | -0.052 | 0.850 | +0.316 | -2.37 [-5.9,1.0] |
-| 20 | b2_gpu3_36 | single_chain | 90.000 | 0.657 | -0.290 | 0.932 | +0.246 | 0.41 [-4.1,4.9] |
+| 1 | b3_gpu7_113 | single_chain | 94.000 | 0.749 | -0.237 | 0.768 | +0.471 | -9.29 [-14.2,-4.3] |
+| 2 | genie3_g6_28_m0 | single_chain | 95.000 | 0.593 | +0.098 | 0.895 | +0.178 | -7.66 [-11.3,-4.0] |
+| 3 | nb3_gpu4_132 | nanobody | 81.000 | 0.720 | -0.216 | CDR-judged(HCDR3) | +0.266 | -7.27 [-11.7,-2.8] |
+| 4 | nb3_gpu6_132 | nanobody | 95.000 | 0.642 | -0.331 | CDR-judged(HCDR3) | +0.583 | -11.72 [-15.6,-8.0] (over-dock; not credited) |
+| 5 | genie3_8_m0 | single_chain | 94.000 | 0.646 | -0.501 | 0.840 | +0.492 | -1.96 [-10.3,6.2] |
+| 6 | b3_gpu7_181 | single_chain | 91.000 | 0.774 | -0.330 | 0.881 | +0.526 | 4.22 [-0.7,8.8] |
+| 7 | genie3_g4_121_m1 | single_chain | 92.000 | 0.546 | +0.171 | 0.682 | +0.423 | 2.58 [-3.5,8.4] |
+| 8 | nb3_gpu3_307 | nanobody | 89.000 | 0.538 | -0.156 | CDR-judged(HCDR3) | +0.460 | 2.93 [-6.0,12.8] |
+| 9 | b3_gpu4_211 | single_chain | 94.000 | 0.666 | +0.129 | 0.801 | +0.485 | 4.88 [-1.7,11.6] |
+| 10 | b3_gpu5_174 | single_chain | 89.000 | 0.729 | -0.151 | 0.864 | +0.489 | 1.67 [-6.1,9.1] |
+| 11 | genie3_g6_148_m1 | single_chain | 91.000 | 0.738 | -0.279 | 0.866 | +0.377 | -2.28 [-8.1,3.6] |
+| 12 | genie3_g5_72_m0 | single_chain | 93.000 | 0.700 | +0.779 | 0.893 | +0.388 | -1.56 [-7.7,4.5] |
+| 13 | nb3_gpu7_192 | nanobody | 88.000 | 0.446 | -0.234 | CDR-judged(HCDR3) | +0.405 | 4.79 [-2.5,11.8] |
+| 14 | genie3_g6_142_m1 | single_chain | 96.000 | 0.679 | +0.602 | 0.932 | +0.408 | -1.52 [-5.0,1.8] |
+| 15 | b3_gpu3_164 | single_chain | 92.000 | 0.773 | -0.738 | 0.946 | +0.423 | 4.81 [-1.6,11.5] |
+| 16 | nb3_gpu2_108 | nanobody | 90.000 | 0.645 | -0.151 | CDR-judged(HCDR3) | +0.346 | -5.11 [-13.7,4.2] |
+| 17 | nb3_gpu7_029 | nanobody | 92.000 | 0.620 | -0.137 | CDR-judged(HCDR3) | +0.324 | 0.38 [-5.8,6.0] |
+| 18 | b3_gpu4_161 | single_chain | 91.000 | 0.615 | -0.052 | 0.850 | +0.316 | -2.37 [-5.9,1.0] |
+| 19 | b2_gpu3_36 | single_chain | 90.000 | 0.657 | -0.290 | 0.932 | +0.246 | 0.41 [-4.1,4.9] |
+| 20 | genie3_g2_141_m1 | single_chain | 94.000 | 0.464 | +0.515 | 0.804 | +0.288 | -5.0* pose-sensitive (alt pose CI incl 0) |

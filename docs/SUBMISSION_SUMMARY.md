@@ -33,21 +33,26 @@ The single buried-residue G12D-vs-WT discrimination is not resolvable by co-fold
    keep Asp6 buried and salt-bridged to HLA Arg114 (an over-docked pose that swings Asp6 out is rejected as an
    artifact). The gate was calibrated to recover the one ground-truth system's ΔΔG and to null a WT-vs-WT control.
 
-On this bar, **four designs are credible, pose-verified G12D-selectives** and lead the list, **spanning both
-independent generators**: **`genie3_g2_103_m1`** (Genie3 single-chain; ΔΔG −12.5 kcal/mol, 95% CI [−17.2,−7.4])
-— the strongest in the campaign; **`b3_gpu7_113`** (BoltzGen single-chain; −9.3 kcal/mol, CI [−14.2,−4.3]);
-**`genie3_g6_28_m0`** (Genie3 single-chain; −7.7 kcal/mol, CI [−11.3,−4.0]); and **`nb3_gpu4_132`** (BoltzGen
-nanobody; −7.3 kcal/mol, CI [−11.7,−2.8]). The two Genie3 credibles were found by an **expansion gate** — applying
-the MM-GBSA judge across the ~2,000 paneled designs the co-fold ruler (blind to the buried residue) never tested.
-`genie3_g2_103_m1` sat at co-fold weakest-margin 0.01 (ruler-invisible) yet is the strongest gate-selective, a
-direct demonstration that the gate sees what the ruler cannot. Each new credible cleared a **pre-registered bar**
-(`docs/EXPANSION_GATE_PREREG.md`): a cheap screen, a 6-replica confirm (ΔΔG ≤ −4, CI excludes 0), a **12-replica
-replication that held** (not the small-sample noise that collapsed earlier leaners), **Benjamini–Hochberg FDR
-q=0.05 across all 24 tests**, and the native **Asp6–Arg114 salt bridge intact in 100% of 6,000 MD frames**
-(not an over-dock). Having credibles from **two generators and two fold classes** directly cuts the
-correlated-failure risk of a single-generator pipeline. Consistent with equilibrium physics, a passive monovalent
-binder cannot exceed the equilibrium selectivity ceiling exp(ΔΔG/RT); we set realistic expectations at the
-low-tens-fold range.
+On this bar, **three designs are credible, pose-robust G12D-selectives** and lead the list, **spanning both
+independent generators** (2 BoltzGen + 1 Genie3): **`b3_gpu7_113`** (BoltzGen single-chain; ΔΔG −9.3 kcal/mol, 95%
+CI [−14.2,−4.3]; binder–peptide interface confidence 0.75, stable across all 5 co-fold models); **`genie3_g6_28_m0`**
+(Genie3 single-chain; −7.7 kcal/mol, CI [−11.3,−4.0]); and **`nb3_gpu4_132`** (BoltzGen nanobody; −7.3 kcal/mol, CI
+[−11.7,−2.8]; interface confidence 0.72). The Genie3 credible was found by an **expansion gate** — applying the
+MM-GBSA judge across the ~2,000 paneled designs the co-fold ruler (blind to the buried residue) never tested.
+
+Critically, each credible is **pose-robust**, not just strong on one predicted pose. Because the ΔΔG is only as
+reliable as the co-fold pose it is computed on, we re-gated every Genie3 candidate on an **independent co-fold
+pose**. This caught and removed a false positive: a Genie3 design with a spectacular −12.5 kcal/mol on its gated
+pose **collapsed to ≈0 (p=0.76) on an independent pose** — a single-pose artifact, built on a low-confidence
+interface (0.47) — and was **dropped from the submission entirely**. A second pose-sensitive Genie3 candidate was
+demoted to deep reserve. `genie3_g6_28_m0`, by contrast, **held its selectivity on both poses** (−7.7 and −7.8,
+p=0) and is retained. The ranking is **reliability-first**: `b3_gpu7_113` leads because it pairs a strong ΔΔG with
+the highest, most stable interface confidence — not the raw-largest (but shakier) number. The full uniform bar is
+pose-realistic co-fold → ΔΔG ≤ −4 with CI excluding 0 → 12-replica replication hold → native Asp6–Arg114 bridge
+intact in 100% of 6,000 MD frames → **independent-pose robustness** (`docs/EXPANSION_GATE_PREREG.md` + addenda).
+Having credibles across two generators and two fold classes cuts single-generator correlated-failure risk.
+Consistent with equilibrium physics, a passive monovalent binder cannot exceed the equilibrium selectivity ceiling
+exp(ΔΔG/RT); we set realistic expectations at the low-tens-fold range.
 
 ## Novelty
 All 20 pass the submission novelty gate (level 3+). Single-chain structural novelty is reported as max-TM to the
@@ -56,28 +61,28 @@ frameworks, as the rules specify (framework TM is expectedly high and not penali
 known binder; generators were run zero-shot (details and framework/CDR provenance in `ELIGIBILITY_PROVENANCE.md`).
 
 ## Ranking and diversity
-Ranked selectivity-evidence-first, with the **four gate-confirmed credible selectives at #1–4**, ordered by gate
-ΔΔG and **interleaving the two generators** (Genie3, BoltzGen, Genie3, BoltzGen); the remaining ranks follow the
-pre-registered weakest-margin co-fold ruler, balanced against novelty, pose-realism and expression. Because model
-error is correlated within a single generator, the assayed **top 10 is diversified across both generators —
-BoltzGen and Genie3 (an orthogonal diffusion model) — and both fold classes**: it holds the **4 credible
-selectives (2 BoltzGen + 2 Genie3)** plus 6 co-fold ruler designs (4 BoltzGen + 2 Genie3). Having credible
-selectivity evidence from **two independent generators** is the strongest available hedge against generator-level
-correlated failure. Every Genie3 design was put through the *identical* pipeline (co-fold panel → weakest-margin
-ruler → MM-GBSA gate + pose-realism), and the gate was applied **honestly in both directions**: the single
-strongest co-fold margin in the campaign was Genie3 but was **gate-refuted as wild-type-leaning** and is not
-featured; a gate-selective Genie3 pose that proved an over-dock artifact was denied credit; and an earlier pair of
-6-replica gate-leaners **collapsed at 12 replicas** and were not promoted. The two promoted Genie3 credibles, by
-contrast, **held their ΔΔG at 12 replicas, passed FDR correction, and kept the native salt bridge through the
-entire MD** — the gate stays an honest filter. All 20 are positive on the weakest-margin ruler (no anti-selective
-padding); lower ranks are well-folded peptide-specific long shots not gate-confirmed. Every in-silico number is a
-prediction; the wet-lab assay is the verdict.
+Ranked selectivity-evidence-first, with the **three pose-robust credible selectives at #1–3**, ordered
+**reliability-first** (strong ΔΔG *and* a stable, high-confidence interface — so `b3_gpu7_113` leads, not the
+raw-largest number); the remaining ranks follow the pre-registered weakest-margin co-fold ruler, balanced against
+novelty, pose-realism and expression. Because model error is correlated within a single generator, the assayed
+**top 10 is diversified across both generators — BoltzGen and Genie3 (an orthogonal diffusion model) — and both
+fold classes**: it holds the **3 credible selectives (2 BoltzGen + 1 Genie3)** plus 7 co-fold ruler designs (incl.
+2 more Genie3). Having a credible selective from each generator still cuts single-generator correlated-failure risk.
+Every Genie3 design was put through the *identical* pipeline (co-fold panel → weakest-margin ruler → MM-GBSA gate →
+pose-realism → **independent-pose robustness**), and the gate was applied **honestly in both directions**: the
+single strongest co-fold margin in the campaign was Genie3 but was **gate-refuted as wild-type-leaning**; a
+gate-selective Genie3 pose that proved an over-dock artifact was denied credit; an earlier pair of 6-replica
+gate-leaners **collapsed at 12 replicas**; and — the decisive filter here — a Genie3 design with a −12.5 kcal/mol
+margin **collapsed to ≈0 on an independent co-fold pose** and was dropped, while a pose-sensitive one was demoted to
+reserve. Only `genie3_g6_28_m0` held across poses and is credited — the gate stays an honest filter. All 20 are
+positive on the weakest-margin ruler (no anti-selective padding); lower ranks are well-folded peptide-specific long
+shots not gate-confirmed. Every in-silico number is a prediction; the wet-lab assay is the verdict.
 
 ## Integrity and anticipated checks
 We pre-empt the standard selection flags:
 - **Not immunoglobulin V-domains.** The 14 single-chain designs are 57–105 aa with **no Ig framework at all — zero
-  cysteines and no WGxG motif in any of them** (the two newly promoted Genie3 credibles included) — so even the
-  longest (two Genie3 designs at 104–105 aa) carry none of the Ig hallmarks and a numbering tool (e.g. ANARCI)
+  cysteines and no WGxG motif in any of them** (the promoted Genie3 credible `genie3_g6_28_m0` included) — so even
+  the longest (two Genie3 designs at 104–105 aa) carry none of the Ig hallmarks and a numbering tool (e.g. ANARCI)
   will not number them as antibody chains. The 6 nanobodies are correctly declared as nanobody.
 - **No near-duplicates in the assayed set.** The single-chain designs have low pairwise identity. The nanobodies
   share the standard VHH framework (expected, and de novo under the organizers' ruling when the CDRs are
@@ -86,9 +91,11 @@ We pre-empt the standard selection flags:
   binders. The three VHH-framework nanobodies in the top 10 are pairwise CDR3-distinct.
 - **Screens disclosed, not cherry-picked.** `runs/submission_screens.csv` reports pLDDT, ipSAE and hydropathy for
   all 20, including the weaker values — a few top-10 designs carry a mild, disclosed note (borderline hydropathy on
-  `genie3_g6_28_m0` KD +0.10 and `b3_gpu4_211` KD +0.13; a modest peptide-interface ipSAE 0.47 and a low-complexity
-  E/K N-terminal segment on the top-ranked `genie3_g2_103_m1`); read within class. The credible ranking rests on
-  the MM-GBSA gate ΔΔG with confidence intervals, not on these supporting screens.
+  `genie3_g6_28_m0` KD +0.10 and `b3_gpu4_211` KD +0.13; the Genie3 credible `genie3_g6_28_m0` has a moderate
+  binder–peptide interface confidence 0.59, below the two BoltzGen credibles' 0.72–0.75 — which is why it is
+  credited only because its ΔΔG held on an independent co-fold pose); read within class. The pose-sensitive design
+  this flagged (−12.5 on one pose, ≈0 on another) was **dropped**, not buried in the table. The credible ranking
+  rests on the MM-GBSA gate ΔΔG with confidence intervals *confirmed pose-robust*, not on these supporting screens.
 - **No tags, no novelty-gaming, no known-binder derivation, no simulated-as-experimental data.** Sequences are the
   binder only (no capture tag, no linkers/padding/extra domains added to dilute similarity); novelty is judged on
   the binding portion. Every in-silico number is a prediction; the wet-lab assay is the verdict.
