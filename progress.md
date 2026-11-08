@@ -2,7 +2,28 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-07 (latest) — EXPANSION GATE: apply the selectivity judge across the un-gated pool (RUNNING)
+## 2026-11-08 (latest) — EXPANSION GATE: screen→confirm done; 2 Genie3 candidates in 12-rep deepen (RUNNING)
+
+Assistant-drafted (Claude). The staged search ran clean (GPUs 2-7; isolated `runs/gate_expand/`).
+- **Screen** (2-rep/2ns, 100 designs, task `bsxkzuez4`, ~9.7h): 43/100 leaned G12D; C2 took the 24 most-negative.
+- **Confirm** (6-rep/5ns, 24 designs, task `bo6wkxjbw` — logged STAGE DONE + full 24-row TSV; the −1 exit was a
+  session-restart artifact, not a compute failure): **C3 (ΔΔG≤−4 & CI excl 0) → 3 pass, ALL Genie3**:
+  `rfd_des_g2_pmhc_g12d_103_m1` −14.26 [−21.1,−6.4] p=0.001, `rfd_des_g6_pmhc_g12d_28_m0` −8.98 [−13.2,−4.2]
+  p=0, `rfd_des_g2_pmhc_g12d_141_m1` −6.33 [−11.8,−1.0] p=0.017. **C6 BH-FDR q=0.05 across all 24 confirm tests**
+  → rejects ranks 1-2 only: **`g6_28` and `g2_103` are FDR-significant; `g2_141` (p=0.017) FAILS C6** (blocked
+  from promotion). Both survivors are Genie3 = maximally decorrelated from our 2 BoltzGen credibles.
+- **C5 dynamic bridge** (`scripts/gate/c5_dynamic_bridge.py`, cpptraj on g12d dry trajs; Asp6=resid 386,
+  Arg114=resid 114 verified): on the 6-rep confirm frames, g6_28 and g2_103 BOTH **100% intact** (median
+  2.8 Å, 3000 frames) → NOT over-dock artifacts. (Re-run on 12-rep frames for the final call.)
+- **RUNNING (task `bln4s93ad`):** 12-rep deepen (appends reps 7-12) on all 3 C3-passers, ~7h. This is the C4
+  replication that killed the earlier Genie3 leaners (−5.2→−2.3) — g6_28/g2_103 have far stronger 6-rep signals,
+  but NO pre-judging; promotion needs C4-hold at 12-rep.
+- **RESUME on deepen completion:** `next_stage_list.py promote confirm/gate_results_deepen.tsv
+  confirm/gate_results_confirm.tsv` (C4 hold + C6 BH m=24) → re-run C5 on 12-rep frames → C7 adversarial pose
+  read → promote survivors (expect 0-2, both Genie3) into `runs/submission.csv`, re-rank, update screens/docs.
+  Honest null keeps count at 2. Upload USER-GATED.
+
+## 2026-11-07 — EXPANSION GATE: apply the selectivity judge across the un-gated pool (framework)
 
 Assistant-drafted (Claude). User lift (`/ambition-lift`): "2 days 10h left — replace the worst designs with
 genuinely new strong ones." Reframed honestly: strength is **yield-limited, not time-limited** (2 credibles /

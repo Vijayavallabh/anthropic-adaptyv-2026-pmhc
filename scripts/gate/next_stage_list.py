@@ -5,7 +5,7 @@ bar in docs/EXPANSION_GATE_PREREG.md. Gate TSV columns: design nG nW gmean wmean
 Usage:
   next_stage_list.py confirm <screen_results.tsv>    # C2: <=24 most-negative ddG<0 -> confirm_cands.tsv
   next_stage_list.py deepen  <confirm_results.tsv>   # C3: ddG<=-4 & ci_hi<0        -> deepen_list.txt
-  next_stage_list.py promote <deepen_results.tsv>    # C4+C6: hold at 12-rep + BH-FDR q=0.05 -> report
+  next_stage_list.py promote <deepen_results.tsv> <confirm_results.tsv>  # C4 hold @12-rep + C6 BH-FDR(m=all confirm) -> report
 """
 import sys, csv, os
 P = "/home/prachh/v/anthropic-adaptyv-2026-pmhc"
@@ -57,22 +57,34 @@ def main():
             print(f"  {r['design']:<26} ddG={r['_ddg']:+.2f} CI[{r['_lo']:+.1f},{r['_hi']:+.1f}] p={r['_p']:.3g}")
         if not cand:
             print("  (none — honest null at confirm; credible count stays 2)")
-    elif mode == "promote":  # C4 hold + C6 BH-FDR
-        held = [r for r in rows if r["_ddg"] <= -4.0 and r["_hi"] < 0.0]
-        # Benjamini-Hochberg across everything deepened
-        ps = sorted([(r["_p"], r) for r in rows], key=lambda x: x[0])
-        m = len(ps); q = 0.05; passed = set()
-        for i, (p, r) in enumerate(ps, 1):
+    elif mode == "promote":  # C4 hold @12-rep (this TSV) + C6 BH-FDR across the FULL confirm family
+        confirm_tsv = sys.argv[3]
+        conf = load(confirm_tsv)
+        # C4: hold at 12-rep (ddG<=-4 AND CI excludes 0 on the negative side)
+        held = {r["design"] for r in rows if r["_ddg"] <= -4.0 and r["_hi"] < 0.0}
+        # C6: Benjamini-Hochberg across ALL confirm tests (the look-elsewhere family), q=0.05
+        ps = sorted([(r["_p"], r["design"]) for r in conf], key=lambda x: x[0])
+        m = len(ps); q = 0.05; kmax = 0
+        for i, (p, d) in enumerate(ps, 1):
             if p <= q * i / m:
-                passed = set(id(rr) for _, rr in ps[:i])
-        promote = [r for r in held if id(r) in passed]
-        print(f"C4: {len(held)}/{len(rows)} HOLD at 12-rep (ddG<=-4 & CI excludes 0)")
-        print(f"C6: BH-FDR q=0.05 across m={m} deepened; adjusted-pass set size {len(passed)}")
-        print("PROMOTE (hold AND FDR-pass):")
-        for r in sorted(promote, key=lambda r: r["_ddg"]):
-            print(f"  {r['design']:<26} ddG={r['_ddg']:+.2f} CI[{r['_lo']:+.1f},{r['_hi']:+.1f}] p={r['_p']:.3g}")
+                kmax = i
+        fdr_pass = {d for _, d in ps[:kmax]}
+        promote = sorted([r for r in rows if r["design"] in held and r["design"] in fdr_pass],
+                         key=lambda r: r["_ddg"])
+        print(f"C4 (12-rep HOLD, ddG<=-4 & CI excl 0): {sorted(held)}")
+        print(f"C6 (BH-FDR q=0.05 across m={m} CONFIRM tests): rejects {sorted(fdr_pass)}")
+        print("PROMOTE candidates (C4-hold AND C6-FDR-pass; still need C5 bridge + C7 read):")
+        for r in promote:
+            print(f"  {r['design']:<26} 12rep ddG={r['_ddg']:+.2f} CI[{r['_lo']:+.1f},{r['_hi']:+.1f}] p={r['_p']:.3g}")
         if not promote:
             print("  (none survive — honest null; credible count stays 2)")
+        # also report what each candidate did at 12-rep for transparency
+        print("\nall deepened designs at 12-rep:")
+        for r in sorted(rows, key=lambda r: r["_ddg"]):
+            tag = []
+            if r["design"] in held: tag.append("C4-hold")
+            if r["design"] in fdr_pass: tag.append("C6-FDR")
+            print(f"  {r['design']:<26} ddG={r['_ddg']:+.2f} CI[{r['_lo']:+.1f},{r['_hi']:+.1f}] p={r['_p']:.3g}  {' '.join(tag)}")
     else:
         sys.exit(f"unknown mode {mode}")
 
