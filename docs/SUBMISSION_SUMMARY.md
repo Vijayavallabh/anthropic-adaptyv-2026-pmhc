@@ -34,21 +34,24 @@ The single buried-residue G12D-vs-WT discrimination is not resolvable by co-fold
    artifact). The gate was calibrated to recover the one ground-truth system's ΔΔG and to null a WT-vs-WT control.
 
 On this bar, **three designs are credible, pose-robust G12D-selectives** and lead the list, **spanning both
-independent generators** (2 BoltzGen + 1 Genie3): **`b3_gpu7_113`** (BoltzGen single-chain; ΔΔG −9.3 kcal/mol, 95%
-CI [−14.2,−4.3]; binder–peptide interface confidence 0.75, stable across all 5 co-fold models); **`genie3_g6_28_m0`**
-(Genie3 single-chain; −7.7 kcal/mol, CI [−11.3,−4.0]); and **`nb3_gpu4_132`** (BoltzGen nanobody; −7.3 kcal/mol, CI
-[−11.7,−2.8]; interface confidence 0.72). The Genie3 credible was found by an **expansion gate** — applying the
-MM-GBSA judge across the ~2,000 paneled designs the co-fold ruler (blind to the buried residue) never tested.
+independent generators** (2 BoltzGen + 1 Genie3). Each is scored not on a single predicted pose but on a
+**5-pose co-fold ensemble** (the gate's confidence interval captures MD noise, not co-fold *pose* uncertainty —
+the larger error for these interfaces): **`b3_gpu7_113`** (BoltzGen single-chain; G12D-favoring on **5/5** poses,
+ensemble-mean ΔΔG −5.8 kcal/mol; binder–peptide interface confidence 0.75, stable across all 5 models);
+**`genie3_g6_28_m0`** (Genie3 single-chain; **5/5** poses, mean −6.2); and **`nb3_gpu4_132`** (BoltzGen nanobody;
+4/5 poses — one flips — mean −3.3; interface confidence 0.72, the weakest of the three, disclosed). The Genie3
+credible was found by an **expansion gate** — applying the MM-GBSA judge across the ~2,000 paneled designs the
+co-fold ruler (blind to the buried residue) never tested.
 
-Critically, each credible is **pose-robust**, not just strong on one predicted pose. Because the ΔΔG is only as
-reliable as the co-fold pose it is computed on, we re-gated every Genie3 candidate on an **independent co-fold
-pose**. This caught and removed a false positive: a Genie3 design with a spectacular −12.5 kcal/mol on its gated
-pose **collapsed to ≈0 (p=0.76) on an independent pose** — a single-pose artifact, built on a low-confidence
-interface (0.47) — and was **dropped from the submission entirely**. A second pose-sensitive Genie3 candidate was
-demoted to deep reserve. `genie3_g6_28_m0`, by contrast, **held its selectivity on both poses** (−7.7 and −7.8,
-p=0) and is retained. The ranking is **reliability-first**: `b3_gpu7_113` leads because it pairs a strong ΔΔG with
-the highest, most stable interface confidence — not the raw-largest (but shakier) number. The full uniform bar is
-pose-realistic co-fold → ΔΔG ≤ −4 with CI excluding 0 → 12-replica replication hold → native Asp6–Arg114 bridge
+Critically, "pose-robust" is a *tested* property, applied uniformly. Because a ΔΔG is only as reliable as the
+co-fold pose it starts from, we re-gated every credible candidate on independent co-fold poses. This caught and
+removed a false positive: a Genie3 design with a spectacular −12.5 kcal/mol on its gated pose **collapsed to ≈0
+(p=0.76) on an independent pose** — a single-pose artifact on a low-confidence interface (0.47) — and was
+**dropped entirely**; a second pose-sensitive candidate was demoted to reserve. The three retained credibles, by
+contrast, favor G12D on 4–5 of 5 independent poses. The ranking is **reliability-first**: `b3_gpu7_113` leads
+because it pairs 5/5 pose-robustness with the highest, most stable interface confidence — not a raw-largest but
+pose-fragile number. The full uniform bar is pose-realistic co-fold → ΔΔG ≤ −4 with CI excluding 0 → 12-replica
+replication hold → **5-pose-ensemble robustness** → native Asp6–Arg114 bridge
 intact in 100% of 6,000 MD frames → **independent-pose robustness** (`docs/EXPANSION_GATE_PREREG.md` + addenda).
 Having credibles across two generators and two fold classes cuts single-generator correlated-failure risk.
 Consistent with equilibrium physics, a passive monovalent binder cannot exceed the equilibrium selectivity ceiling

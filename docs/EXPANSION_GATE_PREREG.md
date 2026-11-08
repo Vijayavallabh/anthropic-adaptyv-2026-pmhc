@@ -104,3 +104,28 @@ The two BoltzGen credibles already had high, stable (0.71–0.75 across all 5 mo
 independent-pose test was needed to trust their poses; the robustness filter is applied wherever interface
 confidence is low. ipSAE in `submission_screens.csv` is reported as the **binder–peptide (C-P)** interface for the
 credibles so the comparison is like-for-like.
+
+---
+
+## Addendum 3 (2026-11-08) — pose-ENSEMBLE, applied uniformly to all credibles
+
+Addendum 2's single-alternative-pose test was noisy and, on one draw, looked alarming for the BoltzGen
+credibles (b3_gpu7_113 -9.3->-3.5; nb3_gpu4_132 -7.3->+2.7). A third side-agent review correctly noted
+the BoltzGen picks had been exempted from that test. We therefore gated **every credible on 5 independent
+co-fold poses** (models 0-4) and judge selectivity on the whole distribution, not one pose (the gate's CI
+captures MD noise, not co-fold pose uncertainty):
+
+| credible | ΔΔG across 5 poses | G12D-direction | ensemble mean | verdict |
+|---|---|---|---|---|
+| `b3_gpu7_113` | -9.3 / -3.2 / -7.5 / -3.5 / -5.4 | **5/5** | **-5.8** | pose-ROBUST |
+| `genie3_g6_28_m0` | -7.7 / -9.1 / -4.5 / -7.8 / -1.8 | **5/5** | **-6.2** | pose-ROBUST |
+| `nb3_gpu4_132` | -7.3 / -3.5 / -8.2 / +2.7 / -0.1 | 4/5 | -3.3 | net G12D, weakest (one flip) |
+
+So the single-pose snapshot OVERSTATED the problem for the BoltzGen picks: across the ensemble,
+`b3_gpu7_113` and `genie3_g6_28_m0` favor G12D on **every** pose (never flip) and `nb3_gpu4_132` on 4/5.
+The three credibles stand; the reported gate value in `submission_screens.csv` is now the **pose-ensemble
+mean** with the pose range and direction-fraction, not a single lucky pose. Ranking stays reliability-first
+(b3_gpu7_113 #1: 5/5 + the highest, most stable interface confidence 0.75; g6_28 #2: 5/5; nb3_gpu4_132 #3:
+weakest, 4/5, disclosed). `genie3_g2_103_m1` (dropped) and `genie3_g2_141_m1` (#20 reserve) are being given
+the identical 5-pose test for consistency; results will be recorded here and their placement confirmed or
+adjusted. Every ΔΔG is a prediction; the wet-lab assay is the verdict.

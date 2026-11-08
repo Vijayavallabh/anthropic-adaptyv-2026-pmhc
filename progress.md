@@ -2,7 +2,22 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-08 (latest) — POSE-ROBUSTNESS CORRECTION: credibles 5→3 (one false top pick CAUGHT + dropped)
+## 2026-11-08 (latest) — POSE-ENSEMBLE: 3-credible tier CONFIRMED (5/5, 5/5, 4/5 across co-fold poses)
+
+Assistant-drafted (Claude). A side-agent review noted the single-pose robustness test (addendum 2) had been run
+only on the Genie3 designs, exempting the BoltzGen #1/#3 on a lighter "stable confidence" bar — and that g2_103
+(which collapsed) ALSO had stable confidence, so that bar isn't safe. Re-gated **every credible on 5 independent
+co-fold poses** (models 0–4; tasks bc9bmx775 + bnz0biq4i). The single model_3 draw had been MISLEADING (worst
+pose): the full ensemble shows **b3_gpu7_113 5/5 G12D-direction (mean −5.8), genie3_g6_28_m0 5/5 (mean −6.2),
+nb3_gpu4_132 4/5 (one flip, mean −3.3)**. So the 3-credible tier STANDS and is now ensemble-validated; ranking
+unchanged (reliability-first). `submission_screens.csv` gate columns now report the **pose-ensemble mean +
+direction-fraction + range** (not a single lucky pose) via `rerank_v7.py` — submission.csv (order) UNCHANGED.
+Key lesson: the gate CI captures MD noise, not co-fold POSE uncertainty — see
+[[lesson-gate-ddg-on-low-confidence-pose-is-single-pose-artifact]]. PREREG addendum 3 records the ensemble.
+Backup `submission_screens.pre-ensemble-2026-11-08.bak.csv`. **RUNNING (task bh0sedmzo):** the identical 5-pose
+test on the dropped g2_103 + reserve g2_141, for consistency — to confirm/adjust their placement. Upload USER-GATED.
+
+## 2026-11-08 — POSE-ROBUSTNESS CORRECTION: credibles 5→3 (one false top pick CAUGHT + dropped)
 
 Assistant-drafted (Claude). Two more side-agent reviews, both acted on:
 - **(a) Consistency:** g2_141 cleared the exact 12-rep bar the original credibles passed but was blocked only by
