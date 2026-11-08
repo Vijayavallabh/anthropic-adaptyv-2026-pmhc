@@ -2,7 +2,29 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-08 (latest) — EXPANSION GATE: screen→confirm done; 2 Genie3 candidates in 12-rep deepen (RUNNING)
+## 2026-11-08 (latest) — EXPANSION GATE COMPLETE: 2 new Genie3 credibles PROMOTED → 4 total, 2 generators
+
+Assistant-drafted (Claude). The 12-rep deepen HELD — the search found **2 genuinely new credible selectives,
+both Genie3** (orthogonal generator). This is the diversity win: credible count **2 → 4, now 2 BoltzGen +
+2 Genie3**, breaking the single-generator correlation that was the submission's one conceded weakness.
+- **Survivors (full C1–C7 bar):** `genie3_g2_103_m1` (rfd_des_g2_pmhc_g12d_103_m1) ΔΔG **−12.51 [−17.2,−7.4]**
+  12-rep — STRONGEST in the campaign, yet co-fold weakest-margin **0.011** (ruler-invisible: direct proof the
+  gate sees what the blind ruler cannot); `genie3_g6_28_m0` (rfd_des_g6_pmhc_g12d_28_m0) **−7.66 [−11.3,−4.0]**.
+  Both: C4 held at 12-rep (did NOT regress), C6 FDR-significant (BH q=0.05 across all 24 confirm tests), C5
+  Asp6–Arg114 bridge intact 100%/6000 frames, C7 engage peptide bulge 4/5/7/8, 0 Cys, soluble/borderline.
+  `g2_141` held (−5.0) but FAILS C6 → NOT promoted (the look-elsewhere guard working as designed).
+- **New screens computed** for the 2: pLDDT 89/95, ipSAE(C-P) 0.47/0.59, KD −1.25/+0.10, novelty maxTM
+  **0.872/0.895 (borderline)** via `scripts/robust_novelty.py` (ESMFold+foldseek; novelty_struct.py foldseek path
+  was stale → used vendored `tools/foldseek-env/bin/foldseek`).
+- **Promotion (`scripts/gate/rerank_v4.py`):** credibles ranked by gate ΔΔG, interleaving generators
+  (G3,BG,G3,BG) = #1 g2_103, #2 b3_gpu7_113, #3 g6_28, #4 nb3_gpu4_132. Dropped the 2 weakest reserve
+  (`b3_gpu6_132` gate +10.1 WT-leaning, `nb3_gpu6_432`). Final 20 = **13 BoltzGen + 7 Genie3, 14 single_chain +
+  6 nanobody**; assayed top-10 = 4 credibles + 6 co-fold. Integrity audit PASS (20 unique, CRLF, all cols,
+  classes valid, seqs valid). Backups `runs/submission*.pre-expansion-2026-11-08.bak.csv`.
+- **Docs synced:** SUBMISSION_SUMMARY.md, METHODS.md (table regenerated + expansion-gate section), progress,
+  memory. Upload stays USER-GATED.
+
+## 2026-11-08 — EXPANSION GATE: screen→confirm→deepen stages
 
 Assistant-drafted (Claude). The staged search ran clean (GPUs 2-7; isolated `runs/gate_expand/`).
 - **Screen** (2-rep/2ns, 100 designs, task `bsxkzuez4`, ~9.7h): 43/100 leaned G12D; C2 took the 24 most-negative.

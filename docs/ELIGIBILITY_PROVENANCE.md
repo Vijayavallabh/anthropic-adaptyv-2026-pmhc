@@ -17,8 +17,8 @@ do not conceal derivation.
 
 ## Our submission under these rules
 
-### Nanobodies (7 of 20) — VHH framework + de novo CDRs, not seeded
-All seven use the canonical camelid VHH framework (BoltzGen nanobody generation). The framework is the **public VHH
+### Nanobodies (6 of 20) — VHH framework + de novo CDRs, not seeded
+All six use the canonical camelid VHH framework (BoltzGen nanobody generation). The framework is the **public VHH
 consensus scaffold, not a specific/proprietary known binder**, and no CDRs were grafted from a known nanobody. The
 shared framework is evident in the conserved FR1 / FR2-hallmark / FR4 and the canonical disulfide cysteines; the CDR
 loops (the variable interior — CDR1 after `…SCAAS`, CDR2 after the FR2 `W[F/L/V]RQAPG…` hallmark, CDR3 before
@@ -30,18 +30,18 @@ loops (the variable interior — CDR1 after `…SCAAS`, CDR2 after the FR2 `W[F/
 | nb3_gpu6_132 | EVQLVESGGGLVQPGGSLRLSCAAS | WFRQAPGKGRELVAA | DYWGQGTQVTVSS |
 | nb3_gpu3_307 | EVQLVESGGGLVQPGGSLRLSCAAS | WFRQAPGQEREFVAG | DYWGQGTLVTVSS |
 | nb3_gpu7_192 | EVQLVESGGGLVQPGGSLRLSCAAS | WLRQAPGKEREFVAA | DFWGQGTLVTVSS |
-| nb3_gpu5_130 | EVQLVESGGGLVQPGGSLRLSCAAS | WFRQAPGQEREFVAG | LYWGQGTLVTVSS |
-| nb3_gpu6_432 | EVQLVESGGGLVQAGGSLSISCAAS | WFRQAPGKEREFVAA | PFWGRGTQVTVSS |
-| nanobody_0202 | EVQLVESGGGVVQPGNSLRLSCAAS | WVRQAPGKGLEWVS | AFWGQGTLVTVSS |
+| nb3_gpu2_108 | EVQLVESGGGLVQPGGSLRLSCAAS | WYRQAPGKGRELVAG | AFWGQGTLVTVSS |
+| nb3_gpu7_029 | EVQLVESGGGLVQAGGSLSISCAAS | WFRQAPGKEREFVAA | DYWGRGTQVTVSS |
 
 Full sequences: `runs/submission.csv`. Per the challenge rules, nanobody novelty is judged on CDR diversity
 (chiefly HCDR3); the natural VHH framework carries expected high whole-domain structural similarity to known VHHs
 and is not penalized. This is exactly the case the organizers sanctioned.
 
-### Single-chain miniproteins (13 of 20) — de novo, non-immunoglobulin
+### Single-chain miniproteins (14 of 20) — de novo, non-immunoglobulin
 Generated zero-shot by **two independent generators** against the ordered pMHC: BoltzGen (protein-anything) for the
 `b2_*`/`b3_*` designs, and **Genie3** — an orthogonal diffusion backbone model (official
-`anthropics/uplifting-biomolecular-modeling`) — for the five `genie3_*` designs, whose backbones were generated de
+`anthropics/uplifting-biomolecular-modeling`) — for the seven `genie3_*` designs (including the two expansion-gate
+credibles `genie3_g2_103_m1`/`genie3_g6_28_m0`), whose backbones were generated de
 novo and then sequence-designed with SolubleMPNN (no Cys); neither route seeds from a known binder. All sequences
 are co-designed de novo, folded directly, never re-sequenced from a natural protein. A sequence/topology classifier
 removed any immunoglobulin V-domain emitted by the single-chain route (every single-chain design carries zero
