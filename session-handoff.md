@@ -2,7 +2,30 @@
 
 Where things stand, for the next session. Newest state at top; full history in `progress.md`.
 
-## As of 2026-11-06 (latest) — ORTHOGONAL Genie3 run → 2-generator hedge in the assayed top-10
+## As of 2026-11-09 (latest) — FINAL v8: expansion gate + complete 5-pose ensemble; 2 pose-robust + 3 net-leaning
+
+The submission has advanced well past the 2026-11-06 state below. Arc since: applied the MM-GBSA gate (the only
+judge of the buried G12D-vs-WT axis) across the ~2,000 paneled-but-un-gated designs (the blind co-fold ruler leaves
+credibles un-gated at low ranks) → then hardened every gate-selective against co-fold POSE uncertainty on a full
+5-pose ensemble (models 0–4). Net result (complete-data final; the 5-model ensemble is exhausted):
+- **2 pose-ROBUST credibles** (G12D on 5/5 poses, never flip): `b3_gpu7_113` (BoltzGen, mean ΔΔG −5.8, ipSAE 0.75)
+  and `genie3_g6_28_m0` (Genie3, mean −6.2; the expansion-gate discovery).
+- **3 net-G12D-leaning selectives** (4/5 poses, one flip, disclosed): `genie3_g2_103_m1` (mean −7.3, strongest),
+  `nb3_gpu4_132` (−3.3), and `genie3_g2_141_m1` (−4.8, #20 reserve: hydrophobic).
+- **submission.csv = 12 BoltzGen + 8 Genie3, 14 single_chain + 6 nanobody.** Assayed top-10 = #1 b3_gpu7_113,
+  #2 genie3_g6_28_m0, #3 genie3_g2_103_m1, #4 nb3_gpu4_132 (2 robust + 2 net-leaning) + 6 co-fold ruler designs.
+  `b2_gpu3_36` (the 11-06 "#4") was dropped (weakest co-fold, no gate evidence).
+- Honest ceiling: in-silico selectivity is pose-dependent/noisy — only the 2 designs are 5/5 pose-robust; the
+  single buried-residue G12D-vs-WT call is still the **bench's**, never ranked by an in-silico number.
+- Trail: `scripts/gate/rerank_v{4..8}.py`; pre-reg + addenda 1–4 in `docs/EXPANSION_GATE_PREREG.md`; docs
+  (METHODS/SUBMISSION_SUMMARY/ELIGIBILITY) synced two-tier; details newest-first in `progress.md`.
+- **Only remaining step = owner's Proteinbase upload (USER-GATED).** Upload all 20 as ONE collection in rank
+  order; confirm the designated collection holds exactly those 20; eyeball a platform-computed pLDDT on each
+  (watch the 6 nanobodies, ESMFold 80–88). No deadline extension: 2026-11-08 23:59 AoE (Nov 9 11:59 UTC).
+
+---
+
+## As of 2026-11-06 — ORTHOGONAL Genie3 run → 2-generator hedge in the assayed top-10
 
 The devil's-advocate verdict's one conceded risk (all-BoltzGen monoculture) is now **resolved**: the user opted to
 run an orthogonal generator, and it succeeded. **Genie3** (rebuilt from the official anthropics repo) generated 1200

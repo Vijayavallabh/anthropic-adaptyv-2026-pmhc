@@ -129,3 +129,31 @@ mean** with the pose range and direction-fraction, not a single lucky pose. Rank
 weakest, 4/5, disclosed). `genie3_g2_103_m1` (dropped) and `genie3_g2_141_m1` (#20 reserve) are being given
 the identical 5-pose test for consistency; results will be recorded here and their placement confirmed or
 adjusted. Every ΔΔG is a prediction; the wet-lab assay is the verdict.
+
+---
+
+## Addendum 4 (2026-11-09) — complete 5-pose ensemble for ALL candidates; g2_103 re-included
+
+For consistency, the dropped `genie3_g2_103_m1` and reserve `genie3_g2_141_m1` were given the SAME 5-pose
+ensemble test as the credibles. The complete picture (all 5 gate-candidates x 5 co-fold poses):
+
+| design | ΔΔG across 5 poses | G12D-dir | mean | #sig |
+|---|---|---|---|---|
+| `b3_gpu7_113` | -9.3/-3.2/-7.5/-3.5/-5.4 | 5/5 | -5.8 | 3/5 |
+| `genie3_g6_28_m0` | -7.7/-9.1/-4.5/-7.8/-1.8 | 5/5 | -6.2 | 3/5 |
+| `genie3_g2_103_m1` | -12.5/-9.2/-10.1/+1.0/-5.8 | 4/5 | **-7.3** | **4/5** |
+| `genie3_g2_141_m1` | -5.0/-12.2/-4.0/-4.8/+1.9 | 4/5 | -4.8 | 3/5 |
+| `nb3_gpu4_132` | -7.3/-3.5/-8.2/+2.7/-0.1 | 4/5 | -3.3 | 2/5 |
+
+**This reverses the Addendum-2 drop of `g2_103`.** That drop was made on a single alternative pose (model_3 =
++1.0), the one outlier; the complete ensemble shows `g2_103` is 4/5 G12D-direction, mean -7.3, significant on 4/5
+-- **stronger than `nb3_gpu4_132`**, which had been kept at #3. Keeping the weaker and dropping the stronger (both
+4/5) is indefensible, so `g2_103` is re-included. Final tiers, judged uniformly on the ensemble:
+- **Pose-ROBUST (G12D on 5/5 poses):** `b3_gpu7_113`, `genie3_g6_28_m0`.
+- **Net-G12D-leaning (4/5, one flip, disclosed):** `genie3_g2_103_m1` (-7.3) and `nb3_gpu4_132` (-3.3) in the
+  assayed tier (both soluble); `genie3_g2_141_m1` (-4.8) in reserve (hydrophobic).
+
+Assayed top-10 = 4 gate-selectives (2 robust + 2 net-leaning) + 6 co-fold; `b2_gpu3_36` (weakest co-fold, no gate
+evidence) dropped to make room. The co-fold model ensemble (5 models) is now EXHAUSTED -- this is the complete-data
+final. Lesson: a single alternative pose is as noisy as a single primary pose; judge on the full ensemble (see
+[[lesson-gate-ddg-on-low-confidence-pose-is-single-pose-artifact]]). Every ΔΔG is a prediction; the assay decides.

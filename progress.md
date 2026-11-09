@@ -2,7 +2,30 @@
 
 Running log (newest first). Deadline 2026-11-08 23:59 AoE. Upload USER-GATED.
 
-## 2026-11-08 (latest) — POSE-ENSEMBLE: 3-credible tier CONFIRMED (5/5, 5/5, 4/5 across co-fold poses)
+## 2026-11-09 (latest) — COMPLETE 5-pose ensemble: g2_103 RE-INCLUDED; final v8 = 2 pose-robust + 3 net-leaning
+
+Assistant-drafted (Claude). The addendum-2 DROP of `genie3_g2_103_m1` was itself made on ONE alternative pose
+(model_3 = +0.99, the outlier). For consistency I gave the dropped g2_103 + reserve g2_141 the SAME complete
+5-pose ensemble test the credibles got (all 5 gate-candidates × co-fold models 0–4; tasks reuse the ensemble runs):
+```
+  b3_gpu7_113      −9.3/−3.2/−7.5/−3.5/−5.4   5/5  mean −5.8  (3/5 sig)  POSE-ROBUST
+  genie3_g6_28_m0  −7.7/−9.1/−4.5/−7.8/−1.8   5/5  mean −6.2  (3/5 sig)  POSE-ROBUST
+  genie3_g2_103_m1 −12.5/−9.2/−10.1/+1.0/−5.8 4/5  mean −7.3  (4/5 sig)  ← strongest mean
+  genie3_g2_141_m1 −5.0/−12.2/−4.0/−4.8/+1.9  4/5  mean −4.8            (reserve: hydrophobic)
+  nb3_gpu4_132     −7.3/−3.5/−8.2/+2.7/−0.1   4/5  mean −3.3  (2/5 sig)
+```
+The single-pose drop was wrong: g2_103 is **4/5 G12D, mean −7.3, significant on 4/5 — STRONGER than the kept
+nb3_gpu4_132** (also 4/5). Keeping the weaker and dropping the stronger (both 4/5) is indefensible → g2_103
+**RE-INCLUDED** (`scripts/gate/rerank_v8.py`). **FINAL v8: 2 pose-ROBUST (5/5) + 3 NET-G12D-LEANING (4/5, one flip,
+disclosed). submission.csv = 12 BoltzGen + 8 Genie3, 14 SC + 6 NB; assayed top-10 = #1 b3_gpu7_113, #2 g6_28,
+#3 g2_103, #4 nb3_gpu4_132 (2 robust + 2 net-leaning) + 6 co-fold; g2_141 #20 reserve.** Dropped `b2_gpu3_36`
+(weakest co-fold, no gate evidence) for room. The 5-model co-fold ensemble is now EXHAUSTED — complete-data final;
+no more pose data to get. PREREG **addendum 4** records it; docs (METHODS/SUBMISSION_SUMMARY/ELIGIBILITY) synced to
+two-tier; backups `runs/submission*.pre-reinclude-2026-11-09.bak.csv`. Lesson: a single alternative pose is as noisy
+as a single primary pose — judge on the full ensemble [[lesson-gate-ddg-on-low-confidence-pose-is-single-pose-artifact]].
+Committed local (NOT pushed). Upload USER-GATED.
+
+## 2026-11-08 — POSE-ENSEMBLE: 3-credible tier CONFIRMED (5/5, 5/5, 4/5 across co-fold poses)
 
 Assistant-drafted (Claude). A side-agent review noted the single-pose robustness test (addendum 2) had been run
 only on the Genie3 designs, exempting the BoltzGen #1/#3 on a lighter "stable confidence" bar — and that g2_103

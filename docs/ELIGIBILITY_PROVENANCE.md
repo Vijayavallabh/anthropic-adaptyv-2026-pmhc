@@ -40,7 +40,7 @@ and is not penalized. This is exactly the case the organizers sanctioned.
 ### Single-chain miniproteins (14 of 20) — de novo, non-immunoglobulin
 Generated zero-shot by **two independent generators** against the ordered pMHC: BoltzGen (protein-anything) for the
 `b2_*`/`b3_*` designs, and **Genie3** — an orthogonal diffusion backbone model (official
-`anthropics/uplifting-biomolecular-modeling`) — for the seven `genie3_*` designs (including the pose-robust
+`anthropics/uplifting-biomolecular-modeling`) — for the eight `genie3_*` designs (including the pose-robust
 expansion-gate credible `genie3_g6_28_m0`), whose backbones were generated de
 novo and then sequence-designed with SolubleMPNN (no Cys); neither route seeds from a known binder. All sequences
 are co-designed de novo, folded directly, never re-sequenced from a natural protein. A sequence/topology classifier
