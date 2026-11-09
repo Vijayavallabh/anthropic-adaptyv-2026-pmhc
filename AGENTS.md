@@ -49,8 +49,9 @@ different folder, physics, or the bench); treat every in-silico score as a hypot
 - **De-novo only, zero-shot only.** No seeding from known binders/TCRs/antibodies; no fine-tuning on the target.
   (Antibody/nanobody *framework* is allowed for the nanobody class; CDRs are de-novo.)
 - **Upload is USER-GATED.** The Proteinbase portal upload/submission is the user's decision — never upload.
-  `runs/submission.csv` is the finalized, portal-validated 20 (the ruler+gate+pose "Recommended 20", chosen
-  2026-11-06; the prior locked set is backed up to `runs/submission.locked-2026-11-06.bak.csv`).
+  `runs/submission.csv` is the finalized, portal-validated 20 (v8, 2026-11-09: the ruler+gate+pose set hardened by
+  the expansion gate + a 5-pose co-fold ensemble; 12 BoltzGen + 8 Genie3, 14 single_chain + 6 nanobody; the
+  2026-11-06 locked set and every re-rank checkpoint are backed up under `runs/submission*.bak.csv`).
 - **Keep raw sequences in files, not chat.** Reference designs by name.
 - **8× H100 local. GPUs 0,1 are FOREIGN** — never clobber them. Campaign uses GPUs 2–7. Verify with `nvidia-smi`,
   one process per GPU, cap CPU threads.

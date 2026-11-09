@@ -4,7 +4,7 @@
   "deadline": "2026-11-08T23:59 AoE",
   "upload_gate": "USER-GATED (Proteinbase portal); never auto-upload",
   "selection_principle": "North star: rank by the WEAKEST discrimination margin min(spec_scram, promisc_margin, bp-bh_e), not composite sel; improve the weakest objective; test all three targets (G12D/WT/empty); one convincing pose is not discrimination; submit diverse designs with honest reasoning; computational confidence is a hypothesis, the experiment is the verdict. What shows it recognizes the difference, not merely what the targets share?",
-  "active_feature": "orthogonal-generator-hedge",
+  "active_feature": "pose-ensemble-finalize",
   "features": [
     {
       "id": "generate",
@@ -84,7 +84,7 @@
       "status": "done",
       "evidence": "scripts/gate/find_rescue_poses.py -> rescue_poses.tsv; re-gated nb3_gpu6_432 (5/7 preserved shards) + protein_0103 (1/5), 12-rep -> runs/campaign/gate/gate_results_rescue.tsv. BOTH went NULL on the realistic pose (nb3_gpu6_432 -10.71 -> +7.39, even leans WT; protein_0103 -5.56 -> +1.94) = their selectivity was the over-dock artifact, confirmed. The other 3 over-docked selectives over-dock in 0/7 shards = unrescuable.",
       "done_criteria": "rescuable over-docked selectives re-gated on preserved poses; rescued iff still selective, else artifact confirmed",
-      "notes": "Result: credible G12D-selective count is DEFINITIVELY 2 (b3_gpu7_113, nb3_gpu4_132)."
+      "notes": "Result: at THIS checkpoint (2026-11-06; only the ruler-top ~68 designs had been gated) the credible count was 2 (b3_gpu7_113, nb3_gpu4_132). SUPERSEDED by the expansion-gate + pose-ensemble-finalize features below, which ran the gate across the ~2000 un-gated designs and re-tiered the set on a 5-pose ensemble (2 pose-robust + 3 net-leaning; the 5/5-robust pair is b3_gpu7_113 + genie3_g6_28_m0, and nb3_gpu4_132 is a 4/5 net-leaner)."
     },
     {
       "id": "finalize-submission",
@@ -131,6 +131,23 @@
       "evidence": "Genie3 rebuilt from the official anthropics repo (setup_genie3_pmhc.sh). 1200 backbones (gen_genie3_pmhc.sh, GPUs 2-7) -> PULCHRA full-bb (build_genie3_fullbb_pmhc.py) -> SolubleMPNN (mpnn_binder.py repointed to tools/proteinmpnn) = 2800 seqs, 97% foldable median pLDDT 93 -> g12d triage top150 -> 5-sample 6-state panel + weakest ruler (funnel_genie3_pmhc.sh, isolated runs/genie3/) -> gate top8 (gate/gate_genie3.sh) + pose-realism + foldseek novelty. 11 designs weakest>=0.30; top 0.670 BEAT BoltzGen best 0.583 but gate-REFUTED (WT-favored); one gate-selective was an over-dock artifact -> NO 3rd credible selective (honest; still 2). Promoted 5 preserved-pose positive-weakest Genie3 (gate/rerank_v3.py): 3 into assayed top-10 (genie3_8_m0 0.49 soluble, genie3_g4_121_m1 0.42 novel maxTM0.68, genie3_g6_148_m1 0.38 gate-lean); 2 hydrophobic held in reserve. New top-10 = 2 credible-sel + 5 BoltzGen + 3 Genie3 (two generators + both classes); dropped the 5 WT-favored pads -> all-20 positive-weakest. Integrity re-passed. Backups runs/submission*.pre-genie3-2026-11-06.bak.csv.",
       "done_criteria": "orthogonal designs scored on the IDENTICAL ruler+gate; only preserved-pose positive-weakest non-WT-favored promoted; gate-refuted/over-dock/hydrophobic excluded from the assayed top-10; strict ruler + diversity gain; upload user-gated",
       "notes": "Resolves devil's-advocate Attack 3. The gate correctly refuted the strongest co-fold design (0.670 -> WT-favored) = co-fold-blindness working as designed. Genie3 infra + weights are gitignored; funnel isolated under runs/genie3/, runs/campaign untouched."
+    },
+    {
+      "id": "expansion-gate",
+      "desc": "Apply the MM-GBSA gate (the only judge of the buried G12D-vs-WT axis) across the ~2000 paneled-but-UN-gated designs under a pre-registered bar, because the blind co-fold ruler leaves credibles un-gated at low ranks",
+      "status": "done",
+      "evidence": "docs/EXPANSION_GATE_PREREG.md (C1-C7: pose-realism prefilter, cheap screen, 6-rep confirm ddG<=-4 & CI-excl-0, 12-rep hold, dynamic bridge >=80% frames, BH-FDR q=0.05, adversarial read). scripts/gate/{select_expand,gate_expand.sh,next_stage_list,c5_dynamic_bridge}.py; staged screen(100)->confirm(24,6-rep)->deepen(12-rep), isolated runs/gate_expand/. Surfaced genie3_g6_28_m0 (-7.66) plus initially genie3_g2_103_m1 (-12.51) and g2_141; all FDR-sig, bridge 100%/6000 frames, 0 Cys, engage bulge 4/5/7/8. The cheap geometric charge-sensor prior was DISCARDED after a control check anti-correlated with truth (ranked the real credibles 1513th/867th and an over-dock artifact 142nd) -> memory lesson-pmhc-contact-prior-anticorrelates-with-selectivity; only its native_bridge sub-signal kept as the C1 pose-realism prefilter.",
+      "done_criteria": "gate applied across the un-gated pool under the pre-registered C1-C7 bar; look-elsewhere controlled by BH-FDR; honest null (0 new) would keep the count at 2; any promotion pose-realism-checked",
+      "notes": "Lever = memory lesson-apply-true-axis-judge-across-blind-ranker-pool. The ruler still ranks; the gate only filters."
+    },
+    {
+      "id": "pose-ensemble-finalize",
+      "desc": "Harden every gate-selective against co-fold POSE uncertainty (the gate CI captures MD noise, not pose uncertainty) on a full 5-pose co-fold ensemble (models 0-4), then re-tier uniformly and emit the final submission (v8)",
+      "status": "done",
+      "evidence": "A single-alternative-pose test (PREREG addendum 2) first DROPPED genie3_g2_103_m1 (-12.51 -> +0.99 on model_3, the outlier) and demoted g2_141; a review flagged that one alternative pose is as noisy as one primary pose and that the BoltzGen picks had been exempted. Re-gated ALL 5 gate-candidates on 5 co-fold poses (addenda 3-4): b3_gpu7_113 5/5 mean -5.8, genie3_g6_28_m0 5/5 mean -6.2 (POSE-ROBUST); genie3_g2_103_m1 4/5 mean -7.3 sig 4/5, nb3_gpu4_132 4/5 mean -3.3, genie3_g2_141_m1 4/5 mean -4.8 (NET-LEANING, one flip). g2_103 (stronger than the kept nb3_gpu4_132, both 4/5) RE-INCLUDED -> scripts/gate/rerank_v{4..8}.py (v8 final). submission.csv = 12 BoltzGen + 8 Genie3, 14 single_chain + 6 nanobody; assayed top-10 = 4 gate-selectives (2 robust + 2 net-leaning) + 6 co-fold; genie3_g2_141_m1 #20 reserve; dropped b2_gpu3_36 (weakest co-fold, no gate evidence). The 5-model co-fold ensemble is now EXHAUSTED = complete-data final. Backups runs/submission*.pre-{expansion,g2141,robust,ensemble,reinclude}.bak.csv. Docs (METHODS/SUBMISSION_SUMMARY/ELIGIBILITY/EXPANSION_GATE_PREREG addenda 1-4), progress.md, session-handoff.md synced. Committed local.",
+      "done_criteria": "every gate-selective judged on the full pose ensemble (not one pose); tiers assigned uniformly; stronger-over-weaker enforced; complete-data final; G12D-vs-WT remains the bench's call; upload user-gated",
+      "notes": "Lesson memory lesson-gate-ddg-on-low-confidence-pose-is-single-pose-artifact. Honest ceiling: in-silico selectivity is pose-dependent/noisy; only 2 designs are 5/5 pose-robust.",
+      "blocked_on": "USER upload (gated) to Proteinbase"
     }
   ]
 }

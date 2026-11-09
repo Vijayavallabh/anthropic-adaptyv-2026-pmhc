@@ -36,7 +36,8 @@ tools/        vendored foldseek+PDB-DB, ProteinMPNN weights, etc. (GITIGNORED, r
 ## Key results (tracked under `runs/`)
 
 - `runs/submission.csv` — the **finalized 20** (`name,sequence,molecule_class`), portal-validated (20/20 Passed).
-  Chosen 2026-11-06 as the ruler+gate+pose-realism "Recommended 20"; 13 single_chain + 7 nanobody, rank-ordered.
+  v8 (2026-11-09): the ruler+gate+pose-realism set hardened by the expansion gate + a 5-pose co-fold ensemble;
+  **12 BoltzGen + 8 Genie3, 14 single_chain + 6 nanobody**, rank-ordered selectivity-evidence-first.
 - `runs/submission.locked-2026-11-06.bak.csv` — the prior locked 20 (backup).
 - `runs/campaign/final20_two_axis_recommended.csv` + `final20_two_axis_rationale.tsv` — the finalized set and its
   per-design rationale (tier, pose realism, gate ΔΔG + CI, weakest margin).
@@ -63,8 +64,11 @@ is the verdict.
 near-identical WT at the single **buried** residue — is not reliably *ranked* in silico (co-fold is blind to it;
 MPNN δ is a verified wash). An orthogonal **ensemble MM-GBSA gate** does recover a *confirmatory* signal on a
 shortlist — but only on poses that keep Asp6 **buried** (the co-folder frequently over-docks it out of the groove,
-faking selectivity), and only as a binary **filter**, never a rank. On that honest bar exactly **two** designs
-(`b3_gpu7_113`, `nb3_gpu4_132`) are credible G12D-selectives; the rest of the portfolio is a diversified spread of
+faking selectivity), and only as a binary **filter**, never a rank. On that honest bar — after an expansion-gate
+sweep of the un-gated pool and a 5-pose co-fold ensemble — **two** designs (`b3_gpu7_113`, `genie3_g6_28_m0`) are
+**pose-robust** credible G12D-selectives (favor G12D on 5/5 independent poses) and **three** more
+(`genie3_g2_103_m1`, `nb3_gpu4_132`, `genie3_g2_141_m1`) are **net-G12D-leaning** (4/5 poses, one flip, disclosed);
+the rest of the portfolio is a diversified spread of
 bets ranked on the pose-independent *measurable* proxies (`spec_scram`, `promisc_margin`, `bh_e`). True
 G12D-vs-WT remains the **wet-lab's** verdict.
 
